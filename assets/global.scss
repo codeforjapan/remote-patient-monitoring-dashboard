@@ -1,0 +1,15 @@
+:root {
+  box-sizing: border-box;
+  color: #252733;
+}
+
+body {
+  background-color: $bg-gray;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}

@@ -1,0 +1,52 @@
+<template>
+  <div class="pageHeader">
+    <h2 class="pageTitle">
+      {{ text }}
+    </h2>
+    <div v-if="isLoggedIn" class="account">
+      <button>ログアウト</button>
+      <div class="accountInfo">
+        <span>XX保健所</span><br />
+        <span>管理者00001</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  props: {
+    text: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      isLoggedIn: true,
+    }
+  },
+})
+</script>
+
+<style lang="scss" scoped>
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 58px;
+}
+.pageTitle {
+  margin: 0;
+}
+.account {
+  display: flex;
+  align-items: center;
+}
+.accountInfo {
+  font-size: 14px;
+  text-align: right;
+  margin-left: 14px;
+}
+</style>
