@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader text="ログイン" />
+    <PageHeader text="患者データ一覧" />
   </div>
 </template>
 

@@ -24,6 +24,7 @@
     "@nuxt/typescript-runtime": "^2.0.0",
     "core-js": "^3.8.1",
     "nuxt": "^2.14.12",
+    "nuxt-property-decorator": "^2.8.8",
     "nuxt-svg-loader": "^1.2.0"
   },
   "devDependencies": {

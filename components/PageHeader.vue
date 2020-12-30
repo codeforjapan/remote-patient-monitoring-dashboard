@@ -4,7 +4,7 @@
       {{ text }}
     </h2>
     <div v-if="isLoggedIn" class="account">
-      <button>ログアウト</button>
+      <ActionButton theme="primary" size="S" text="ログアウト" />
       <div class="accountInfo">
         <span>XX保健所</span><br />
         <span>管理者00001</span>
@@ -15,8 +15,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import ActionButton from '@/components/ActionButton.vue'
 
 export default Vue.extend({
+  components: {
+    ActionButton,
+  },
   props: {
     text: {
       type: String,
