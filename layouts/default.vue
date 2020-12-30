@@ -1,55 +1,57 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="appContainer">
+    <div class="sideContainer">
+      <div class="sideInner">
+        <Sidebar />
+      </div>
+    </div>
+    <main class="mainContainer">
+      <div class="mainInner">
+        <Nuxt />
+      </div>
+    </main>
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script lang="ts">
+import Vue from 'vue'
+import Sidebar from '@/components/Sidebar.vue'
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
+export default Vue.extend({
+  components: {
+    Sidebar,
+  },
+})
+</script>
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
+<style lang="scss" scoped>
+$sidebarWidth: 255px;
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.appContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: $sidebarWidth 1fr;
+  grid-template-rows: auto;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+.sideContainer {
+  grid-column: 1/2;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+  width: $sidebarWidth;
+  height: 100%;
+  background-color: $bg-black;
+  overscroll-behavior: contain;
 }
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.sideInner {
+  padding: 36px 30px 30px;
+}
+.mainContainer {
+  grid-column: 2/3;
+  overflow: hidden;
+  background-color: $bg-gray;
+}
+.mainInner {
+  padding: 36px 30px 30px;
 }
 </style>
