@@ -86,6 +86,10 @@ export default Vue.extend({
 .titleLink {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  &:focus {
+    outline: dotted $gray-2 1px;
+  }
 }
 .titleText {
   font-size: 14px;
