@@ -119,6 +119,7 @@ export default Vue.extend({
   align-items: center;
 }
 .overviewTitle {
+  font-size: 20px;
   margin: 32px;
 }
 .overviewTable {
