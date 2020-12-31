@@ -96,6 +96,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .symptomsHistoryTitle {
+  font-size: 24px;
   margin: 32px;
 }
 .symptomsHistoryTable {
