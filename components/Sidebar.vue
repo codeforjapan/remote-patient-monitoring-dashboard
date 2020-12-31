@@ -61,17 +61,17 @@ export default Vue.extend({
         {
           icon: 'ListIcon',
           title: 'データ一覧',
-          link: 'list',
+          link: '/',
         },
         {
           icon: 'GraphIcon',
           title: '患者表示',
-          link: 'patient',
+          link: '/patient',
         },
         {
           icon: 'GraphIcon',
           title: '患者登録',
-          link: 'register',
+          link: '/register',
         },
       ]
     },
