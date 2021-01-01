@@ -38,7 +38,7 @@ export default Vue.extend({
 .pageHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 58px;
+  margin-bottom: 50px;
 }
 .pageTitle {
   margin: 0;
