@@ -23,7 +23,7 @@ import PageHeader from '@/components/PageHeader.vue'
 import InputField from '@/components/InputField.vue'
 
 export default Vue.extend({
-  name: 'Index',
+  name: 'Login',
   components: {
     PageHeader,
     InputField,

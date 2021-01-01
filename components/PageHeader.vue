@@ -26,11 +26,10 @@ export default Vue.extend({
       type: String,
       default: '',
     },
-  },
-  data() {
-    return {
-      isLoggedIn: true,
-    }
+    isLoggedIn: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>
