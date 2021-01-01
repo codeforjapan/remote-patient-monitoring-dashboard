@@ -1,6 +1,11 @@
 <template>
   <div>
     <PageHeader text="患者表示" :is-logged-in="true" />
+    <SearchField
+      class="searchField"
+      :value="inputSearch"
+      @input="inputSearch = $event"
+    />
     <div class="patientContainer">
       <div class="patientHeader">
         <div>
@@ -58,6 +63,7 @@ import PageHeader from '@/components/PageHeader.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import SymptomsHistory from '@/components/SymptomsHistory.vue'
 import EditIcon from '@/static/icon-edit.svg'
+import SearchField from '@/components/SearchField.vue'
 
 export default Vue.extend({
   name: 'Patient',
@@ -66,17 +72,22 @@ export default Vue.extend({
     ActionButton,
     SymptomsHistory,
     EditIcon,
+    SearchField,
   },
   data() {
     return {
       memo: 'Cさん',
       isEditDisabled: true,
+      inputSearch: '',
     }
   },
 })
 </script>
 
 <style lang="scss" scoped>
+.searchField {
+  margin-bottom: 16px;
+}
 .patientContainer {
   background-color: $white;
   border: 1px solid $gray-2;
