@@ -60,31 +60,11 @@ export default Vue.extend({
   components: {
     SymptomsStatusText,
   },
-  data(): {
-    items: Item[]
-  } {
-    return {
-      items: [
-        {
-          date: '12/27 9:00',
-          isActiveCough: false,
-          isActiveSputum: false,
-          isActiveSuffocation: false,
-          isActiveHeadache: false,
-          isActiveThroat: true,
-          other: 'のどが痛くなってきました。',
-        },
-        {
-          date: '12/27 22:00',
-          isActiveCough: true,
-          isActiveSputum: true,
-          isActiveSuffocation: false,
-          isActiveHeadache: false,
-          isActiveThroat: true,
-          other: 'かなりせきがでるようになり、とてもつらいです。',
-        },
-      ],
-    }
+  props: {
+    items: {
+      type: Array as () => Item[],
+      default: [],
+    },
   },
   computed: {
     reverseItems(): Item[] {
