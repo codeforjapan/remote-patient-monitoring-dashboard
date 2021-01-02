@@ -5,6 +5,7 @@
     <div class="inputContainer">
       <InputField
         label="ニックネーム（任意）"
+        name="memo"
         :value="inputMemo"
         @input="inputMemo = $event"
       />
@@ -13,6 +14,7 @@
     <div class="inputContainer">
       <InputField
         label="携帯電話番号（任意）"
+        name="mobileTel"
         :value="inputMobileTel"
         @input="inputMobileTel = $event"
       />

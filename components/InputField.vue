@@ -4,6 +4,7 @@
     <input
       class="inputField"
       :type="type"
+      :name="name"
       :value="value"
       @input="$emit('input', $event.target.value)"
     />
@@ -24,6 +25,10 @@ export default Vue.extend({
       default: '',
     },
     label: {
+      type: String,
+      default: '',
+    },
+    name: {
       type: String,
       default: '',
     },
