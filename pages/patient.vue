@@ -50,7 +50,7 @@
           <dt class="patientSummaryTitle">脈拍</dt>
           <dd class="patientSummaryItem">80 <span class="unit">bpm</span></dd>
         </dl>
-        <div>グラフ</div>
+        <PatientGraph />
       </div>
       <SymptomsHistory :items="items" />
     </div>
