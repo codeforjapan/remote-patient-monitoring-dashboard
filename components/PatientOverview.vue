@@ -15,7 +15,7 @@
     <td class="temperature">{{ temperature.toFixed(1) }}</td>
     <td class="pulse">{{ pulse }}</td>
     <td class="spo2">{{ spo2.toFixed(1) }}</td>
-    <td class="graph"></td>
+    <td class="graph"><PatientOverviewGraph /></td>
     <td class="symptoms">
       <ul class="symptomsList">
         <li class="symptomsItem">
