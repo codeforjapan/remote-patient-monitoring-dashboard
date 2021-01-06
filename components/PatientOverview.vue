@@ -12,9 +12,9 @@
       <span>{{ patientId.nickname }}</span>
     </td>
     <td class="lastUpdate">{{ lastUpdate }}</td>
-    <td class="temperature">{{ temperature }}</td>
+    <td class="temperature">{{ temperature.toFixed(1) }}</td>
     <td class="pulse">{{ pulse }}</td>
-    <td class="spo2">{{ spo2 }}</td>
+    <td class="spo2">{{ spo2.toFixed(1) }}</td>
     <td class="graph"></td>
     <td class="symptoms">
       <ul class="symptomsList">
