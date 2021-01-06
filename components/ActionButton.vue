@@ -41,6 +41,7 @@ export default class ActionButton extends Vue {
   border-radius: 0.5em;
   border: none;
   color: $white;
+  cursor: pointer;
   &-primary {
     background-color: $primary;
   }
