@@ -48,7 +48,7 @@
     "stylelint": "^13.8.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
-    "ts-loader": "^8.0.12",
+    "ts-loader": "^8.0.14",
     "webpack": "^5.11.1"
   }
 }
