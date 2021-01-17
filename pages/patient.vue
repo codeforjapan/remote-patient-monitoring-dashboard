@@ -134,7 +134,7 @@ export default Vue.extend({
 }
 .patientContainer {
   background-color: $white;
-  border: 1px solid $gray-2;
+  border: 1px solid $gray-3;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -192,7 +192,7 @@ export default Vue.extend({
   font-weight: bold;
   margin: 0;
   padding: 16px;
-  border-bottom: 1px solid $gray-2;
+  border-bottom: 1px solid $gray-3;
   .unit {
     font-size: 14px;
   }

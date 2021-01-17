@@ -80,7 +80,7 @@ export default Vue.extend({
   width: 100%;
   font-size: 16px;
   tbody tr {
-    border-bottom: 1px solid $gray-2;
+    border-bottom: 1px solid $gray-3;
     &:last-child {
       border: none;
     }
@@ -103,6 +103,6 @@ export default Vue.extend({
 }
 .symptomsHistoryHeader {
   color: $gray-3;
-  border-bottom: 1px solid $gray-2;
+  border-bottom: 1px solid $gray-3;
 }
 </style>
