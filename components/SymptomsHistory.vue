@@ -19,23 +19,23 @@
           :key="index"
           class="symptomsHistoryRow"
         >
-          <td class="alignLeft">{{ item.date }}</td>
+          <td class="alignLeft">{{ getDate(item.created) }}</td>
           <td>
-            <SymptomsStatusText :is-active="item.isActiveCough" />
+            <SymptomsStatusText :is-active="item.symptom.cough" />
           </td>
           <td>
-            <SymptomsStatusText :is-active="item.isActiveSputum" />
+            <SymptomsStatusText :is-active="item.symptom.phlegm" />
           </td>
           <td>
-            <SymptomsStatusText :is-active="item.isActiveSuffocation" />
+            <SymptomsStatusText :is-active="item.symptom.suffocation" />
           </td>
           <td>
-            <SymptomsStatusText :is-active="item.isActiveHeadache" />
+            <SymptomsStatusText :is-active="item.symptom.headache" />
           </td>
           <td>
-            <SymptomsStatusText :is-active="item.isActiveThroat" />
+            <SymptomsStatusText :is-active="item.symptom.sore_throat" />
           </td>
-          <td class="alignLeft">{{ item.other }}</td>
+          <td class="alignLeft">{{ item.symptom.remarks }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,31 +44,28 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import dayjs from 'dayjs'
+import { Status } from '@/types/component-interfaces/status'
 import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
-
-type Item = {
-  date: string
-  isActiveCough: boolean
-  isActiveSputum: boolean
-  isActiveSuffocation: boolean
-  isActiveHeadache: boolean
-  isActiveThroat: boolean
-  other: string
-}
 
 export default Vue.extend({
   components: {
     SymptomsStatusText,
   },
   props: {
-    items: {
-      type: Array as () => Item[],
+    statuses: {
+      type: Array as () => Status[],
       default: [],
     },
   },
   computed: {
-    reverseItems(): Item[] {
-      return this.items.slice().reverse()
+    reverseItems(): Status[] {
+      return this.statuses.slice().reverse()
+    },
+  },
+  methods: {
+    getDate(date: string): string {
+      return dayjs(date).format('MM/DD HH:mm')
     },
   },
 })

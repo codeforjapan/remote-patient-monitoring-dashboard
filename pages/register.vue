@@ -23,7 +23,7 @@
         患者が普段使うスマートフォンの番号を入力してください。
       </p>
     </div>
-    <ActionButton theme="primary" size="M" text="患者IDを発行する" />
+    <ActionButton theme="primary" size="M" :is-inline="true">患者IDを発行する</ActionButton>
     <div class="flow">
       <RegistrationFlow :step="1" />
     </div>

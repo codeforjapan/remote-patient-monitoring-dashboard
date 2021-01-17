@@ -23,17 +23,11 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .symptomsText {
-  display: block;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
-  color: $white;
-  text-align: center;
-  padding: 4px 8px;
-  margin: 6px;
-  border-radius: 3em;
-  background-color: $primary;
+  color: $gray-3;
   &.active {
-    background-color: $error;
+    color: $notice;
   }
 }
 </style>
