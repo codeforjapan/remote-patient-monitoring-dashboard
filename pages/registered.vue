@@ -17,7 +17,9 @@
       <dt class="registrationTitle">ニックネーム</dt>
       <dd class="registrationItem">Sさん</dd>
     </dl>
-    <ActionButton theme="primary" size="M" text="別のIDを発行する" />
+    <ActionButton theme="primary" size="M" :is-inline="true">
+      別のIDを発行する
+    </ActionButton>
     <div class="flow">
       <RegistrationFlow :step="2" />
     </div>

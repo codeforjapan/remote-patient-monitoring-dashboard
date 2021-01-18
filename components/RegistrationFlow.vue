@@ -30,8 +30,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .registrationFlowList {
   display: flex;
-  list-style: none;
-  padding: 0;
 }
 .registrationFlowItem {
   display: flex;

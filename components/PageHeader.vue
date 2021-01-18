@@ -3,23 +3,22 @@
     <h2 class="pageTitle">
       {{ text }}
     </h2>
-    <div v-if="isLoggedIn" class="account">
-      <ActionButton theme="primary" size="S" text="ログアウト" />
-      <div class="accountInfo">
-        <span>XX保健所</span><br />
-        <span>管理者00001</span>
-      </div>
-    </div>
+    <ActionButton v-if="isLoggedIn" theme="primary" size="M" :is-inline="true">
+      <PlusIcon />
+      新規患者
+    </ActionButton>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import ActionButton from '@/components/ActionButton.vue'
+import PlusIcon from '@/static/icon-plus.svg'
 
 export default Vue.extend({
   components: {
     ActionButton,
+    PlusIcon,
   },
   props: {
     text: {
@@ -42,14 +41,5 @@ export default Vue.extend({
 }
 .pageTitle {
   margin: 0;
-}
-.account {
-  display: flex;
-  align-items: center;
-}
-.accountInfo {
-  font-size: 14px;
-  text-align: right;
-  margin-left: 14px;
 }
 </style>

@@ -27,7 +27,7 @@ export default Vue.extend({
   padding: 12px;
   border-radius: 8px;
   border: none;
-  background: $gray-1 url('~static/icon-search.png') no-repeat scroll 12px 12px;
+  background: $white url('~static/icon-search.png') no-repeat scroll 12px 12px;
   text-indent: 20px;
 }
 </style>
