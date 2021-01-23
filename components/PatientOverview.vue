@@ -29,8 +29,16 @@
     </td>
     <td class="graph"></td>
     <td class="symptoms">
-      <SymptomsStatus class="symptomsItem" text="せき" :is-active="lastStatus.symptom.cough" />
-      <SymptomsStatus class="symptomsItem" text="たん" :is-active="lastStatus.symptom.phlegm" />
+      <SymptomsStatus
+        class="symptomsItem"
+        text="せき"
+        :is-active="lastStatus.symptom.cough"
+      />
+      <SymptomsStatus
+        class="symptomsItem"
+        text="たん"
+        :is-active="lastStatus.symptom.phlegm"
+      />
       <SymptomsStatus
         class="symptomsItem"
         text="息苦しさ"

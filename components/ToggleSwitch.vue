@@ -3,8 +3,8 @@
     <div class="labelText">{{ label }}</div>
     <div class="toggleSwitch">
       <input
-        type="checkbox"
         :id="name"
+        type="checkbox"
         class="checkbox"
         :checked="checked"
         :value="value"
