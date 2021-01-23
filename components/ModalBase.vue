@@ -1,0 +1,117 @@
+<template>
+  <transition name="modalWrapTransition" @after-enter="showContent = true">
+    <div
+      v-if="show"
+      class="modalWrap"
+      @click="showContent ? (showContent = false) : $emit('close')"
+    >
+      <transition name="modalContentTransition" @after-leave="$emit('close')">
+        <div v-if="showContent" class="modalContent" @click.stop>
+          <div class="closeButton" @click="showContent = false">
+            <CloseIcon />
+          </div>
+          <div class="modalContentBody">
+            <slot />
+          </div>
+        </div>
+      </transition>
+    </div>
+  </transition>
+</template>
+
+<script lang="ts">
+/**
+ * usage:
+ *      <ModalBase
+ *        :show="state.showModal"
+ *        @close="state.showModal = false"
+ *      >
+ *        （モーダルコンテンツまたはコンテンツを含んだコンポーネント）
+ *      </ModalBase>
+ */
+import Vue from 'vue'
+import CloseIcon from '@/static/icon-close.svg'
+
+export default Vue.extend({
+  components: {
+    CloseIcon,
+  },
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data(): {
+    showContent: boolean
+  } {
+    return {
+      showContent: false,
+    }
+  },
+})
+</script>
+
+<style scoped lang="scss">
+.modalWrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 7000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($black, 0.85);
+
+  &Transition {
+    &-enter,
+    &-leave-to {
+      opacity: 0;
+    }
+    &-enter-active,
+    &-leave-active {
+      transition: all 0.15s ease-in-out;
+    }
+  }
+}
+.modalContent {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 80%;
+  max-width: 750px;
+  min-height: 50%;
+  max-height: calc(100vh - 100px);
+  padding: 55px 10px;
+  margin: 50px 0;
+  background-color: $white;
+  border-radius: 10px;
+  transform: translate(-50%, 0);
+
+  &Transition {
+    &-enter,
+    &-leave-to {
+      opacity: 0;
+      transform: translate(-50%, 50px);
+    }
+    &-enter-active,
+    &-leave-active {
+      transition: all 0.25s ease-in-out;
+    }
+  }
+}
+.modalContentBody {
+  max-height: calc(100vh - 200px);
+  padding: 0 30px;
+  overflow-y: auto;
+}
+.closeButton {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  cursor: pointer;
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+</style>
