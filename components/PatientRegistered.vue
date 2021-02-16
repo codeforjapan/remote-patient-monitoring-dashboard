@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader text="患者登録完了" :is-logged-in="true" />
+    <h2>患者登録完了</h2>
     <p>患者のIDを発行しました。</p>
     <dl class="registrationList">
       <dt class="registrationTitle">患者ID</dt>
@@ -17,7 +17,14 @@
       <dt class="registrationTitle">ニックネーム</dt>
       <dd class="registrationItem">Sさん</dd>
     </dl>
-    <ActionButton theme="primary" size="M" text="別のIDを発行する" />
+    <ActionButton
+      theme="primary"
+      size="M"
+      :is-inline="true"
+      @click="$emit('click-reset')"
+    >
+      別のIDを発行する
+    </ActionButton>
     <div class="flow">
       <RegistrationFlow :step="2" />
     </div>
@@ -26,14 +33,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import RegistrationFlow from '@/components/RegistrationFlow.vue'
 
 export default Vue.extend({
-  name: 'Registered',
   components: {
-    PageHeader,
     ActionButton,
     RegistrationFlow,
   },

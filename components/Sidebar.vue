@@ -11,7 +11,7 @@
       </h1>
     </header>
     <nav>
-      <ul class="navList">
+      <ul>
         <li v-for="(item, index) in items" :key="index" class="navItem">
           <NuxtLink :to="item.link" class="navLink">
             <span class="navIcon">
@@ -68,11 +68,6 @@ export default Vue.extend({
           title: '患者表示',
           link: '/patient',
         },
-        {
-          icon: 'GraphIcon',
-          title: '患者登録',
-          link: '/register',
-        },
       ]
     },
   },
@@ -95,10 +90,6 @@ export default Vue.extend({
   font-size: 14px;
   color: $gray-2;
   padding-left: 12px;
-}
-.navList {
-  list-style: none;
-  padding: 0;
 }
 .navItem {
   padding: 16px 0;

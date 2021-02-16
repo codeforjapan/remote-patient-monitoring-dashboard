@@ -1,6 +1,11 @@
 :root {
-  box-sizing: border-box;
   color: #252733;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -12,4 +17,9 @@ img {
   max-width: 100%;
   height: auto;
   vertical-align: bottom;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }

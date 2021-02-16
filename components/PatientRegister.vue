@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader text="患者登録" :is-logged-in="true" />
+    <h2>患者登録</h2>
     <p>患者のIDを新規で発行します。</p>
     <div class="inputContainer">
       <InputField
@@ -23,7 +23,14 @@
         患者が普段使うスマートフォンの番号を入力してください。
       </p>
     </div>
-    <ActionButton theme="primary" size="M" text="患者IDを発行する" />
+    <ActionButton
+      theme="primary"
+      size="M"
+      :is-inline="true"
+      @click="$emit('click-register')"
+    >
+      患者IDを発行する
+    </ActionButton>
     <div class="flow">
       <RegistrationFlow :step="1" />
     </div>
@@ -32,15 +39,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
 import InputField from '@/components/InputField.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import RegistrationFlow from '@/components/RegistrationFlow.vue'
 
 export default Vue.extend({
-  name: 'Register',
   components: {
-    PageHeader,
     InputField,
     ActionButton,
     RegistrationFlow,

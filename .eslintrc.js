@@ -13,5 +13,19 @@ module.exports = {
   ],
   plugins: ['prettier'],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'class',
+        format: ['PascalCase', 'snake_case'],
+        custom: {
+          regex: 'send|start|find',
+          match: false,
+        },
+      },
+    ],
+  },
 }
