@@ -23,12 +23,14 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
+    "apexcharts": "^3.23.1",
     "core-js": "^3.8.2",
     "dayjs": "^1.10.3",
     "nuxt": "^2.14.12",
     "nuxt-property-decorator": "^2.8.8",
     "nuxt-svg-loader": "^1.2.0",
     "vue": "2.6.12",
+    "vue-apexcharts": "^1.6.0",
     "vuex": "3.6.0"
   },
   "devDependencies": {

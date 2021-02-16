@@ -27,7 +27,7 @@
         {{ lastStatus.pulse }}
       </div>
     </td>
-    <td class="graph"></td>
+    <td class="graph"><PatientOverviewGraph /></td>
     <td class="symptoms">
       <SymptomsStatus
         class="symptomsItem"
