@@ -16,10 +16,7 @@
       </ActionButton>
     </div>
     <ModalBase :show="showModal" @close="showModal = false">
-      <PatientRegister
-        v-if="!registered"
-        @click-register="registered = true"
-      />
+      <PatientRegister v-if="!registered" @click-register="registered = true" />
       <PatientRegistered v-else @click-reset="registered = false" />
     </ModalBase>
   </div>

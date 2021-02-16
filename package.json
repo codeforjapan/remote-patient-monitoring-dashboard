@@ -7,9 +7,10 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
-    "lint": "yarn lint:js && yarn lint:style"
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint:fix": "yarn lint --fix",
+    "stylelint": "stylelint **/*.{vue,css} --ignore-path .gitignore",
+    "stylelint:fix": "yarn stylelint --fix"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
