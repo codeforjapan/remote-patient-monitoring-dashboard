@@ -26,7 +26,23 @@ export default Vue.extend({
           text: '開始日が早い順',
         },
         {
-          slug: 'id',
+          slug: 'tmp-latest', // たぶん、これが 'latest' なのでは?
+          text: '開始日が遅い順',
+        },
+        {
+          slug: 'severity',
+          text: '重症度順(SpO2が低い順)',
+        },
+        {
+          slug: 'reporting-latest',
+          text: '報告日時順',
+        },
+        {
+          slug: 'remark-latest',
+          text: '備考記録日順',
+        },
+        {
+          slug: 'id', // これたぶんいらない?
           text: 'ID順',
         },
       ],
