@@ -56,7 +56,7 @@
             {{ lastStatus.pulse }} <span class="unit">bpm</span>
           </dd>
         </dl>
-        <div>グラフ</div>
+        <PatientGraph />
       </div>
       <SymptomsHistory :statuses="patient.statuses" />
     </div>

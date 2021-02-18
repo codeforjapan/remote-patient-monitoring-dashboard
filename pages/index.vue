@@ -12,7 +12,6 @@
             <th>患者ID</th>
             <th>最終更新</th>
             <th>SpO2</th>
-            <th>体温/脈拍</th>
             <th></th>
             <th>症状</th>
           </tr>
@@ -104,7 +103,7 @@ export default Vue.extend({
 }
 .overviewTableHeader {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 30% 24%;
+  grid-template-columns: 1fr 1fr 1fr 30% 24%;
   grid-template-rows: auto;
   font-size: 16px;
   color: $gray-3;

@@ -68,11 +68,6 @@ export default Vue.extend({
           title: '患者表示',
           link: '/patient',
         },
-        {
-          icon: 'GraphIcon',
-          title: '患者登録',
-          link: '/register',
-        },
       ]
     },
   },
