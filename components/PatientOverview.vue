@@ -11,9 +11,8 @@
       <br />
       <span class="date">{{ getDate(patient.policy_accepted) }}〜</span>
     </td>
-    <td>{{ getDate(lastStatus.created) }}</td>
-    <td class="spo2">{{ lastStatus.SpO2 }}</td>
-    <td class="statusItem">
+    <td>
+      {{ getDate(lastStatus.created) }}
       <div class="withIconItem">
         <span class="icon">
           <TemperatureIcon />
@@ -27,6 +26,7 @@
         {{ lastStatus.pulse }}
       </div>
     </td>
+    <td class="spo2">{{ lastStatus.SpO2 }}</td>
     <td class="graph"><PatientOverviewGraph /></td>
     <td class="symptoms">
       <SymptomsStatus
@@ -132,7 +132,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 30% 24%;
+  grid-template-columns: 1fr 1fr 1fr 30% 24%;
   grid-template-rows: auto;
   font-size: 16px;
   td {
