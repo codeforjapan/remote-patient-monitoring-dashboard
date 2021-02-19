@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.1",
-    "apexcharts": "^3.23.1",
+    "apexcharts": "^3.24.0",
     "core-js": "^3.9.0",
     "dayjs": "^1.10.4",
     "nuxt": "^2.15.0",
