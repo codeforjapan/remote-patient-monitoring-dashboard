@@ -1,39 +1,32 @@
 <template>
   <div>
-    <h2>患者登録</h2>
-    <p>患者のIDを新規で発行します。</p>
-    <div class="inputContainer">
-      <InputField
-        label="ニックネーム（任意）"
-        name="memo"
-        :value="inputMemo"
-        @input="inputMemo = $event"
-      />
-      <p>患者には通知されない、識別用の任意のメモです。</p>
+    <h2>新規患者を登録する</h2>
+    <p>
+      入力された電話番号にショートメッセージにてログイン用のURLを送ります。<br />
+      受信者に通信料金がかかる場合があります。
+    </p>
+    <div class="patientId">
+      <p class="">患者ID</p>
+      <p class="idNum">2022433050</p>
     </div>
+
     <div class="inputContainer">
       <InputField
-        label="携帯電話番号（任意）"
+        label="携帯電話番号（ハイフン不要）"
         name="mobileTel"
         :value="inputMobileTel"
+        placeholder="例）09012345678"
         @input="inputMobileTel = $event"
       />
-      <p>
-        SMS（ショートメッセージ）で、ID/PWDを通知します。<br />
-        患者が普段使うスマートフォンの番号を入力してください。
-      </p>
     </div>
     <ActionButton
       theme="primary"
-      size="M"
-      :is-inline="true"
+      size="L"
+      :is-inline="false"
       @click="$emit('click-register')"
     >
-      患者IDを発行する
+      登録する
     </ActionButton>
-    <div class="flow">
-      <RegistrationFlow :step="1" />
-    </div>
   </div>
 </template>
 
@@ -41,13 +34,11 @@
 import Vue from 'vue'
 import InputField from '@/components/InputField.vue'
 import ActionButton from '@/components/ActionButton.vue'
-import RegistrationFlow from '@/components/RegistrationFlow.vue'
 
 export default Vue.extend({
   components: {
     InputField,
     ActionButton,
-    RegistrationFlow,
   },
   data() {
     return {
@@ -59,12 +50,30 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+.inputFieldContainer {
+  display: block;
+}
 .inputContainer {
   width: 100%;
   max-width: 600px;
   margin: 30px 0;
 }
-.flow {
-  margin-top: 36px;
+/deep/ .labelText {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 400;
+}
+/deep/ .inputField {
+  width: 100%;
+}
+.patientId {
+  margin: 40px 0 0;
+  p {
+    margin: 8px 0;
+  }
+  .idNum {
+    font-weight: 700;
+  }
 }
 </style>
