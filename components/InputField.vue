@@ -6,6 +6,7 @@
       :type="type"
       :name="name"
       :value="value"
+      :placeholder="placeholder"
       @input="$emit('input', $event.target.value)"
     />
   </label>
@@ -29,6 +30,10 @@ export default Vue.extend({
       default: '',
     },
     name: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
       type: String,
       default: '',
     },

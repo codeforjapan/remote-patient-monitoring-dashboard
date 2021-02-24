@@ -78,7 +78,7 @@ export default Vue.extend({
   top: 0;
   left: 50%;
   width: 80%;
-  max-width: 750px;
+  max-width: 520px;
   min-height: 50%;
   max-height: calc(100vh - 100px);
   padding: 55px 10px;
