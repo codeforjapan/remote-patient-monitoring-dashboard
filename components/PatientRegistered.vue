@@ -29,14 +29,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-// import ActionButton from '@/components/ActionButton.vue'
-// import RegistrationFlow from '@/components/RegistrationFlow.vue'
 
 export default Vue.extend({
-  components: {
-    // ActionButton,
-    // RegistrationFlow,
-  },
+  components: {},
 })
 </script>
 
