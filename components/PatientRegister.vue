@@ -5,10 +5,10 @@
       入力された電話番号にショートメッセージにてログイン用のURLを送ります。<br />
       受信者に通信料金がかかる場合があります。
     </p>
-    <div class="patientId">
-      <p class="">患者ID</p>
-      <p class="idNum">2022433050</p>
-    </div>
+    <dl class="registrationList">
+      <dt class="registrationTitle">患者ID</dt>
+      <dd class="registrationItem">2022433050</dd>
+    </dl>
 
     <div class="inputContainer">
       <InputField
@@ -67,13 +67,14 @@ export default Vue.extend({
 /deep/ .inputField {
   width: 100%;
 }
-.patientId {
+.registrationList {
   margin: 40px 0 0;
-  p {
-    margin: 8px 0;
-  }
-  .idNum {
-    font-weight: 700;
-  }
+}
+.registrationTitle {
+  margin: 8px 0;
+}
+.registrationItem {
+  font-weight: 700;
+  margin-left: 0;
 }
 </style>
