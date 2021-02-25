@@ -26,7 +26,7 @@
     "apexcharts": "3.25.0",
     "core-js": "3.9.0",
     "dayjs": "1.10.4",
-    "nuxt": "2.15.0",
+    "nuxt": "2.15.2",
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
     "vue": "2.6.12",
@@ -34,7 +34,7 @@
     "vuex": "3.6.2"
   },
   "devDependencies": {
-    "@nuxt/types": "2.15.0",
+    "@nuxt/types": "2.15.2",
     "@nuxt/typescript-build": "2.0.6",
     "@nuxtjs/eslint-config": "5.0.0",
     "@nuxtjs/eslint-config-typescript": "5.0.0",
