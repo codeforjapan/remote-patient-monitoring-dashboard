@@ -1,75 +1,62 @@
 <template>
   <div>
-    <h2>患者登録完了</h2>
-    <p>患者のIDを発行しました。</p>
+    <h2>登録完了</h2>
+    <p>
+      ログイン用のURLを記載したメッセージを送信しました。<br />
+      患者に受信の確認をしてください。
+    </p>
     <dl class="registrationList">
       <dt class="registrationTitle">患者ID</dt>
-      <dd class="registrationItem">03Xdt</dd>
-      <dt class="registrationTitle">パスワード</dt>
-      <dd class="registrationItem">xm4HY</dd>
+      <dd class="registrationItem">2022433050</dd>
       <dt class="registrationTitle">携帯電話番号</dt>
-      <dd class="registrationItem">
-        <span>090-0000-0000</span>
-        <p class="subText">こちらの携帯番号に利用方法を送信済みです。</p>
-      </dd>
-      <dt class="registrationTitle">症状入力サイトURL</dt>
-      <dd class="registrationItem">https://xxxxxx.jp</dd>
-      <dt class="registrationTitle">ニックネーム</dt>
-      <dd class="registrationItem">Sさん</dd>
+      <dd class="registrationItem">xxx-xxxx-0000</dd>
     </dl>
-    <ActionButton
-      theme="primary"
-      size="M"
-      :is-inline="true"
-      @click="$emit('click-reset')"
-    >
-      別のIDを発行する
-    </ActionButton>
-    <div class="flow">
-      <RegistrationFlow :step="2" />
+    <div class="registrationMessage">
+      <p class="registrationText">
+        送信に少々お時間がかかる場合があります。<br />
+        <br />
+        しばらく経ってもメッセージが届かない場合は以下をご確認ください。<br />
+        <br />
+        • 端末がSMSの受信を制限していないかどうか<br />
+        • 電話番号の入力に間違いがないかどうか<br />
+        <br />
+        メッセージが届かない場合は、再送をお試しください。
+      </p>
+      <a class="registrationTextLink" href="">メッセージを再送する</a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import ActionButton from '@/components/ActionButton.vue'
-import RegistrationFlow from '@/components/RegistrationFlow.vue'
+// import ActionButton from '@/components/ActionButton.vue'
+// import RegistrationFlow from '@/components/RegistrationFlow.vue'
 
 export default Vue.extend({
   components: {
-    ActionButton,
-    RegistrationFlow,
+    // ActionButton,
+    // RegistrationFlow,
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.registrationList {
-  font-size: 24px;
-  font-weight: bold;
-  &::after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-}
 .registrationTitle {
-  clear: both;
-  float: left;
-  width: 12em;
-  margin-bottom: 12px;
+  margin: 24px 0 8px;
 }
 .registrationItem {
-  float: left;
-  margin: 0 0 12px;
-  .subText {
-    font-size: 18px;
-    font-weight: normal;
-    margin: 0;
-  }
+  font-weight: 700;
+  margin-left: 0;
 }
-.flow {
-  margin-top: 36px;
+.registrationMessage {
+  background-color: $background;
+  margin: 24px 0 0;
+  padding: 16px;
+}
+.registrationText {
+  margin: 0 0 32px;
+}
+.registrationTextLink {
+  color: $primary;
 }
 </style>

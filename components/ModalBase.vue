@@ -81,7 +81,7 @@ export default Vue.extend({
   max-width: 520px;
   min-height: 50%;
   max-height: calc(100vh - 100px);
-  padding: 55px 10px;
+  padding: 22px 10px 40px;
   margin: 50px 0;
   background-color: $white;
   border-radius: 10px;
@@ -106,12 +106,12 @@ export default Vue.extend({
 }
 .closeButton {
   position: absolute;
-  top: 30px;
-  right: 20px;
+  top: 24px;
+  right: 24px;
   cursor: pointer;
   svg {
-    width: 32px;
-    height: 32px;
+    width: 16px;
+    height: 16px;
   }
 }
 </style>
