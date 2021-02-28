@@ -9,19 +9,45 @@ export default {
   head: {
     title: 'remote-patient-monitoring-dashboard',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { hid: 'robots', name: 'robots', content: 'noindex' },
+      {
+        charset: 'utf-8',
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: '',
+      },
+      {
+        hid: 'robots',
+        name: 'robots',
+        content: 'noindex',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico',
+      },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['@/assets/global.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [{ src: '@/plugins/vue-apexchart.ts', ssr: false }],
+  plugins: [
+    {
+      src: '@/plugins/vue-apexchart.ts',
+      ssr: false,
+    },
+  ],
+
+  loading: { color: '#FF8000' },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

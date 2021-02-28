@@ -24,6 +24,7 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "2.0.2",
     "apexcharts": "3.25.0",
+    "axios": "^0.21.1",
     "core-js": "3.9.0",
     "dayjs": "1.10.4",
     "nuxt": "2.15.2",
@@ -31,11 +32,13 @@
     "nuxt-svg-loader": "1.2.0",
     "vue": "2.6.12",
     "vue-apexcharts": "1.6.0",
-    "vuex": "3.6.2"
+    "vuex": "3.6.2",
+    "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
     "@nuxt/types": "2.15.2",
     "@nuxt/typescript-build": "2.0.6",
+    "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/eslint-config": "5.0.0",
     "@nuxtjs/eslint-config-typescript": "5.0.0",
     "@nuxtjs/eslint-module": "3.0.2",
@@ -43,7 +46,7 @@
     "@nuxtjs/stylelint-module": "4.0.0",
     "babel-eslint": "10.1.0",
     "eslint": "7.20.0",
-    "eslint-config-prettier": "7.2.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-nuxt": "2.0.0",
     "eslint-plugin-prettier": "3.3.1",
     "husky": "5.1.1",
