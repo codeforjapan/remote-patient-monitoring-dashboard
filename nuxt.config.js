@@ -47,6 +47,8 @@ export default {
     },
   ],
 
+  loading: { color: '#FF8000' },
+
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
