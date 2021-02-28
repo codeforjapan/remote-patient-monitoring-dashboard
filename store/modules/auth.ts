@@ -2,6 +2,8 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import AuthService from '@/services/AuthService'
 import { AuthUser } from '@/types/auth'
 
+export interface IAuthUser { u: AuthUser } 
+
 const storedUser = localStorage.getItem('user')
 
 @Module({
@@ -35,7 +37,7 @@ export default class AuthModule extends VuexModule {
   public login(data: {
     username: string
     password: string
-  }): Promise<AuthUser> {
+  }): Promise<IAuthUser> {
     return AuthService.login(data.username, data.password).then(
       (user) => {
         this.context.commit('loginSuccess', user)

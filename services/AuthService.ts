@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { AuthUser } from '../store/modules/auth.module'
+import { IAuthUser } from '../store/modules/auth'
 
 const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
 
 class AuthService {
-  login(username: string, password: string): Promise<AuthUser> {
+  login(username: string, password: string): Promise<IAuthUser> {
     return axios
       .post(API_URL + 'login', {
         username,
