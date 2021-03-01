@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AuthUser } from '../store/modules/auth.module'
+import { AuthUser } from '~/types/auth'
 
 const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
 
