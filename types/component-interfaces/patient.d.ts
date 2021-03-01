@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Status } from './status'
 
 export interface Patient {
@@ -7,4 +8,7 @@ export interface Patient {
   phone: string
   display: true
   statuses: Status[]
+}
+export interface ConsumePatient {
+  phone: string
 }

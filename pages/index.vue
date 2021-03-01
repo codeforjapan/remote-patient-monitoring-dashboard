@@ -29,56 +29,61 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 import PageHeader from '@/components/PageHeader.vue'
 import PatientOverview from '@/components/PatientOverview.vue'
 import SearchField from '@/components/SearchField.vue'
 import SortSelect from '@/components/SortSelect.vue'
+import { patientsStore } from '~/store'
 
-export default Vue.extend({
-  name: 'Index',
+@Component({
   components: {
     PageHeader,
     PatientOverview,
     SearchField,
     SortSelect,
   },
-  data() {
-    return {
-      inputSearch: '',
-      itemSelect: 'latest',
-      patients: [
+})
+export default class Index extends Vue {
+  inputSearch = ''
+  itemSelect = 'latest'
+  patients = [
+    {
+      patientId: 'string',
+      centerId: 'string',
+      policy_accepted: '2021-01-17T05:09:12.935Z',
+      phone: 'string',
+      display: true,
+      statuses: [
         {
+          statusId: 'string',
           patientId: 'string',
           centerId: 'string',
-          policy_accepted: '2021-01-17T05:09:12.935Z',
-          phone: 'string',
-          display: true,
-          statuses: [
-            {
-              statusId: 'string',
-              patientId: 'string',
-              centerId: 'string',
-              created: '2021-01-17T05:09:12.935Z',
-              SpO2: 0,
-              body_temperature: 0,
-              pulse: 0,
-              symptom: {
-                symptomId: 'string',
-                cough: true,
-                phlegm: true,
-                suffocation: true,
-                headache: false,
-                sore_throat: true,
-                remarks: '本日はどうも体調が優れません。',
-              },
-            },
-          ],
+          created: '2021-01-17T05:09:12.935Z',
+          SpO2: 0,
+          body_temperature: 0,
+          pulse: 0,
+          symptom: {
+            symptomId: 'string',
+            cough: true,
+            phlegm: true,
+            suffocation: true,
+            headache: false,
+            sore_throat: true,
+            remarks: '本日はどうも体調が優れません。',
+          },
         },
       ],
-    }
-  },
-})
+    },
+  ]
+
+  created() {
+    patientsStore.load().then((patients) => {
+      this.patients = patients
+      console.log(patients)
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

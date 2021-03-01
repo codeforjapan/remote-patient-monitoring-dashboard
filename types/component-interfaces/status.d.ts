@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export interface Status {
   statusId: string
   patientId: string
@@ -8,6 +9,19 @@ export interface Status {
   pulse: number
   symptom: {
     symptomId: string
+    cough: boolean
+    phlegm: boolean
+    suffocation: boolean
+    headache: boolean
+    sore_throat: boolean
+    remarks: string
+  }
+}
+export interface ConsumeStatus {
+  SpO2: number
+  body_temperature: number
+  pulse: number
+  symptom: {
     cough: boolean
     phlegm: boolean
     suffocation: boolean
