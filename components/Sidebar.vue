@@ -112,6 +112,7 @@ export default class Sidebar extends Vue {
   padding: 0;
   border: none;
   font-size: 16px;
+  cursor: pointer;
   &:focus {
     color: $light;
     outline: dotted $gray-2 1px;
