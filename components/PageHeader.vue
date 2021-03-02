@@ -6,6 +6,7 @@
       </h2>
       <ActionButton
         v-if="isLoggedIn"
+        class="newPatientBtn"
         theme="primary"
         size="M"
         :is-inline="true"
@@ -61,9 +62,13 @@ export default Vue.extend({
 .pageHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .pageTitle {
   margin: 0;
+}
+.newPatientBtn {
+  display: block;
+  width: 122px;
 }
 </style>
