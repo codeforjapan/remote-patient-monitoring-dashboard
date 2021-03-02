@@ -14,14 +14,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 import Sidebar from '@/components/Sidebar.vue'
 
-export default Vue.extend({
+@Component({
+  middleware: ['authenticated'],
   components: {
     Sidebar,
   },
 })
+export default class Default extends Vue {}
 </script>
 
 <style lang="scss" scoped>
