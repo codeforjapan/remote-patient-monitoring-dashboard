@@ -23,3 +23,14 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+a{
+  color: $primary;
+  text-decoration: none;
+  &:visited,
+  &:link,
+  &:hover,
+  &:active {
+    color: $primary;
+  }
+}

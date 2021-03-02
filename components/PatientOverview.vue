@@ -216,11 +216,7 @@ export default Vue.extend({
   text-align: center;
 }
 .detailItem {
-  text-decoration: none;
   font-size: 14px;
-  &:visited {
-    color: $primary;
-  }
 }
 
 .date {
