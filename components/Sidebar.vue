@@ -12,13 +12,21 @@
     </header>
     <nav>
       <ul>
-        <li v-for="(item, index) in items" :key="index" class="navItem">
-          <NuxtLink :to="item.link" class="navLink">
+        <li class="navItem">
+          <NuxtLink to="/" class="navLink">
             <span class="navIcon">
-              <svg :is="item.icon" aria-hidden="true" />
+              <UserIcon aria-hidden="true" />
             </span>
-            {{ item.title }}
+            <span>患者一覧</span>
           </NuxtLink>
+        </li>
+        <li class="navItem">
+          <button class="navButton" @click="handleLogout">
+            <span class="navIcon">
+              <LogoutIcon aria-hidden="true" />
+            </span>
+            <span>ログアウト</span>
+          </button>
         </li>
       </ul>
     </nav>
@@ -28,7 +36,7 @@
           <span class="navIcon">
             <HelpIcon aria-hidden="true" />
           </span>
-          ヘルプ
+          <span>ヘルプ</span>
         </NuxtLink>
       </div>
     </footer>
@@ -36,42 +44,27 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 import Logo from '@/static/logo.svg'
-import ListIcon from '@/static/icon-list.svg'
-import GraphIcon from '@/static/icon-graph.svg'
+import UserIcon from '@/static/icon-user.svg'
+import LogoutIcon from '@/static/icon-logout.svg'
 import HelpIcon from '@/static/icon-help.svg'
+import { authStore } from '@/store'
 
-type Item = {
-  icon: string
-  title: string
-  link: string
-}
-
-export default Vue.extend({
+@Component({
   components: {
     Logo,
-    ListIcon,
-    GraphIcon,
+    UserIcon,
+    LogoutIcon,
     HelpIcon,
   },
-  computed: {
-    items(): Item[] {
-      return [
-        {
-          icon: 'ListIcon',
-          title: 'データ一覧',
-          link: '/',
-        },
-        {
-          icon: 'GraphIcon',
-          title: '患者表示',
-          link: '/patient',
-        },
-      ]
-    },
-  },
 })
+export default class Sidebar extends Vue {
+  handleLogout() {
+    authStore.signOut()
+    this.$router.push('/login')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -112,8 +105,23 @@ export default Vue.extend({
     }
   }
 }
+.navButton {
+  display: flex;
+  color: $gray-2;
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  &:focus {
+    color: $light;
+    outline: dotted $gray-2 1px;
+  }
+}
 .navIcon {
+  display: inline;
   padding-right: 16px;
+  vertical-align: bottom;
   svg {
     fill: currentColor;
   }

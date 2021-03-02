@@ -26,9 +26,10 @@
 import { Component, Vue } from 'vue-property-decorator'
 import PageHeader from '@/components/PageHeader.vue'
 import InputField from '@/components/InputField.vue'
-import { authStore } from '~/store'
+import { authStore } from '@/store'
 
 @Component({
+  layout: 'simple',
   components: {
     PageHeader,
     InputField,
