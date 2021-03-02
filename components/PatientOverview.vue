@@ -10,6 +10,8 @@
       <span>{{ patient.patientId }}</span>
       <br />
       <span class="date">{{ getDate(patient.policy_accepted) }}〜</span>
+      <br />
+      <span class="hide">非表示にする</span>
     </td>
     <td>
       {{ getDate(lastStatus.created) }}
@@ -27,35 +29,49 @@
       </div>
     </td>
     <td class="spo2">{{ lastStatus.SpO2 }}</td>
-    <td class="graph"><PatientOverviewGraph /></td>
-    <td class="symptoms">
-      <SymptomsStatus
-        class="symptomsItem"
-        text="せき"
-        :is-active="lastStatus.symptom.cough"
-      />
-      <SymptomsStatus
-        class="symptomsItem"
-        text="たん"
-        :is-active="lastStatus.symptom.phlegm"
-      />
-      <SymptomsStatus
-        class="symptomsItem"
-        text="息苦しさ"
-        :is-active="lastStatus.symptom.suffocation"
-      />
-      <SymptomsStatus
-        class="symptomsItem"
-        text="頭痛"
-        :is-active="lastStatus.symptom.headache"
-      />
-      <SymptomsStatus
-        class="symptomsItem"
-        text="のど痛み"
-        :is-active="lastStatus.symptom.sore_throat"
-      />
+    <td class="graph">
+      <span class="symptoms">
+        <SymptomsStatus
+          class="symptomsItem"
+          text="せき"
+          :is-active="lastStatus.symptom.cough"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="たん"
+          :is-active="lastStatus.symptom.phlegm"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="息苦しさ"
+          :is-active="lastStatus.symptom.suffocation"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="頭痛"
+          :is-active="lastStatus.symptom.headache"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="のど痛み"
+          :is-active="lastStatus.symptom.sore_throat"
+        />
+      </span>
+      <span><PatientOverviewGraph /></span>
+    </td>
+    <td>
       <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
       <time class="date symptomDate">{{ getDate(lastStatus.created) }}</time>
+    </td>
+    <td class="detail">
+      <ActionButton
+        theme="outline"
+        size="M"
+        :is-inline="true"
+        @click="$emit('click-register')"
+      >
+        <NuxtLink class="detailItem" to="/patient">詳細をみる</NuxtLink>
+      </ActionButton>
     </td>
   </tr>
 </template>
@@ -68,12 +84,15 @@ import { Status } from '@/types/component-interfaces/status'
 import SymptomsStatus from '@/components/SymptomsStatus.vue'
 import TemperatureIcon from '@/static/icon-temperature.svg'
 import HeartIcon from '@/static/icon-heart.svg'
+import ActionButton from '@/components/ActionButton.vue'
 
 export default Vue.extend({
   components: {
     SymptomsStatus,
     TemperatureIcon,
     HeartIcon,
+    // eslint-disable-next-line vue/no-unused-components
+    ActionButton,
   },
   props: {
     patient: {
@@ -132,12 +151,12 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 30% 24%;
+  grid-template-columns: 1fr 1fr 0.5fr 40% 17% 1fr;
   grid-template-rows: auto;
   font-size: 16px;
   td {
     align-self: center;
-    justify-self: center;
+    padding: 0 16px;
   }
   &.outdated {
     background-color: $gray-1;
@@ -170,24 +189,54 @@ export default Vue.extend({
     }
   }
 }
-.symptomsList {
-  display: flex;
-  margin: 0;
+// .symptomsList {
+//  display: flex;
+//  margin: 0;
+// }
+
+.graph {
+  text-align: right;
+}
+.symptoms {
+  display: inline-block;
+  border: 1px solid $secondary;
+  box-sizing: border-box;
+  border-radius: 14px;
+  font-size: 10px;
+  padding: 0 8px;
 }
 .symptomsItem:not(:last-of-type)::after {
   content: '・';
   color: $gray-3;
 }
 .remarks {
-  font-size: 14px;
   margin: 6px 0;
 }
-.date {
+.detail {
+  text-align: center;
+}
+.detailItem {
+  text-decoration: none;
   font-size: 14px;
+  &:visited {
+    color: $primary;
+  }
+}
+
+.date {
+  font-size: 13px;
   color: $gray-3;
+}
+.hide {
+  display: block;
+  margin: 8px 0 0;
+  color: $primary;
+  text-decoration: underline;
+  cursor: pointer;
 }
 .symptomDate {
   display: block;
   text-align: right;
+  font-size: 13px;
 }
 </style>
