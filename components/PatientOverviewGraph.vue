@@ -30,9 +30,9 @@ export default {
         legend: {
           show: false,
         },
-        colors: ['#4CD964', '#E24242', '#855CF8'],
+        colors: ['#FF8000', '#03AF7A', '#05A'],
         stroke: {
-          curve: 'straight',
+          curve: 'smooth',
           width: 2,
         },
         labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
@@ -47,20 +47,39 @@ export default {
             show: false,
           },
           axisTicks: {
-            show: false,
+            show: true,
           },
         },
         yaxis: [
           {
-            seriesName: '体温',
-            decimalsInFloat: 1,
+            seriesName: '脈拍',
+            decimalsInFloat: 0,
             float: true,
-            tickAmount: 4,
+            tickAmount: 3,
             labels: {
               minWidth: 0,
               maxWidth: 40,
               style: {
-                colors: ['#4CD964'],
+                colors: ['#FF8000'],
+              },
+            },
+            title: {
+              enabled: false,
+              show: false,
+            },
+            min: 40,
+            max: 150,
+          },
+          {
+            seriesName: '体温',
+            decimalsInFloat: 1,
+            float: true,
+            tickAmount: 3,
+            labels: {
+              minWidth: 0,
+              maxWidth: 40,
+              style: {
+                colors: ['#03AF7A'],
               },
             },
             title: {
@@ -71,34 +90,15 @@ export default {
             max: 40,
           },
           {
-            seriesName: '血圧',
-            decimalsInFloat: 0,
-            float: true,
-            tickAmount: 4,
-            labels: {
-              minWidth: 0,
-              maxWidth: 40,
-              style: {
-                colors: ['#E24242'],
-              },
-            },
-            title: {
-              enabled: false,
-              show: false,
-            },
-            min: 30,
-            max: 150,
-          },
-          {
             seriesName: 'SpO2',
             decimalsInFloat: 0,
             float: true,
-            tickAmount: 4,
+            tickAmount: 3,
             labels: {
               minWidth: 0,
               maxWidth: 40,
               style: {
-                colors: ['#855CF8'],
+                colors: ['#05A'],
               },
             },
             title: {
@@ -111,6 +111,26 @@ export default {
         ],
       },
       series: [
+        {
+          name: '脈拍',
+          data: [
+            120,
+            132,
+            121,
+            104,
+            99,
+            96,
+            84,
+            90,
+            100,
+            104,
+            105,
+            104,
+            123,
+            110,
+            130,
+          ],
+        },
         {
           name: '体温',
           data: [
@@ -129,26 +149,6 @@ export default {
             38.5,
             37.5,
             36.5,
-          ],
-        },
-        {
-          name: '血圧',
-          data: [
-            120,
-            132,
-            121,
-            104,
-            99,
-            96,
-            84,
-            90,
-            100,
-            104,
-            105,
-            104,
-            123,
-            110,
-            130,
           ],
         },
         {

@@ -2,7 +2,7 @@
   <input
     class="searchField"
     type="search"
-    placeholder="Search"
+    placeholder="検索"
     :value="value"
     @input="$emit('input', $event.target.value)"
   />
@@ -23,11 +23,12 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .searchField {
-  width: 300px;
-  padding: 12px;
-  border-radius: 8px;
+  width: 48%;
+  padding: 12px 16px;
+  border-radius: 10px;
   border: none;
-  background: $white url('~static/icon-search.png') no-repeat scroll 12px 12px;
-  text-indent: 20px;
+  background: $white url('../static/icon-search.png') no-repeat scroll 16px 12px;
+  text-indent: 30px;
+  font-size: 16px;
 }
 </style>
