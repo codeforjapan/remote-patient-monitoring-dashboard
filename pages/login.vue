@@ -29,6 +29,7 @@ import InputField from '@/components/InputField.vue'
 import { authStore } from '~/store'
 
 @Component({
+  layout: 'simple',
   components: {
     PageHeader,
     InputField,
