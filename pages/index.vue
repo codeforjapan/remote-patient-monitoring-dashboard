@@ -58,7 +58,7 @@ import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
 })
 export default class Index extends Vue {
   inputSearch = ''
-  itemSelect = 'hide'
+  itemSelect = 'show-only-display-true'
   patients: Patient[] = []
 
   created() {
