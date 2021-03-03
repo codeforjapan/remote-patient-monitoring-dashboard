@@ -7,14 +7,14 @@ export interface Status {
   SpO2: number
   body_temperature: number
   pulse: number
-  symptom: {
+  symptom?: {
     symptomId: string
     cough: boolean
     phlegm: boolean
     suffocation: boolean
     headache: boolean
     sore_throat: boolean
-    remarks: string
+    remarks?: string
   }
 }
 export interface ConsumeStatus {

@@ -6,9 +6,12 @@ export interface Patient {
   centerId: string
   policy_accepted: string
   phone: string
-  display: true
+  display: boolean
   statuses: Status[]
 }
 export interface ConsumePatient {
+  patientId: string
+  centerId: string
   phone: string
+  display: boolean
 }
