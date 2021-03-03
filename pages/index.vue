@@ -4,7 +4,7 @@
     <div class="searchContainer">
       <SearchField :value="inputSearch" @input="inputSearch = $event" />
       <SortSelect v-model="itemSelect" />
-      <HiddenSelect v-model="itemSelect" @input="handleSelect" />
+      <HiddenSelect v-model="itemDisplaySelect" @input="handleSelect" />
     </div>
     <div class="overviewContainer">
       <table class="overviewTable">
@@ -58,7 +58,8 @@ import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
 })
 export default class Index extends Vue {
   inputSearch = ''
-  itemSelect = 'show-only-display-true'
+  itemSelect = ''
+  itemDisplaySelect = 'show-only-display-true'
   patients: Patient[] = []
 
   created() {
