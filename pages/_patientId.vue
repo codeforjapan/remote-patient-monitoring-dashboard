@@ -64,17 +64,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
+import { Patient } from '@/types/component-interfaces/patient'
 import { Status } from '@/types/component-interfaces/status'
 import PageHeader from '@/components/PageHeader.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import SymptomsHistory from '@/components/SymptomsHistory.vue'
 import EditIcon from '@/static/icon-edit.svg'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import { patientsStore } from '@/store'
 
-export default Vue.extend({
-  name: 'Patient',
+@Component({
+  name: 'patientId',
   components: {
     PageHeader,
     ActionButton,
@@ -82,50 +84,64 @@ export default Vue.extend({
     EditIcon,
     ToggleSwitch,
   },
-  data() {
-    return {
-      memo: 'Cさん',
-      isEditDisabled: true,
-      patient: {
-        patientId: 'string',
-        centerId: 'string',
-        policy_accepted: '2021-01-17T08:49:48.866Z',
-        phone: 'string',
-        display: true,
-        statuses: [
-          {
-            statusId: 'string',
-            patientId: 'string',
-            centerId: 'string',
-            created: '2021-01-17T08:49:48.866Z',
-            SpO2: 0,
-            body_temperature: 0,
-            pulse: 0,
-            symptom: {
-              symptomId: 'string',
-              cough: true,
-              phlegm: true,
-              suffocation: true,
-              headache: true,
-              sore_throat: true,
-              remarks: 'string',
-            },
-          },
-        ],
-      },
-    }
-  },
-  computed: {
-    lastStatus(): Status {
-      return this.patient.statuses[this.patient.statuses.length - 1]
-    },
-  },
-  methods: {
-    getDate(date: string): string {
-      return dayjs(date).format('MM/DD HH:mm')
-    },
-  },
 })
+export default class PatientId extends Vue {
+  memo = ''
+  isEditDisabled = true
+  patient: Patient | undefined = {
+    patientId: '',
+    centerId: '',
+    policy_accepted: '',
+    phone: '',
+    display: true,
+    statuses: [],
+  }
+
+  lastStatus: Status | undefined = {
+    statusId: '',
+    patientId: '',
+    centerId: '',
+    created: '',
+    SpO2: 0,
+    body_temperature: 0,
+    pulse: 0,
+    symptom: {
+      symptomId: '',
+      cough: false,
+      phlegm: false,
+      suffocation: false,
+      headache: false,
+      sore_throat: false,
+      remarks: '',
+    },
+  }
+
+  created() {
+    if (patientsStore.getPatients.length > 0) {
+      this.patient = patientsStore.getPatients.find(
+        (patient) => patient.patientId === this.$route.params.patientId,
+      )
+      this.getLastStatus()
+    } else {
+      patientsStore
+        .loadPatient(this.$route.params.patientId)
+        .then((patient) => {
+          this.patient = patient
+          this.getLastStatus()
+        })
+    }
+  }
+
+  getLastStatus(): void {
+    this.lastStatus = this.patient
+      ? this.patient.statuses[this.patient.statuses.length - 1]
+      : undefined
+  }
+
+  getDate(date: string): string {
+    return dayjs(date).format('MM/DD HH:mm')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
