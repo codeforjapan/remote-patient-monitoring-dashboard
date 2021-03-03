@@ -10,7 +10,7 @@ import { ConsumeStatus, Status } from '~/types/component-interfaces/status'
 class StatusesModule extends VuexModule {
   private statuses: Status[] = []
 
-  public get getStatuses(): Status[] | undefined {
+  public get getStatuses(): Status[] {
     return this.statuses
   }
 
