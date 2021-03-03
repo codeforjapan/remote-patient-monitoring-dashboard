@@ -11,7 +11,20 @@
       <br />
       <span class="date">{{ getDate(patient.policy_accepted) }}〜</span>
       <br />
-      <span class="hide">非表示にする</span>
+      <span
+        v-if="patient.display"
+        class="display"
+        @click="$emit('click', { ...patient, display: false })"
+      >
+        非表示にする
+      </span>
+      <span
+        v-else
+        class="display"
+        @click="$emit('click', { ...patient, display: true })"
+      >
+        表示する
+      </span>
     </td>
     <td>
       {{ getDate(lastStatus.created) }}
@@ -66,18 +79,18 @@
     <td class="detail">
       <ActionButton
         theme="outline"
-        size="M"
+        size="S"
         :is-inline="true"
-        @click="$emit('click-register')"
+        :to="`/${patient.patientId}`"
       >
-        <NuxtLink class="detailItem" to="/patient">詳細をみる</NuxtLink>
+        詳細をみる
       </ActionButton>
     </td>
   </tr>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 import { Patient } from '@/types/component-interfaces/patient'
 import { Status } from '@/types/component-interfaces/status'
@@ -86,66 +99,32 @@ import TemperatureIcon from '@/static/icon-temperature.svg'
 import HeartIcon from '@/static/icon-heart.svg'
 import ActionButton from '@/components/ActionButton.vue'
 
-export default Vue.extend({
+@Component({
+  name: 'PatientOverview',
   components: {
     SymptomsStatus,
     TemperatureIcon,
     HeartIcon,
-    // eslint-disable-next-line vue/no-unused-components
     ActionButton,
   },
-  props: {
-    patient: {
-      type: Object as () => Patient,
-      default: () => ({
-        patientId: '',
-        centerId: '',
-        policy_accepted: '',
-        phone: '',
-        display: true,
-        statuses: [
-          {
-            statusId: '',
-            patientId: '',
-            centerId: '',
-            created: '',
-            SpO2: 0,
-            body_temperature: 0,
-            pulse: 0,
-            symptom: {
-              symptomId: '',
-              cough: false,
-              phlegm: false,
-              suffocation: false,
-              headache: false,
-              sore_throat: false,
-              remarks: '',
-            },
-          },
-        ],
-      }),
-    },
-  },
-  data(): {
-    isOutdated: boolean
-    isAlerted: boolean
-  } {
-    return {
-      isOutdated: false,
-      isAlerted: false,
-    }
-  },
-  computed: {
-    lastStatus(): Status {
-      return this.patient.statuses[this.patient.statuses.length - 1]
-    },
-  },
-  methods: {
-    getDate(date: string): string {
-      return dayjs(date).format('MM/DD HH:mm')
-    },
-  },
 })
+export default class PatientOverview extends Vue {
+  isOutdated = false
+  isAlerted = false
+
+  @Prop()
+  patient: Patient | undefined
+
+  get lastStatus(): Status | undefined {
+    return this.patient
+      ? this.patient.statuses[this.patient.statuses.length - 1]
+      : undefined
+  }
+
+  getDate(date: string): string {
+    return dayjs(date).format('MM/DD HH:mm')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -189,11 +168,6 @@ export default Vue.extend({
     }
   }
 }
-// .symptomsList {
-//  display: flex;
-//  margin: 0;
-// }
-
 .graph {
   text-align: right;
 }
@@ -215,15 +189,11 @@ export default Vue.extend({
 .detail {
   text-align: center;
 }
-.detailItem {
-  font-size: 14px;
-}
-
 .date {
   font-size: 13px;
   color: $gray-3;
 }
-.hide {
+.display {
   display: block;
   margin: 8px 0 0;
   color: $primary;

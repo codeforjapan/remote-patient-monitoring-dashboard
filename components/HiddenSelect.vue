@@ -22,11 +22,11 @@ export default Vue.extend({
     return {
       items: [
         {
-          slug: 'latest',
+          slug: 'show-only-display-true',
           text: '非表示患者を表示しない',
         },
         {
-          slug: 'tmp-latest',
+          slug: 'show-only-display-false',
           text: '非表示患者のみ表示する',
         },
       ],

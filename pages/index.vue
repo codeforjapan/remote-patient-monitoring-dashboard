@@ -3,8 +3,8 @@
     <PageHeader text="患者一覧" :is-logged-in="true" />
     <div class="searchContainer">
       <SearchField :value="inputSearch" @input="inputSearch = $event" />
-      <SortSelect v-model="itemSelect" />
-      <HiddenSelect v-model="itemSelect" />
+      <SortSelect v-model="sortSelect" />
+      <HiddenSelect v-model="displaySelect" @input="handleSelect" />
     </div>
     <div class="overviewContainer">
       <table class="overviewTable">
@@ -23,11 +23,14 @@
           </tr>
         </thead>
         <tbody>
-          <PatientOverview
-            v-for="(patient, index) in patients"
-            :key="index"
-            :patient="patient"
-          />
+          <template v-for="(patient, index) in patients">
+            <PatientOverview
+              v-if="patient.statuses.length > 0"
+              :key="index"
+              :patient="patient"
+              @click="handleDisplayPatient"
+            />
+          </template>
         </tbody>
       </table>
     </div>
@@ -35,15 +38,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 import PageHeader from '@/components/PageHeader.vue'
 import PatientOverview from '@/components/PatientOverview.vue'
 import SearchField from '@/components/SearchField.vue'
 import SortSelect from '@/components/SortSelect.vue'
-import HiddenSelect from '~/components/HiddenSelect.vue'
+import HiddenSelect from '@/components/HiddenSelect.vue'
+import { patientsStore } from '@/store'
+import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
 
-export default Vue.extend({
-  name: 'Index',
+@Component({
   components: {
     PageHeader,
     PatientOverview,
@@ -51,42 +55,43 @@ export default Vue.extend({
     SortSelect,
     HiddenSelect,
   },
-  data() {
-    return {
-      inputSearch: '',
-      itemSelect: 'latest',
-      patients: [
-        {
-          patientId: 'string',
-          centerId: 'string',
-          policy_accepted: '2021-01-17T05:09:12.935Z',
-          phone: 'string',
-          display: true,
-          statuses: [
-            {
-              statusId: 'string',
-              patientId: 'string',
-              centerId: 'string',
-              created: '2021-01-17T05:09:12.935Z',
-              SpO2: 0,
-              body_temperature: 0,
-              pulse: 0,
-              symptom: {
-                symptomId: 'string',
-                cough: true,
-                phlegm: true,
-                suffocation: true,
-                headache: false,
-                sore_throat: true,
-                remarks: '本日はどうも体調が優れません。',
-              },
-            },
-          ],
-        },
-      ],
-    }
-  },
 })
+export default class Index extends Vue {
+  inputSearch = ''
+  sortSelect = ''
+  displaySelect = 'show-only-display-true'
+  patients: Patient[] = []
+
+  created() {
+    patientsStore.load().then((patients) => {
+      this.patients = patients.filter((item) => {
+        return item.display
+      })
+    })
+  }
+
+  handleDisplayPatient(patient: ConsumePatient) {
+    patientsStore.update(patient).then((patient) => {
+      patientsStore.load().then(() => {
+        this.patients = this.patients.filter((item) => {
+          return item.patientId !== patient.patientId
+        })
+      })
+    })
+  }
+
+  handleSelect(value: string) {
+    if (value === 'show-only-display-true') {
+      this.patients = patientsStore.getPatients.filter((item) => {
+        return item.display
+      })
+    } else if (value === 'show-only-display-false') {
+      this.patients = patientsStore.getPatients.filter((item) => {
+        return !item.display
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
