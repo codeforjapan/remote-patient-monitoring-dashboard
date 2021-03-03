@@ -9,14 +9,27 @@ import { Patient, ConsumePatient } from '~/types/component-interfaces/patient'
 })
 class PatientsModule extends VuexModule {
   private patients: Patient[] = []
+  private patient: Patient = {
+    centerId: '',
+    display: true,
+    patientId: '',
+    phone: '',
+    policy_accepted: '',
+    statuses: [],
+  }
 
-  public get getPatients(): Patient[] | undefined {
+  public get getPatients(): Patient[] {
     return this.patients
   }
 
   @Mutation
   public loadSuccess(patients: Patient[]): void {
     this.patients = patients
+  }
+
+  @Mutation
+  public loadPatientSuccess(patient: Patient): void {
+    this.patient = patient
   }
 
   @Mutation
@@ -62,6 +75,43 @@ class PatientsModule extends VuexModule {
     return PatientService.postPatient(patient).then(
       (patient) => {
         this.context.commit('pushPatient', patient)
+        return Promise.resolve(patient)
+      },
+      (error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString()
+        return Promise.reject(message)
+      },
+    )
+  }
+
+  @Action({ rawError: true })
+  loadPatient(patientId: string): Promise<Patient> {
+    return PatientService.getPatient(patientId).then(
+      (patient) => {
+        this.context.commit('loadPatientSuccess', patient)
+        return Promise.resolve(patient)
+      },
+      (error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString()
+        return Promise.reject(message)
+      },
+    )
+  }
+
+  @Action({ rawError: true })
+  update(patient: ConsumePatient): Promise<Patient> {
+    return PatientService.putPatient(patient.patientId, patient).then(
+      (patient) => {
         return Promise.resolve(patient)
       },
       (error) => {
