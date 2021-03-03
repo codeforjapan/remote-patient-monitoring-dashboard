@@ -3,8 +3,8 @@
     <PageHeader text="患者一覧" :is-logged-in="true" />
     <div class="searchContainer">
       <SearchField :value="inputSearch" @input="inputSearch = $event" />
-      <SortSelect v-model="itemSelect" />
-      <HiddenSelect v-model="itemDisplaySelect" @input="handleSelect" />
+      <SortSelect v-model="sortSelect" />
+      <HiddenSelect v-model="displaySelect" @input="handleSelect" />
     </div>
     <div class="overviewContainer">
       <table class="overviewTable">
@@ -58,8 +58,8 @@ import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
 })
 export default class Index extends Vue {
   inputSearch = ''
-  itemSelect = ''
-  itemDisplaySelect = 'show-only-display-true'
+  sortSelect = ''
+  displaySelect = 'show-only-display-true'
   patients: Patient[] = []
 
   created() {
