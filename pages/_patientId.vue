@@ -133,9 +133,7 @@ export default class PatientId extends Vue {
   }
 
   getLastStatus(): void {
-    this.lastStatus = this.patient
-      ? this.patient.statuses[this.patient.statuses.length - 1]
-      : undefined
+    this.lastStatus = this.patient ? this.patient.statuses[0] : undefined
   }
 
   getDate(date: string): string {
