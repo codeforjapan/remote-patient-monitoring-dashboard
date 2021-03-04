@@ -2,17 +2,8 @@
   <div>
     <PageHeader text="ログイン" />
     <div class="inputContainer">
-      <InputField
-        v-model="user.username"
-        label="ログインID"
-        @input="inputId = $event"
-      />
-      <InputField
-        v-model="user.password"
-        label="パスワード"
-        type="password"
-        @input="inputPassword = $event"
-      />
+      <InputField v-model="user.username" label="ログインID" />
+      <InputField v-model="user.password" label="パスワード" type="password" />
     </div>
     <div>
       <ActionButton theme="primary" size="M" @click="handleLogin()">

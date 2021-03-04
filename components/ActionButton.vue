@@ -4,6 +4,8 @@
     :to="to"
     :class="['actionButton', `actionButton-${theme}`, { inline: isInline }]"
     :style="{ fontSize: fontSizeMap.get(size) }"
+    :type="type"
+    :disabled="isDisabled"
     @click="$emit('click')"
   >
     <slot />
@@ -37,8 +39,18 @@ export default class ActionButton extends Vue {
   @Prop({ default: '' })
   to?: string
 
-  get tag() {
+  @Prop({ default: false })
+  isSubmittable!: boolean
+
+  @Prop({ default: 'button' })
+  type!: string
+
+  get tag(): string {
     return this.to ? 'router-link' : 'button'
+  }
+
+  get isDisabled(): boolean {
+    return this.type === 'submit' && !this.isSubmittable
   }
 }
 </script>
@@ -69,6 +81,7 @@ export default class ActionButton extends Vue {
   }
   &-disable {
     background-color: $gray-1;
+    cursor: not-allowed;
   }
   &-outline {
     background-color: $white;

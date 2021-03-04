@@ -62,7 +62,7 @@ class PatientsModule extends VuexModule {
         const message =
           (error.response &&
             error.response.data &&
-            error.response.data.message) ||
+            error.response.data.errorMessage) ||
           error.message ||
           error.toString()
         return Promise.reject(message)
@@ -71,7 +71,7 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  create(patient: ConsumePatient): Promise<Patient | string> {
+  create(patient: ConsumePatient): Promise<Patient> {
     return PatientService.postPatient(patient).then(
       (patient) => {
         this.context.commit('pushPatient', patient)
@@ -81,7 +81,7 @@ class PatientsModule extends VuexModule {
         const message =
           (error.response &&
             error.response.data &&
-            error.response.data.message) ||
+            error.response.data.errorMessage) ||
           error.message ||
           error.toString()
         return Promise.reject(message)
@@ -100,7 +100,7 @@ class PatientsModule extends VuexModule {
         const message =
           (error.response &&
             error.response.data &&
-            error.response.data.message) ||
+            error.response.data.errorMessage) ||
           error.message ||
           error.toString()
         return Promise.reject(message)
@@ -118,7 +118,7 @@ class PatientsModule extends VuexModule {
         const message =
           (error.response &&
             error.response.data &&
-            error.response.data.message) ||
+            error.response.data.errorMessage) ||
           error.message ||
           error.toString()
         return Promise.reject(message)
