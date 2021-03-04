@@ -9,7 +9,11 @@
     <td>
       <span>{{ patient.patientId }}</span>
       <br />
-      <span class="date">{{ getDate(patient.policy_accepted) }}〜</span>
+      <time class="date">
+        {{
+          patient.policy_accepted ? getDate(patient.policy_accepted) : '--:--'
+        }}〜
+      </time>
       <br />
       <span
         v-if="patient.display"
@@ -27,7 +31,9 @@
       </span>
     </td>
     <td>
-      {{ lastStatus.created !== '' ? getDate(lastStatus.created) : '--:--' }}
+      <time>
+        {{ lastStatus.created ? getDate(lastStatus.created) : '--:--' }}
+      </time>
       <div class="withIconItem">
         <span class="icon">
           <TemperatureIcon />
@@ -84,7 +90,7 @@
     <td>
       <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
       <time class="date symptomDate">
-        {{ lastStatus.created !== '' ? getDate(lastStatus.created) : '--:--' }}
+        {{ lastStatus.created ? getDate(lastStatus.created) : '--:--' }}
       </time>
     </td>
     <td class="detail">
