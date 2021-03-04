@@ -7,9 +7,9 @@
     </p>
     <dl class="registrationList">
       <dt class="registrationTitle">患者ID</dt>
-      <dd class="registrationItem">2022433050</dd>
+      <dd class="registrationItem">{{ patientId }}</dd>
       <dt class="registrationTitle">携帯電話番号</dt>
-      <dd class="registrationItem">xxx-xxxx-0000</dd>
+      <dd class="registrationItem">{{ phone }}</dd>
     </dl>
     <div class="registrationMessage">
       <p class="registrationText">
@@ -28,11 +28,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default Vue.extend({
-  components: {},
-})
+@Component
+export default class PatientRegistered extends Vue {
+  @Prop({ default: '' })
+  patientId!: string
+
+  @Prop({ default: '' })
+  phone!: string
+}
 </script>
 
 <style lang="scss" scoped>

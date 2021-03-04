@@ -1,5 +1,5 @@
 <template>
-  <span :class="['symptomsText', { active: isActive }]">
+  <span v-if="isActive" class="symptomsText">
     {{ text }}
   </span>
 </template>
@@ -25,9 +25,5 @@ export default Vue.extend({
 .symptomsText {
   font-size: 14px;
   font-weight: bold;
-  color: $gray-3;
-  &.active {
-    color: $notice;
-  }
 }
 </style>
