@@ -28,11 +28,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default Vue.extend({
-  components: {},
-})
+@Component
+export default class PatientRegistered extends Vue {}
 </script>
 
 <style lang="scss" scoped>
