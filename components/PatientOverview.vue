@@ -27,7 +27,7 @@
       </span>
     </td>
     <td>
-      {{ getDate(lastStatus.created) }}
+      {{ lastStatus.created !== '' ? getDate(lastStatus.created) : '--:--' }}
       <div class="withIconItem">
         <span class="icon">
           <TemperatureIcon />
@@ -43,7 +43,16 @@
     </td>
     <td class="spo2">{{ lastStatus.SpO2 }}</td>
     <td class="graph">
-      <span class="symptoms">
+      <div
+        v-if="
+          lastStatus.symptom.cough ||
+          lastStatus.symptom.phlegm ||
+          lastStatus.symptom.suffocation ||
+          lastStatus.symptom.headache ||
+          lastStatus.symptom.sore_throat
+        "
+        class="symptoms"
+      >
         <SymptomsStatus
           class="symptomsItem"
           text="せき"
@@ -69,12 +78,14 @@
           text="のど痛み"
           :is-active="lastStatus.symptom.sore_throat"
         />
-      </span>
-      <span><PatientOverviewGraph /></span>
+      </div>
+      <div><PatientOverviewGraph /></div>
     </td>
     <td>
       <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
-      <time class="date symptomDate">{{ getDate(lastStatus.created) }}</time>
+      <time class="date symptomDate">
+        {{ lastStatus.created !== '' ? getDate(lastStatus.created) : '--:--' }}
+      </time>
     </td>
     <td class="detail">
       <ActionButton
@@ -111,12 +122,32 @@ import ActionButton from '@/components/ActionButton.vue'
 export default class PatientOverview extends Vue {
   isOutdated = false
   isAlerted = false
+  defaultStatus: Status | undefined = {
+    statusId: '',
+    patientId: '',
+    centerId: '',
+    created: '',
+    SpO2: 0,
+    body_temperature: 0,
+    pulse: 0,
+    symptom: {
+      symptomId: '',
+      cough: false,
+      phlegm: false,
+      suffocation: false,
+      headache: false,
+      sore_throat: false,
+      remarks: '',
+    },
+  }
 
   @Prop()
   patient: Patient | undefined
 
-  get lastStatus(): Status | undefined {
-    return this.patient ? this.patient.statuses[0] : undefined
+  get lastStatus(): Status {
+    return this.patient.statuses.length > 0
+      ? this.patient.statuses[0]
+      : this.defaultStatus
   }
 
   getDate(date: string): string {
@@ -172,7 +203,6 @@ export default class PatientOverview extends Vue {
 .symptoms {
   display: inline-block;
   border: 1px solid $secondary;
-  box-sizing: border-box;
   border-radius: 14px;
   font-size: 10px;
   padding: 0 8px;
