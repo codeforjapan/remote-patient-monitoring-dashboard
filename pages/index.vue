@@ -1,8 +1,32 @@
 <template>
   <div>
-    <PageHeader text="患者一覧" :is-logged-in="true" />
+    <div class="pageHeader">
+      <h2 class="pageTitle">患者一覧</h2>
+      <ActionButton
+        class="newPatientBtn"
+        theme="primary"
+        size="M"
+        :is-inline="true"
+        @click="showModal = true"
+      >
+        <PlusIcon />
+        新規患者
+      </ActionButton>
+    </div>
+    <ModalBase :show="showModal" @close="closeModal">
+      <PatientRegister
+        v-if="!registered"
+        :error-message="errorMessage"
+        @click-register="handleRegister"
+      />
+      <PatientRegistered
+        v-else
+        :patient-id="newPatientId"
+        :phone="newPatientPhone"
+      />
+    </ModalBase>
     <div class="searchContainer">
-      <SearchField :value="inputSearch" @input="inputSearch = $event" />
+      <SearchField v-model="inputSearch" />
       <SortSelect v-model="sortSelect" />
       <HiddenSelect v-model="displaySelect" @input="handleSelect" />
     </div>
@@ -25,7 +49,6 @@
         <tbody>
           <template v-for="(patient, index) in patients">
             <PatientOverview
-              v-if="patient.statuses.length > 0"
               :key="index"
               :patient="patient"
               @click="handleDisplayPatient"
@@ -39,7 +62,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import PageHeader from '@/components/PageHeader.vue'
+import ActionButton from '@/components/ActionButton.vue'
+import PlusIcon from '@/static/icon-plus.svg'
+import ModalBase from '@/components/ModalBase.vue'
+import PatientRegister from '@/components/PatientRegister.vue'
+import PatientRegistered from '@/components/PatientRegistered.vue'
 import PatientOverview from '@/components/PatientOverview.vue'
 import SearchField from '@/components/SearchField.vue'
 import SortSelect from '@/components/SortSelect.vue'
@@ -49,7 +76,11 @@ import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
 
 @Component({
   components: {
-    PageHeader,
+    ActionButton,
+    PlusIcon,
+    ModalBase,
+    PatientRegister,
+    PatientRegistered,
     PatientOverview,
     SearchField,
     SortSelect,
@@ -57,10 +88,15 @@ import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
   },
 })
 export default class Index extends Vue {
+  showModal = false
+  registered = false
   inputSearch = ''
   sortSelect = ''
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
+  newPatientId = ''
+  newPatientPhone = ''
+  errorMessage = ''
 
   created() {
     patientsStore.load().then((patients) => {
@@ -91,10 +127,42 @@ export default class Index extends Vue {
       })
     }
   }
+
+  handleRegister(value: string) {
+    const newPatient: ConsumePatient = {
+      patientId: value.patientId,
+      phone: value.mobileTel,
+      display: true,
+    }
+    patientsStore
+      .create(newPatient)
+      .then((patient) => {
+        this.patients = patientsStore.getPatients
+        this.registered = true
+        this.newPatientId = patient.patientId
+        this.newPatientPhone = patient.phone
+      })
+      .catch((error) => {
+        this.errorMessage = error
+      })
+  }
+
+  closeModal() {
+    this.showModal = false
+    this.registered = false
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.pageTitle {
+  margin: 0;
+}
 .searchContainer {
   display: flex;
   margin: 16px 0;
