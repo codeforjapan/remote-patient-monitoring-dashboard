@@ -165,7 +165,7 @@ export default class PatientOverview extends Vue {
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr 40% 17% 1fr;
+  grid-template-columns: 8em 8em 6em 1fr 13% 8em;
   grid-template-rows: auto;
   font-size: 16px;
   td {

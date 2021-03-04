@@ -1,7 +1,12 @@
 <template>
   <div class="patient-overview-graph">
     <client-only>
-      <Apexcharts type="line" :options="chartOptions" :series="series" />
+      <Apexcharts
+        type="line"
+        height="130px"
+        :options="chartOptions"
+        :series="series"
+      />
     </client-only>
   </div>
 </template>
