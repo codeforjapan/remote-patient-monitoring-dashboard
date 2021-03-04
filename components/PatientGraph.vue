@@ -23,19 +23,38 @@ export default {
           horizontalAlign: 'left',
           inverseOrder: true,
         },
-        colors: ['#4CD964', '#E24242', '#855CF8'],
+        colors: ['#FF8000', '#03AF7A', '#05A'],
         stroke: {
-          curve: 'straight',
+          curve: 'smooth',
           width: 2,
         },
         labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
         yaxis: [
           {
+            seriesName: '脈拍',
+            decimalsInFloat: 0,
+            labels: {
+              style: {
+                colors: ['#FF8000'],
+              },
+            },
+            min: 40,
+            max: 150,
+            crosshairs: {
+              show: true,
+              position: 'back',
+            },
+            tooltip: {
+              enabled: true,
+            },
+            float: true,
+          },
+          {
             seriesName: '体温',
             decimalsInFloat: 1,
             labels: {
               style: {
-                colors: ['#4CD964'],
+                colors: ['#03AF7A'],
               },
             },
             min: 34,
@@ -50,30 +69,11 @@ export default {
             float: true,
           },
           {
-            seriesName: '血圧',
-            decimalsInFloat: 0,
-            labels: {
-              style: {
-                colors: ['#E24242'],
-              },
-            },
-            min: 30,
-            max: 150,
-            crosshairs: {
-              show: true,
-              position: 'back',
-            },
-            tooltip: {
-              enabled: true,
-            },
-            float: true,
-          },
-          {
             seriesName: 'SpO2',
             decimalsInFloat: 0,
             labels: {
               style: {
-                colors: ['#855CF8'],
+                colors: ['#05A'],
               },
             },
             min: 90,
@@ -90,6 +90,26 @@ export default {
         ],
       },
       series: [
+        {
+          name: '脈拍',
+          data: [
+            120,
+            132,
+            121,
+            104,
+            99,
+            96,
+            84,
+            90,
+            100,
+            104,
+            105,
+            104,
+            123,
+            110,
+            130,
+          ],
+        },
         {
           name: '体温',
           data: [
@@ -108,26 +128,6 @@ export default {
             38.5,
             37.5,
             36.5,
-          ],
-        },
-        {
-          name: '血圧',
-          data: [
-            120,
-            132,
-            121,
-            104,
-            99,
-            96,
-            84,
-            90,
-            100,
-            104,
-            105,
-            104,
-            123,
-            110,
-            130,
           ],
         },
         {
