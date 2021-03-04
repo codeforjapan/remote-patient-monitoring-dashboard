@@ -150,8 +150,8 @@ export default class PatientOverview extends Vue {
   @Prop()
   patient: Patient | undefined
 
-  get lastStatus(): Status {
-    return this.patient.statuses.length > 0
+  get lastStatus(): Status | undefined {
+    return this.patient && this.patient.statuses.length > 0
       ? this.patient.statuses[0]
       : this.defaultStatus
   }

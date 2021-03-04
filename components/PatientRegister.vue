@@ -58,7 +58,7 @@ export default class PatientRegister extends Vue {
   inputMobileTel = ''
 
   @Prop({ default: '' })
-  errorMessage: string
+  errorMessage?: string
 
   get isSubmittable(): boolean {
     return this.inputPatientId !== '' && this.inputMobileTel !== ''

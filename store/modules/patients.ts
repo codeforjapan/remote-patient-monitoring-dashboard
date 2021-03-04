@@ -71,7 +71,7 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  create(patient: ConsumePatient): Promise<Patient | string> {
+  create(patient: ConsumePatient): Promise<Patient> {
     return PatientService.postPatient(patient).then(
       (patient) => {
         this.context.commit('pushPatient', patient)

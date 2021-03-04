@@ -33,10 +33,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class PatientRegistered extends Vue {
   @Prop({ default: '' })
-  patientId: string
+  patientId!: string
 
   @Prop({ default: '' })
-  phone: string
+  phone!: string
 }
 </script>
 

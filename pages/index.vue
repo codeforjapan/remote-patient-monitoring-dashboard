@@ -128,7 +128,7 @@ export default class Index extends Vue {
     }
   }
 
-  handleRegister(value: string) {
+  handleRegister(value: { patientId: string; mobileTel: string }) {
     const newPatient: ConsumePatient = {
       patientId: value.patientId,
       phone: value.mobileTel,
@@ -136,7 +136,7 @@ export default class Index extends Vue {
     }
     patientsStore
       .create(newPatient)
-      .then((patient) => {
+      .then((patient: Patient) => {
         this.patients = patientsStore.getPatients
         this.registered = true
         this.newPatientId = patient.patientId
