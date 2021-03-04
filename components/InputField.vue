@@ -147,7 +147,9 @@ export default Vue.extend({
   }
 }
 .labelText {
-  font-size: 20px;
+  display: block;
+  margin: 0 0 8px;
+  font-size: 16px;
 }
 .message {
   display: block;
