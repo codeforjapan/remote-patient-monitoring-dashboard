@@ -1,33 +1,49 @@
 <template>
-  <label class="inputFieldContainer">
-    <span class="labelText">{{ label }}</span>
-    <input
-      class="inputField"
-      :type="type"
-      :name="name"
-      :value="value"
-      :placeholder="placeholder"
-      @input="$emit('input', $event.target.value)"
-    />
-  </label>
+  <div>
+    <label class="inputFieldContainer">
+      <span class="labelText">{{ label }}</span>
+      <input
+        :class="['inputField', { 'inputField-error': showError }]"
+        :style="{ fontSize: fontSizeMap.get(fontSize) }"
+        :type="type"
+        :pattern="type === 'number' ? '\\d*' : null"
+        :name="name"
+        :placeholder="placeholder"
+        :step="step"
+        :value="value"
+        :autocomplete="autocomplete"
+        @input="$emit('input', $event.target.value)"
+      />
+    </label>
+    <span class="message">{{ errorMessage }}</span>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
+type Rules = {
+  [key: string]: {
+    isValid: boolean
+    message: string
+  }
+}
+type SizeType = 'M' | 'S'
+type FontSizeType = string
+
 export default Vue.extend({
   props: {
-    type: {
+    label: {
       type: String,
-      default: 'text',
+      default: '',
     },
     value: {
       type: String,
       default: '',
     },
-    label: {
+    type: {
       type: String,
-      default: '',
+      default: 'text',
     },
     name: {
       type: String,
@@ -37,32 +53,106 @@ export default Vue.extend({
       type: String,
       default: '',
     },
+    step: {
+      type: Number,
+      default: 0,
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    fontSize: {
+      type: String,
+      default: 'M',
+    },
+    autocomplete: {
+      type: String,
+      default: 'on',
+    },
+    unit: {
+      type: String,
+      default: '',
+    },
+  },
+  data(): {
+    showError: boolean
+    fontSizeMap: Map<SizeType, FontSizeType>
+  } {
+    return {
+      showError: false,
+      fontSizeMap: new Map([
+        ['M', '20px'],
+        ['S', '16px'],
+      ]),
+    }
+  },
+  computed: {
+    rules(): Rules {
+      return {
+        required: {
+          isValid: this.ruleRequired,
+          message: '必須項目です', // TODO: メッセージを確定させる
+        },
+      }
+    },
+    ruleRequired(): boolean {
+      if (!this.required) return true
+      return Boolean(this.value)
+    },
+    errorMessage(): string {
+      if (!this.showError) return ''
+      const key = Object.keys(this.rules).find(
+        (key) => !this.rules[key].isValid,
+      )
+      if (!key) return ''
+      return this.rules[key].message
+    },
+    hasErrors(): boolean {
+      return Object.keys(this.rules).some(
+        (key: string) => !this.rules[key].isValid,
+      )
+    },
+  },
+  watch: {
+    rules() {
+      this.showError = this.hasErrors
+    },
+    value() {
+      this.$emit('validate', !this.hasErrors)
+    },
   },
 })
 </script>
 
 <style lang="scss" scoped>
 .inputFieldContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 12px 0;
 }
 .inputField {
-  flex: 0 0 48%;
-  font-size: 16px;
+  width: 100%;
   padding: 16px;
   border-radius: 6px;
   border: 1px solid $gray-2;
   &:focus {
     outline-color: $primary;
   }
-  &:invalid:not(:focus) {
-    border: 2px solid $error;
+  &-error {
+    border: 1px solid $error;
+    &:focus {
+      outline-color: $error;
+    }
+  }
+  &::placeholder {
+    color: $gray-2;
   }
 }
 .labelText {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 20px;
+}
+.message {
+  display: block;
+  color: $error;
+  font-size: 14px;
+  height: 14px;
 }
 </style>
