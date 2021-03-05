@@ -6,10 +6,23 @@
       患者に受信の確認をしてください。
     </p>
     <dl class="registrationList">
-      <dt class="registrationTitle">患者ID</dt>
-      <dd class="registrationItem">{{ patientId }}</dd>
       <dt class="registrationTitle">携帯電話番号</dt>
       <dd class="registrationItem">{{ phone }}</dd>
+      <dt v-if="memo" class="registrationTitle">メモ</dt>
+      <dd v-if="memo" class="registrationItem">{{ memo }}</dd>
+      <dt class="registrationTitle">患者ログインURL</dt>
+      <dd class="registrationItem">
+        <div class="fieldWithIcon">
+          <input
+            ref="loginUrl"
+            class="inputFieldReadOnly"
+            type="text"
+            :value="`${clientUrl}/login/${loginKey}`"
+            readonly
+          />
+          <CopyIcon class="icon" @click="copyToClipboard" />
+        </div>
+      </dd>
     </dl>
     <div class="registrationMessage">
       <p class="registrationText">
@@ -29,14 +42,31 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import CopyIcon from '@/static/icon-copy.svg'
 
-@Component
+@Component({
+  components: {
+    CopyIcon,
+  },
+})
 export default class PatientRegistered extends Vue {
-  @Prop({ default: '' })
-  patientId!: string
+  clientUrl = process.env.clientUrl
 
   @Prop({ default: '' })
   phone!: string
+
+  @Prop({ default: '' })
+  memo?: string
+
+  @Prop({ default: '' })
+  loginKey!: string
+
+  copyToClipboard() {
+    const input: HTMLInputElement = this.$refs.loginUrl as HTMLInputElement
+    input.select()
+    document.execCommand('copy')
+    alert('コピーしました')
+  }
 }
 </script>
 
@@ -58,5 +88,17 @@ export default class PatientRegistered extends Vue {
 }
 .registrationTextLink {
   color: $primary;
+}
+.fieldWithIcon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.inputFieldReadOnly {
+  width: calc(100% - 30px);
+  padding: 8px;
+}
+.icon {
+  width: 20px;
 }
 </style>

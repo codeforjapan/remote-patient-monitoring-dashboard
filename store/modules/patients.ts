@@ -1,6 +1,10 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import PatientService from '@/services/PatientService'
-import { Patient, ConsumePatient } from '~/types/component-interfaces/patient'
+import {
+  Patient,
+  ConsumePatient,
+  RegisteredPatient,
+} from '@/types/component-interfaces/patient'
 
 @Module({
   name: 'modules/patients',
@@ -71,7 +75,7 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  create(patient: ConsumePatient): Promise<Patient> {
+  create(patient: ConsumePatient): Promise<RegisteredPatient> {
     return PatientService.postPatient(patient).then(
       (patient) => {
         this.context.commit('pushPatient', patient)
