@@ -85,7 +85,7 @@
           :is-active="lastStatus.symptom.sore_throat"
         />
       </div>
-      <div><PatientOverviewGraph /></div>
+      <div><PatientOverviewGraph :patient="patient" /></div>
     </td>
     <td>
       <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
