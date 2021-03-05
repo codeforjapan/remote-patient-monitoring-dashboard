@@ -36,12 +36,10 @@ export default class Login extends Vue {
     if (this.user.username && this.user.password) {
       this.loading = true
       this.$nuxt.$loading.start()
-      console.log('login!')
       authStore.login(this.user).then(
-        (data) => {
+        () => {
           this.$nuxt.$loading.finish()
           this.loading = false
-          console.log(data)
           this.$router.push('/')
         },
         (error) => {
