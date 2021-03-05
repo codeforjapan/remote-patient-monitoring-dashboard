@@ -53,9 +53,9 @@ export default {
         xaxis: {
           type: 'datetime',
           labels: {
-            show: false,
+            show: true,
             formatter: (val) => {
-              return dayjs(val).format('MM/DD HH:mm')
+              return dayjs(val).format('MM/DD')
             },
           },
           axisBorder: {
