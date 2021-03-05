@@ -14,3 +14,6 @@ export interface ConsumePatient {
   phone: string
   display: boolean
 }
+export interface RegisteredPatient extends Patient {
+  loginKey: string
+}

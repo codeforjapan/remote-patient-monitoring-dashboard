@@ -79,4 +79,8 @@ export default {
       },
     },
   },
+
+  env: {
+    clientUrl: process.env.CLIENT_URL || 'http://localhost:8080',
+  },
 }

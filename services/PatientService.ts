@@ -1,6 +1,10 @@
 import axios from 'axios'
 import authHeader from './auth-header'
-import { ConsumePatient, Patient } from '~/types/component-interfaces/patient'
+import {
+  ConsumePatient,
+  Patient,
+  RegisteredPatient,
+} from '~/types/component-interfaces/patient'
 
 const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
 
@@ -15,7 +19,7 @@ class PatientService {
     return response.data.Items
   }
 
-  async postPatient(patient: ConsumePatient): Promise<Patient> {
+  async postPatient(patient: ConsumePatient): Promise<RegisteredPatient> {
     const response = await axios.post(
       API_URL + 'centers/79167710-2761-4cf4-8888-241e9f0c36b8/patients/',
       patient,
