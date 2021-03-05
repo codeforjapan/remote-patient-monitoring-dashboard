@@ -92,7 +92,7 @@ import {
     HiddenSelect,
   },
 })
-export default class Index extends Vue {
+export default class CenterId extends Vue {
   timer: ReturnType<typeof setInterval> | null = null
   showModal = false
   registered = false
@@ -117,7 +117,7 @@ export default class Index extends Vue {
   }
 
   fetchPatients() {
-    patientsStore.load().then((patients) => {
+    patientsStore.load(this.$route.params.centerId).then((patients) => {
       this.patients = patients.filter((item) => {
         return this.displaySelect === 'show-only-display-true'
           ? item.display
@@ -131,7 +131,7 @@ export default class Index extends Vue {
       this.patients = this.patients.filter((item) => {
         return item.patientId !== patient.patientId
       })
-      patientsStore.load().then(() => {})
+      patientsStore.load(this.$route.params.centerId).then(() => {})
     })
   }
 
@@ -144,6 +144,7 @@ export default class Index extends Vue {
   handleRegister(value: { mobileTel: string; memo: string | undefined }) {
     this.newPatientMemo = value.memo || ''
     const newPatient: ConsumePatient = {
+      centerId: this.$route.params.centerId,
       patientId: value.mobileTel,
       phone: value.mobileTel,
       display: true,
