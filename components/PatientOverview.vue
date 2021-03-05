@@ -7,7 +7,11 @@
     ]"
   >
     <td>
-      <span>{{ patient.patientId }}</span>
+      <span>{{
+        !!getMemo(patient.patientId)
+          ? getMemo(patient.patientId)
+          : patient.patientId
+      }}</span>
       <br />
       <time class="date">
         {{
@@ -116,6 +120,14 @@ import TemperatureIcon from '@/static/icon-temperature.svg'
 import HeartIcon from '@/static/icon-heart.svg'
 import ActionButton from '@/components/ActionButton.vue'
 
+interface PatientItems {
+  memo: string | null
+}
+
+interface StoragePatientItems {
+  [key: string]: PatientItems
+}
+
 @Component({
   name: 'PatientOverview',
   components: {
@@ -158,6 +170,17 @@ export default class PatientOverview extends Vue {
 
   getDate(date: string): string {
     return dayjs(date).format('MM/DD HH:mm')
+  }
+
+  getMemo(patientId: keyof string): string | undefined | null {
+    const patientItems:
+      | StoragePatientItems
+      | string
+      | null = localStorage.getItem('patientItems')
+    const patient: any = patientItems
+      ? JSON.parse(patientItems)[patientId]
+      : undefined
+    return patient ? patient.memo : undefined
   }
 }
 </script>
