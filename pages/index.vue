@@ -21,8 +21,9 @@
       />
       <PatientRegistered
         v-else
-        :patient-id="newPatientId"
         :phone="newPatientPhone"
+        :memo="newPatientMemo"
+        :login-key="newPatientLoginKey"
       />
     </ModalBase>
     <div class="searchContainer">
@@ -72,7 +73,11 @@ import SearchField from '@/components/SearchField.vue'
 import SortSelect from '@/components/SortSelect.vue'
 import HiddenSelect from '@/components/HiddenSelect.vue'
 import { patientsStore } from '@/store'
-import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
+import {
+  Patient,
+  ConsumePatient,
+  RegisteredPatient,
+} from '@/types/component-interfaces/patient'
 
 @Component({
   components: {
@@ -88,59 +93,71 @@ import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
   },
 })
 export default class Index extends Vue {
+  timer: ReturnType<typeof setInterval> | null = null
   showModal = false
   registered = false
   inputSearch = ''
   sortSelect = ''
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
-  newPatientId = ''
   newPatientPhone = ''
+  newPatientMemo = ''
+  newPatientLoginKey = ''
   errorMessage = ''
 
   created() {
+    this.fetchPatients()
+    this.timer = setInterval(this.fetchPatients, 300000)
+  }
+
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
+  }
+
+  fetchPatients() {
     patientsStore.load().then((patients) => {
       this.patients = patients.filter((item) => {
-        return item.display
+        return this.displaySelect === 'show-only-display-true'
+          ? item.display
+          : !item.display
       })
     })
   }
 
   handleDisplayPatient(patient: ConsumePatient) {
     patientsStore.update(patient).then((patient) => {
-      patientsStore.load().then(() => {
-        this.patients = this.patients.filter((item) => {
-          return item.patientId !== patient.patientId
-        })
+      this.patients = this.patients.filter((item) => {
+        return item.patientId !== patient.patientId
       })
+      patientsStore.load().then(() => {})
     })
   }
 
   handleSelect(value: string) {
-    if (value === 'show-only-display-true') {
-      this.patients = patientsStore.getPatients.filter((item) => {
-        return item.display
-      })
-    } else if (value === 'show-only-display-false') {
-      this.patients = patientsStore.getPatients.filter((item) => {
-        return !item.display
-      })
-    }
+    this.patients = patientsStore.getPatients.filter((item) => {
+      return value === 'show-only-display-true' ? item.display : !item.display
+    })
   }
 
-  handleRegister(value: { patientId: string; mobileTel: string }) {
+  handleRegister(value: { mobileTel: string; memo: string | undefined }) {
+    this.newPatientMemo = value.memo || ''
     const newPatient: ConsumePatient = {
-      patientId: value.patientId,
+      patientId: value.mobileTel,
       phone: value.mobileTel,
       display: true,
     }
     patientsStore
       .create(newPatient)
-      .then((patient: Patient) => {
-        this.patients = patientsStore.getPatients
+      .then((patient: RegisteredPatient) => {
         this.registered = true
-        this.newPatientId = patient.patientId
         this.newPatientPhone = patient.phone
+        this.newPatientLoginKey = patient.loginKey
+        const patientItems =
+          JSON.parse(localStorage.getItem('patientItems') || '{}') || {}
+        patientItems[patient.patientId] = { memo: value.memo }
+        localStorage.setItem('patientItems', JSON.stringify(patientItems))
       })
       .catch((error) => {
         this.errorMessage = error
