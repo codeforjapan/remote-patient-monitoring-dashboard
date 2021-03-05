@@ -8,7 +8,7 @@
   >
     <td>
       <span>{{
-        !!getMemo(patient.patientId)
+        getMemo(patient.patientId)
           ? getMemo(patient.patientId)
           : patient.patientId
       }}</span>
