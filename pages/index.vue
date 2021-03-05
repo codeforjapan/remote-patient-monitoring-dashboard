@@ -1,211 +1,79 @@
 <template>
   <div>
-    <div class="pageHeader">
-      <h2 class="pageTitle">患者一覧</h2>
-      <ActionButton
-        class="newPatientBtn"
-        theme="primary"
-        size="M"
-        :is-inline="true"
-        @click="showModal = true"
-      >
-        <PlusIcon />
-        新規患者
-      </ActionButton>
-    </div>
-    <ModalBase :show="showModal" @close="closeModal">
-      <PatientRegister
-        v-if="!registered"
-        :error-message="errorMessage"
-        @click-register="handleRegister"
-      />
-      <PatientRegistered
-        v-else
-        :patient-id="newPatientId"
-        :phone="newPatientPhone"
-      />
-    </ModalBase>
-    <div class="searchContainer">
-      <SearchField v-model="inputSearch" />
-      <SortSelect v-model="sortSelect" />
-      <HiddenSelect v-model="displaySelect" @input="handleSelect" />
-    </div>
-    <div class="overviewContainer">
-      <table class="overviewTable">
-        <thead>
-          <tr class="overviewTableHeader">
-            <th>患者ID</th>
-            <th>最終更新</th>
-            <th>SpO2</th>
-            <th class="overviewLabel">
-              <span class="sp02">SpO2</span>
-              <span class="temp">体温</span>
-              <span class="pulse">脈拍</span>
-            </th>
-            <th>症状</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="(patient, index) in patients">
-            <PatientOverview
-              :key="index"
-              :patient="patient"
-              @click="handleDisplayPatient"
-            />
-          </template>
-        </tbody>
-      </table>
+    <div class="selectContainer">
+      <select v-model="selected" class="select" @change="handleChange">
+        <option value="">保健所を選択してください</option>
+        <option
+          v-for="(center, index) in centers"
+          :key="index"
+          :value="center.centerId"
+        >
+          {{ center.centerId }}
+        </option>
+      </select>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import ActionButton from '@/components/ActionButton.vue'
-import PlusIcon from '@/static/icon-plus.svg'
-import ModalBase from '@/components/ModalBase.vue'
-import PatientRegister from '@/components/PatientRegister.vue'
-import PatientRegistered from '@/components/PatientRegistered.vue'
-import PatientOverview from '@/components/PatientOverview.vue'
-import SearchField from '@/components/SearchField.vue'
-import SortSelect from '@/components/SortSelect.vue'
-import HiddenSelect from '@/components/HiddenSelect.vue'
-import { patientsStore } from '@/store'
-import { Patient, ConsumePatient } from '@/types/component-interfaces/patient'
+import { authStore, nursesStore } from '@/store'
+import { Center } from '@/types/component-interfaces/nurse'
 
-@Component({
-  components: {
-    ActionButton,
-    PlusIcon,
-    ModalBase,
-    PatientRegister,
-    PatientRegistered,
-    PatientOverview,
-    SearchField,
-    SortSelect,
-    HiddenSelect,
-  },
-})
+@Component
 export default class Index extends Vue {
-  showModal = false
-  registered = false
-  inputSearch = ''
-  sortSelect = ''
-  displaySelect = 'show-only-display-true'
-  patients: Patient[] = []
-  newPatientId = ''
-  newPatientPhone = ''
-  errorMessage = ''
+  centers: Center[] = []
+  selected = ''
 
   created() {
-    patientsStore.load().then((patients) => {
-      this.patients = patients.filter((item) => {
-        return item.display
+    if (authStore.user) {
+      nursesStore.load(authStore.user.username).then((nurse) => {
+        this.centers = nurse.manageCenters
       })
-    })
-  }
-
-  handleDisplayPatient(patient: ConsumePatient) {
-    patientsStore.update(patient).then((patient) => {
-      patientsStore.load().then(() => {
-        this.patients = this.patients.filter((item) => {
-          return item.patientId !== patient.patientId
-        })
-      })
-    })
-  }
-
-  handleSelect(value: string) {
-    if (value === 'show-only-display-true') {
-      this.patients = patientsStore.getPatients.filter((item) => {
-        return item.display
-      })
-    } else if (value === 'show-only-display-false') {
-      this.patients = patientsStore.getPatients.filter((item) => {
-        return !item.display
-      })
+    } else {
+      authStore.signOut()
+      this.$router.push('/login')
     }
   }
 
-  handleRegister(value: { patientId: string; mobileTel: string }) {
-    const newPatient: ConsumePatient = {
-      patientId: value.patientId,
-      phone: value.mobileTel,
-      display: true,
-    }
-    patientsStore
-      .create(newPatient)
-      .then((patient: Patient) => {
-        this.patients = patientsStore.getPatients
-        this.registered = true
-        this.newPatientId = patient.patientId
-        this.newPatientPhone = patient.phone
-      })
-      .catch((error) => {
-        this.errorMessage = error
-      })
-  }
-
-  closeModal() {
-    this.showModal = false
-    this.registered = false
+  handleChange() {
+    nursesStore.setCenter(this.selected)
+    this.$router.push(`/centers/${this.selected}`)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.pageHeader {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.pageTitle {
-  margin: 0;
-}
-.searchContainer {
-  display: flex;
-  margin: 16px 0;
-}
-.overviewContainer {
+.selectContainer {
+  margin-left: 16px;
+  position: relative;
+  border-radius: 10px;
   background-color: $white;
-  border-radius: 8px;
-  overflow: hidden;
+  &::before {
+    position: absolute;
+    top: 50%;
+    right: 0.8em;
+    margin-top: -2px;
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid $gray-3;
+    pointer-events: none;
+  }
 }
-.overviewTable {
+.select {
   width: 100%;
-  border-spacing: 0;
-  tbody tr {
-    border-bottom: 1px solid $gray-3;
-    padding: 8px 0;
-    &:last-child {
-      border: none;
-    }
-  }
-}
-.overviewTableHeader {
-  display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr 40% 17% 1fr;
-  grid-template-rows: auto;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  appearance: none;
   font-size: 16px;
-  color: $gray-3;
-  border-bottom: 1px solid $gray-3;
-  padding: 8px 0;
-  text-align: left;
-  text-indent: 16px;
-}
-.overviewLabel {
-  font-size: 12px;
-  font-weight: 400;
-  align-self: center;
-  .sp02 {
-    color: $primary;
-  }
-  .temp {
-    color: $tertiary;
-  }
-  .pulse {
-    color: $secondary;
-  }
+  padding: 12px 38px 12px 12px;
 }
 </style>

@@ -1,6 +1,10 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import PatientService from '@/services/PatientService'
-import { Patient, ConsumePatient } from '~/types/component-interfaces/patient'
+import {
+  Patient,
+  ConsumePatient,
+  RegisteredPatient,
+} from '@/types/component-interfaces/patient'
 
 @Module({
   name: 'modules/patients',
@@ -51,8 +55,8 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  load(): Promise<Patient[]> {
-    return PatientService.getPatients().then(
+  load(centerId: string): Promise<Patient[]> {
+    return PatientService.getPatients(centerId).then(
       (patients) => {
         this.context.commit('loadSuccess', patients)
         return Promise.resolve(patients)
@@ -71,8 +75,8 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  create(patient: ConsumePatient): Promise<Patient> {
-    return PatientService.postPatient(patient).then(
+  create(patient: ConsumePatient): Promise<RegisteredPatient> {
+    return PatientService.postPatient(patient.centerId, patient).then(
       (patient) => {
         this.context.commit('pushPatient', patient)
         return Promise.resolve(patient)

@@ -7,15 +7,6 @@
     </p>
     <div class="inputContainer">
       <InputField
-        v-model="inputPatientId"
-        label="患者ID"
-        name="patientId"
-        required
-        rules="required"
-      />
-    </div>
-    <div class="inputContainer">
-      <InputField
         v-model="inputMobileTel"
         label="携帯電話番号（ハイフン不要）"
         name="mobileTel"
@@ -24,6 +15,9 @@
         rules="required"
       />
     </div>
+    <div class="inputContainer">
+      <InputField v-model="inputMemo" label="メモ（任意）" name="memo" />
+    </div>
     <ActionButton
       type="submit"
       :theme="btnTheme"
@@ -31,8 +25,8 @@
       :is-submittable="isSubmittable"
       @click="
         $emit('click-register', {
-          patientId: inputPatientId,
           mobileTel: inputMobileTel,
+          memo: inputMemo,
         })
       "
     >
@@ -54,14 +48,14 @@ import ActionButton from '@/components/ActionButton.vue'
   },
 })
 export default class PatientRegister extends Vue {
-  inputPatientId = ''
   inputMobileTel = ''
+  inputMemo = ''
 
   @Prop({ default: '' })
   errorMessage?: string
 
   get isSubmittable(): boolean {
-    return this.inputPatientId !== '' && this.inputMobileTel !== ''
+    return this.inputMobileTel !== ''
   }
 
   get btnTheme(): string {

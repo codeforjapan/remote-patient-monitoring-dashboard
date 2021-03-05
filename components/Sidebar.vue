@@ -13,7 +13,7 @@
     <nav>
       <ul>
         <li class="navItem">
-          <NuxtLink to="/" class="navLink">
+          <NuxtLink :to="`/centers/${centerId}`" class="navLink">
             <span class="navIcon">
               <UserIcon aria-hidden="true" />
             </span>
@@ -49,7 +49,7 @@ import Logo from '@/static/logo.svg'
 import UserIcon from '@/static/icon-user.svg'
 import LogoutIcon from '@/static/icon-logout.svg'
 import HelpIcon from '@/static/icon-help.svg'
-import { authStore } from '@/store'
+import { authStore, nursesStore } from '@/store'
 
 @Component({
   components: {
@@ -60,6 +60,10 @@ import { authStore } from '@/store'
   },
 })
 export default class Sidebar extends Vue {
+  get centerId() {
+    return nursesStore.getCenterId
+  }
+
   handleLogout() {
     authStore.signOut()
     this.$router.push('/login')

@@ -7,7 +7,11 @@
     ]"
   >
     <td>
-      <span>{{ patient.patientId }}</span>
+      <span>{{
+        getMemo(patient.patientId)
+          ? getMemo(patient.patientId)
+          : patient.patientId
+      }}</span>
       <br />
       <time class="date">
         {{
@@ -85,7 +89,7 @@
           :is-active="lastStatus.symptom.sore_throat"
         />
       </div>
-      <div><PatientOverviewGraph /></div>
+      <div><PatientOverviewGraph :patient="patient" /></div>
     </td>
     <td>
       <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
@@ -115,6 +119,14 @@ import SymptomsStatus from '@/components/SymptomsStatus.vue'
 import TemperatureIcon from '@/static/icon-temperature.svg'
 import HeartIcon from '@/static/icon-heart.svg'
 import ActionButton from '@/components/ActionButton.vue'
+
+interface PatientItems {
+  memo: string | null
+}
+
+interface StoragePatientItems {
+  [key: string]: PatientItems
+}
 
 @Component({
   name: 'PatientOverview',
@@ -159,13 +171,24 @@ export default class PatientOverview extends Vue {
   getDate(date: string): string {
     return dayjs(date).format('MM/DD HH:mm')
   }
+
+  getMemo(patientId: keyof string): string | undefined | null {
+    const patientItems:
+      | StoragePatientItems
+      | string
+      | null = localStorage.getItem('patientItems')
+    const patient: any = patientItems
+      ? JSON.parse(patientItems)[patientId]
+      : undefined
+    return patient ? patient.memo : undefined
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr 40% 17% 1fr;
+  grid-template-columns: 8em 8em 6em 1fr 13% 8em;
   grid-template-rows: auto;
   font-size: 16px;
   td {
