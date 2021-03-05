@@ -138,13 +138,13 @@ export default {
       const spO2s = this.patient.statuses.map((status) => {
         return {
           x: status.created,
-          y: status.SpO2.toFixed(1),
+          y: status.SpO2,
         }
       })
       const pulses = this.patient.statuses.map((status) => {
         return {
           x: status.created,
-          y: status.pulse.toFixed(1),
+          y: status.pulse,
         }
       })
 
