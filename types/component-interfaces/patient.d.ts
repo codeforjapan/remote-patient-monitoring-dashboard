@@ -11,6 +11,7 @@ export interface Patient {
 }
 export interface ConsumePatient {
   patientId: string
+  centerId: string
   phone: string
   display: boolean
 }
