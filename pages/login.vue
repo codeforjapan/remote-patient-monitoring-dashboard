@@ -17,7 +17,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import PageHeader from '@/components/PageHeader.vue'
 import InputField from '@/components/InputField.vue'
-import { authStore } from '@/store'
+import { authStore, nursesStore } from '@/store'
 
 @Component({
   layout: 'simple',
@@ -32,18 +32,24 @@ export default class Login extends Vue {
   loading = false
 
   handleLogin() {
-    console.log(this.user)
     if (this.user.username && this.user.password) {
       this.loading = true
       this.$nuxt.$loading.start()
       authStore.login(this.user).then(
-        () => {
+        (user) => {
           this.$nuxt.$loading.finish()
           this.loading = false
-          this.$router.push('/')
+          nursesStore.load(user.username).then((nurse) => {
+            const centers = nurse.manageCenters
+            if (centers.length === 1) {
+              this.$router.push(`/centers/${centers[0].centerId}`)
+            } else {
+              this.$router.push('/')
+            }
+          })
         },
         (error) => {
-          console.log(error)
+          console.error(error)
           this.$nuxt.$loading.finish()
           this.loading = false
           this.message = 'ログインに失敗しました。'
