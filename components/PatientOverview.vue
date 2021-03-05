@@ -102,7 +102,7 @@
         theme="outline"
         size="S"
         :is-inline="true"
-        :to="`/${patient.patientId}`"
+        :to="`/patient/${patient.patientId}`"
       >
         詳細をみる
       </ActionButton>
