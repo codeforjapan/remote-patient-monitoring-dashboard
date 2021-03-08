@@ -18,6 +18,7 @@ class PatientsModule extends VuexModule {
     display: true,
     patientId: '',
     phone: '',
+    memo: '',
     policy_accepted: '',
     statuses: [],
   }
@@ -34,6 +35,11 @@ class PatientsModule extends VuexModule {
   @Mutation
   public loadPatientSuccess(patient: Patient): void {
     this.patient = patient
+  }
+
+  @Mutation
+  public updatePatientMemo(memo: string): void {
+    this.patient.memo = memo
   }
 
   @Mutation
