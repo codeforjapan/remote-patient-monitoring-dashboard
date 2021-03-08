@@ -42,7 +42,7 @@ export default class Login extends Vue {
           nursesStore.load(user.username).then((nurse) => {
             const centers = nurse.manageCenters
             if (centers.length === 1) {
-              this.$router.push(`/centers/${centers[0].centerId}`)
+              this.$router.push(`/center/${centers[0].centerId}`)
             } else {
               this.$router.push('/')
             }
