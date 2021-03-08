@@ -87,7 +87,7 @@ import { nursesStore, patientsStore } from '@/store'
 export default class PatientId extends Vue {
   isEditDisabled = true
   currentMemoValue = ''
-  patient: Patient | undefined = {
+  patient: Patient = {
     patientId: '',
     centerId: '',
     policy_accepted: '',
@@ -101,14 +101,14 @@ export default class PatientId extends Vue {
     if (patientsStore.getPatients.length > 0) {
       this.patient = patientsStore.getPatients.find(
         (patient) => patient.patientId === this.$route.params.patientId,
-      )
-      this.currentMemoValue = this.patient?.memo
+      )!
+      this.currentMemoValue = this.patient.memo || ''
     } else {
       patientsStore
         .loadPatient(this.$route.params.patientId)
         .then((patient) => {
           this.patient = patient
-          this.currentMemoValue = this.patient?.memo
+          this.currentMemoValue = this.patient.memo || ''
         })
     }
   }
@@ -118,11 +118,13 @@ export default class PatientId extends Vue {
   }
 
   get memoValue() {
-    return this.patient?.memo
+    return this.patient.memo
   }
 
   set memoValue(value) {
-    patientsStore.updatePatientMemo(value)
+    if (value) {
+      patientsStore.updatePatientMemo(value)
+    }
   }
 
   getDate(date: string): string {
@@ -133,8 +135,8 @@ export default class PatientId extends Vue {
     patientsStore
       .update({ ...this.patient, memo: this.memoValue })
       .then((patient) => {
-        this.patient?.memo = patient.memo
-        this.currentMemoValue = patient.memo
+        this.patient.memo = patient.memo
+        this.currentMemoValue = patient.memo!
         this.isEditDisabled = true
       })
   }
@@ -144,11 +146,11 @@ export default class PatientId extends Vue {
     this.isEditDisabled = true
   }
 
-  handleDisplayPatient(isDisplay) {
+  handleDisplayPatient(isDisplay: boolean) {
     patientsStore
       .update({ ...this.patient, display: isDisplay })
       .then((patient) => {
-        this.patient?.display = patient.display
+        this.patient.display = patient.display
       })
   }
 }

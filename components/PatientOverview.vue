@@ -148,7 +148,7 @@ export default class PatientOverview extends Vue {
   }
 
   @Prop()
-  patient: Patient | undefined
+  patient!: Patient
 
   get lastStatus(): Status | undefined {
     return this.patient && this.patient.statuses.length > 0
