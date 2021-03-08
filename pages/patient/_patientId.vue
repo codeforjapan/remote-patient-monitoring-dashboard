@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="patientGraphLayout">
-        <PatientGraph />
+        <PatientGraph :patient="patient" />
       </div>
       <SymptomsHistory class="symptomsHistory" :statuses="patient.statuses" />
     </div>
