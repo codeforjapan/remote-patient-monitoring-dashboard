@@ -4,47 +4,53 @@
       <h2 class="pageTitle">患者データ</h2>
       <ActionButton
         theme="outline"
-        class="backBtn"
         size="M"
         :is-inline="true"
+        :to="`/center/${centerId}`"
         @click="$emit('click-register')"
       >
-        <NuxtLink class="detailItem" to="/">一覧に戻る</NuxtLink>
+        一覧に戻る
       </ActionButton>
     </div>
     <div class="patientContainer">
       <div class="patientHeader">
         <div>
           <span class="patentId">
-            患者ID：{{ patient.patientId }}
-            <EditIcon
-              :class="['editIcon', { editable: !isEditDisabled }]"
-              @click="isEditDisabled = !isEditDisabled"
-            />
-          </span>
-          <span>
-            <input
-              v-model="memo"
+            患者ID：
+            <InputField
+              v-model="memoValue"
               class="memo"
-              type="text"
               :disabled="isEditDisabled"
             />
-            <ActionButton
-              class="saveBtn"
-              theme="primary"
-              size="M"
-              :is-inline="true"
-              @click="isEditDisabled = !isEditDisabled"
-            >
-              保存
-            </ActionButton>
+            <EditIcon
+              v-if="isEditDisabled"
+              class="icon"
+              @click="isEditDisabled = false"
+            />
+            <span v-else>
+              <SaveIcon class="icon" @click="updateMemo" />
+              <CloseIcon class="icon" @click="cancelMemo" />
+            </span>
           </span>
         </div>
         <div>
           <span class="monitoringTerm">
             モニタリング開始：{{ getDate(patient.policy_accepted) }}
           </span>
-          <span class="dataHide"> 患者データを非表示にする </span>
+          <span
+            v-if="patient.display"
+            class="isDataDisplay"
+            @click="handleDisplayPatient(false)"
+          >
+            患者データを非表示にする
+          </span>
+          <span
+            v-else
+            class="isDataDisplay"
+            @click="handleDisplayPatient(true)"
+          >
+            患者データを表示する
+          </span>
         </div>
       </div>
       <div class="patientGraphLayout">
@@ -59,50 +65,36 @@
 import { Component, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 import { Patient } from '@/types/component-interfaces/patient'
-import { Status } from '@/types/component-interfaces/status'
 import ActionButton from '@/components/ActionButton.vue'
 import SymptomsHistory from '@/components/SymptomsHistory.vue'
+import InputField from '@/components/InputField.vue'
 import EditIcon from '@/static/icon-edit.svg'
-import { patientsStore } from '@/store'
+import SaveIcon from '@/static/icon-save.svg'
+import CloseIcon from '@/static/icon-close.svg'
+import { nursesStore, patientsStore } from '@/store'
 
 @Component({
   name: 'patientId',
   components: {
     ActionButton,
     SymptomsHistory,
+    InputField,
     EditIcon,
-    // ToggleSwitch,
+    SaveIcon,
+    CloseIcon,
   },
 })
 export default class PatientId extends Vue {
-  memo = ''
   isEditDisabled = true
+  currentMemoValue = ''
   patient: Patient | undefined = {
     patientId: '',
     centerId: '',
     policy_accepted: '',
     phone: '',
+    memo: '',
     display: true,
     statuses: [],
-  }
-
-  lastStatus: Status | undefined = {
-    statusId: '',
-    patientId: '',
-    centerId: '',
-    created: '',
-    SpO2: 0,
-    body_temperature: 0,
-    pulse: 0,
-    symptom: {
-      symptomId: '',
-      cough: false,
-      phlegm: false,
-      suffocation: false,
-      headache: false,
-      sore_throat: false,
-      remarks: '',
-    },
   }
 
   created() {
@@ -110,26 +102,54 @@ export default class PatientId extends Vue {
       this.patient = patientsStore.getPatients.find(
         (patient) => patient.patientId === this.$route.params.patientId,
       )
-      this.getLastStatus()
+      this.currentMemoValue = this.patient?.memo
     } else {
       patientsStore
         .loadPatient(this.$route.params.patientId)
         .then((patient) => {
           this.patient = patient
-          this.getLastStatus()
+          this.currentMemoValue = this.patient?.memo
         })
     }
   }
 
-  getLastStatus(): void {
-    this.lastStatus =
-      this.patient && this.patient.statuses.length > 0
-        ? this.patient.statuses[0]
-        : this.lastStatus
+  get centerId() {
+    return nursesStore.getCenterId
+  }
+
+  get memoValue() {
+    return this.patient?.memo
+  }
+
+  set memoValue(value) {
+    patientsStore.updatePatientMemo(value)
   }
 
   getDate(date: string): string {
     return dayjs(date).format('MM/DD HH:mm')
+  }
+
+  updateMemo() {
+    patientsStore
+      .update({ ...this.patient, memo: this.memoValue })
+      .then((patient) => {
+        this.patient?.memo = patient.memo
+        this.currentMemoValue = patient.memo
+        this.isEditDisabled = true
+      })
+  }
+
+  cancelMemo() {
+    this.memoValue = this.currentMemoValue
+    this.isEditDisabled = true
+  }
+
+  handleDisplayPatient(isDisplay) {
+    patientsStore
+      .update({ ...this.patient, display: isDisplay })
+      .then((patient) => {
+        this.patient?.display = patient.display
+      })
   }
 }
 </script>
@@ -144,9 +164,6 @@ export default class PatientId extends Vue {
 .pageTitle {
   font-size: 24px;
 }
-.backBtn {
-  padding: 12.8px 40px;
-}
 .patientContainer {
   background-color: $white;
   border: none;
@@ -154,27 +171,23 @@ export default class PatientId extends Vue {
   overflow: hidden;
 }
 .patientHeader {
-  //display: flex;
-  //justify-content: space-between;
   padding: 32px;
 }
 .patentId {
   font-size: 20px;
   font-weight: bold;
 }
-.editIcon {
+.icon {
   display: inline-block;
+  width: 20px;
+  height: 20px;
   margin-left: 16px;
   fill: $gray-3;
-  &.editable {
-    fill: $link;
-  }
 }
 .memo {
+  display: inline-block;
+  width: 15em;
   font-size: 20px;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 5px 0;
 }
 
 .saveBtn {
@@ -186,7 +199,7 @@ export default class PatientId extends Vue {
   font-size: 12px;
   color: $gray-3;
 }
-.dataHide {
+.isDataDisplay {
   display: inline-block;
   margin-left: 16px;
   font-size: 14px;

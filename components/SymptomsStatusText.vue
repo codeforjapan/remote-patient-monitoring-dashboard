@@ -1,6 +1,6 @@
 <template>
   <span :class="['statusText', { active: isActive }]">
-    {{ isActive ? 'あり' : 'なし' }}
+    {{ text }}
   </span>
 </template>
 
@@ -13,6 +13,10 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    text: {
+      type: String,
+      default: '',
+    },
   },
 })
 </script>
@@ -20,9 +24,9 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .statusText {
   font-weight: bold;
-  color: $link;
+  color: $gray-2;
   &.active {
-    color: $error;
+    color: $notice;
   }
 }
 </style>
