@@ -6,15 +6,18 @@ export interface Patient {
   centerId: string
   policy_accepted: string
   phone: string
+  memo?: string | undefined
   display: boolean
   statuses: Status[]
 }
 export interface ConsumePatient {
-  patientId: string
   centerId: string
   phone: string
+  memo?: string | undefined
   display: boolean
 }
-export interface RegisteredPatient extends Patient {
+export interface RegisteredPatient {
+  phone: string
+  memo?: string | undefined
   loginKey: string
 }

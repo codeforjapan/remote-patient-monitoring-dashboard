@@ -37,11 +37,6 @@ class PatientsModule extends VuexModule {
   }
 
   @Mutation
-  public pushPatient(patient: Patient): void {
-    this.patients.push(patient)
-  }
-
-  @Mutation
   public removePatient(patientId: string): void {
     this.patients.splice(
       this.patients.findIndex((item) => item.patientId === patientId),
@@ -78,7 +73,6 @@ class PatientsModule extends VuexModule {
   create(patient: ConsumePatient): Promise<RegisteredPatient> {
     return PatientService.postPatient(patient.centerId, patient).then(
       (patient) => {
-        this.context.commit('pushPatient', patient)
         return Promise.resolve(patient)
       },
       (error) => {
@@ -113,7 +107,7 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  update(patient: ConsumePatient): Promise<Patient> {
+  update(patient: Patient): Promise<Patient> {
     return PatientService.putPatient(patient.patientId, patient).then(
       (patient) => {
         return Promise.resolve(patient)
