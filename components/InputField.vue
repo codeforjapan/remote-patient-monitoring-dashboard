@@ -12,6 +12,7 @@
         :step="step"
         :value="value"
         :autocomplete="autocomplete"
+        :disabled="disabled"
         @input="$emit('input', $event.target.value)"
       />
     </label>
@@ -68,6 +69,10 @@ export default Vue.extend({
     autocomplete: {
       type: String,
       default: 'on',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     unit: {
       type: String,

@@ -4,34 +4,48 @@
       <thead>
         <tr class="symptomsHistoryRow symptomsHistoryHeader">
           <th>記録日時</th>
-          <th>
-            SpO2
-            <LiftAndLowerIcon />
-          </th>
-          <th>
-            体温
-            <LiftAndLowerIcon />
-          </th>
-          <th>
-            脈拍
-            <LiftAndLowerIcon />
-          </th>
-          <th>症状</th>
-          <th>症状</th>
+          <th>SpO2</th>
+          <th>体温</th>
+          <th>脈拍</th>
+          <th class="alignLeft" style="padding-left: 20px">症状</th>
+          <th class="alignLeft">症状</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="(item, index) in reverseItems"
+          v-for="(item, index) in statuses"
           :key="index"
           class="symptomsHistoryRow"
         >
-          <td class="alignLeft">{{ getDate(item.created) }}</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{ getDate(item.created) }}</td>
+          <td class="alignCenter spo2">{{ item.SpO2 }}</td>
+          <td class="alignCenter">{{ item.body_temperature.toFixed(1) }}</td>
+          <td class="alignCenter">{{ item.pulse }}</td>
+          <td>
+            <div class="symptoms">
+              <SymptomsStatusText
+                text="せき"
+                :is-active="item.symptom.cough"
+              />・
+              <SymptomsStatusText
+                text="たん"
+                :is-active="item.symptom.phlegm"
+              />・
+              <SymptomsStatusText
+                text="息苦しさ"
+                :is-active="item.symptom.suffocation"
+              />・
+              <SymptomsStatusText
+                text="頭痛"
+                :is-active="item.symptom.headache"
+              />・
+              <SymptomsStatusText
+                text="のど痛み"
+                :is-active="item.symptom.sore_throat"
+              />
+            </div>
+          </td>
+          <td>{{ item.symptom.remarks }}</td>
         </tr>
       </tbody>
     </table>
@@ -42,25 +56,16 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import { Status } from '@/types/component-interfaces/status'
-// import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
-// import SymptomsStatus from '@/components/SymptomsStatus.vue'
-import LiftAndLowerIcon from '@/static/icon-liftAndLower.svg'
+import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
 
 export default Vue.extend({
   components: {
-    // SymptomsStatusText,
-    // SymptomsStatus,
-    LiftAndLowerIcon,
+    SymptomsStatusText,
   },
   props: {
     statuses: {
       type: Array as () => Status[],
       default: [],
-    },
-  },
-  computed: {
-    reverseItems(): Status[] {
-      return this.statuses.slice().reverse()
     },
   },
   methods: {
@@ -86,19 +91,16 @@ export default Vue.extend({
 }
 .symptomsHistoryRow {
   display: grid;
-  grid-template-columns: 120px 1fr 1fr 1fr 24% 35%;
+  grid-template-columns: 7em 5em 5em 5em 1fr 22%;
   grid-template-rows: auto;
   padding: 0 12px 0 0;
-  td {
-    text-align: center;
-    align-self: center;
-    padding: 8px 4px;
-  }
+  td,
   th {
-    text-align: left;
     align-self: center;
     padding: 8px 4px;
-
+    &.alignCenter {
+      text-align: center;
+    }
     &.alignLeft {
       text-align: left;
     }
@@ -106,5 +108,12 @@ export default Vue.extend({
 }
 .symptomsHistoryHeader {
   color: $gray-2;
+}
+.spo2 {
+  font-size: 22px;
+}
+.symptoms {
+  color: $gray-2;
+  padding: 0 1em;
 }
 </style>
