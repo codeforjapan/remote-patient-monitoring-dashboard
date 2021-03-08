@@ -4,6 +4,7 @@ import {
   Patient,
   ConsumePatient,
   RegisteredPatient,
+  UpdatePatient,
 } from '@/types/component-interfaces/patient'
 
 @Module({
@@ -113,7 +114,7 @@ class PatientsModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  update(patient: Patient): Promise<Patient> {
+  update(patient: UpdatePatient): Promise<UpdatePatient> {
     return PatientService.putPatient(patient.patientId, patient).then(
       (patient) => {
         return Promise.resolve(patient)

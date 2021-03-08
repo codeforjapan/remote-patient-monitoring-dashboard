@@ -21,3 +21,9 @@ export interface RegisteredPatient {
   memo?: string | undefined
   loginKey: string
 }
+export interface UpdatePatient {
+  patientId: string
+  phone: string
+  memo?: string | undefined
+  display: boolean
+}

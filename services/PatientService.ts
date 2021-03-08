@@ -4,6 +4,7 @@ import {
   ConsumePatient,
   Patient,
   RegisteredPatient,
+  UpdatePatient,
 } from '~/types/component-interfaces/patient'
 
 const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
@@ -42,7 +43,7 @@ class PatientService {
 
   async putPatient(
     patientId: string,
-    payload: ConsumePatient,
+    payload: UpdatePatient,
   ): Promise<Patient> {
     const response = await axios.put(
       API_URL + `patients/${patientId}`,
