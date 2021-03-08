@@ -13,7 +13,7 @@
     <nav>
       <ul>
         <li class="navItem">
-          <NuxtLink :to="`/centers/${centerId}`" class="navLink">
+          <NuxtLink :to="`/center/${centerId}`" class="navLink">
             <span class="navIcon">
               <UserIcon aria-hidden="true" />
             </span>

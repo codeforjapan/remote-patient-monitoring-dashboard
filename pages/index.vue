@@ -38,7 +38,7 @@ export default class Index extends Vue {
 
   handleChange() {
     nursesStore.setCenter(this.selected)
-    this.$router.push(`/centers/${this.selected}`)
+    this.$router.push(`/center/${this.selected}`)
   }
 }
 </script>

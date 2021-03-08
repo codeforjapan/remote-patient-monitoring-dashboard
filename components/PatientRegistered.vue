@@ -7,9 +7,11 @@
     </p>
     <dl class="registrationList">
       <dt class="registrationTitle">携帯電話番号</dt>
-      <dd class="registrationItem">{{ phone }}</dd>
-      <dt v-if="memo" class="registrationTitle">メモ</dt>
-      <dd v-if="memo" class="registrationItem">{{ memo }}</dd>
+      <dd class="registrationItem">{{ newPatient.phone }}</dd>
+      <dt v-if="newPatient.memo" class="registrationTitle">メモ</dt>
+      <dd v-if="newPatient.memo" class="registrationItem">
+        {{ newPatient.memo }}
+      </dd>
       <dt class="registrationTitle">患者ログインURL</dt>
       <dd class="registrationItem">
         <div class="fieldWithIcon">
@@ -17,7 +19,7 @@
             ref="loginUrl"
             class="inputFieldReadOnly"
             type="text"
-            :value="`${clientUrl}/login/${loginKey}`"
+            :value="`${clientUrl}/login/${newPatient.loginKey}`"
             readonly
           />
           <CopyIcon class="icon" @click="copyToClipboard" />
@@ -43,6 +45,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import CopyIcon from '@/static/icon-copy.svg'
+import { RegisteredPatient } from '@/types/component-interfaces/patient'
 
 @Component({
   components: {
@@ -52,14 +55,8 @@ import CopyIcon from '@/static/icon-copy.svg'
 export default class PatientRegistered extends Vue {
   clientUrl = process.env.clientUrl
 
-  @Prop({ default: '' })
-  phone!: string
-
-  @Prop({ default: '' })
-  memo?: string
-
-  @Prop({ default: '' })
-  loginKey!: string
+  @Prop({ default: () => ({ phone: '', memo: '', loginKey: '' }) })
+  newPatient!: RegisteredPatient
 
   copyToClipboard() {
     const input: HTMLInputElement = this.$refs.loginUrl as HTMLInputElement
