@@ -47,13 +47,12 @@ export default {
           curve: 'smooth',
           width: 2,
         },
-        tooltip: {
-          enabled: true,
-        },
         xaxis: {
           type: 'datetime',
           labels: {
             show: true,
+            rotate: -30,
+            rotateAlways: true,
             formatter: (val) => {
               return dayjs(val).format('MM/DD')
             },
@@ -63,6 +62,16 @@ export default {
           },
           axisTicks: {
             show: true,
+          },
+          tooltip: {
+            enabled: false,
+          },
+        },
+        tooltip: {
+          x: {
+            formatter: (val) => {
+              return dayjs(val).format('MM/DD HH:mm')
+            },
           },
         },
         yaxis: [
