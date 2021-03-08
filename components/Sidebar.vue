@@ -12,14 +12,14 @@
     </header>
     <!--    <label class="selectTitle">保健所</label>-->
     <div class="selectContainer">
-      <select v-model="selected" class="select" @change="handleChange">
-        <option value="">保健所を選択してください</option>
+      <select v-model="selected" class="select" @change="handleChangeCenter">
+        <option value="">保健所を選択</option>
         <option
           v-for="(center, index) in centers"
           :key="index"
           :value="center.centerId"
         >
-          {{ center.centerId }}
+          {{ center.centerName }}
         </option>
       </select>
     </div>
@@ -74,17 +74,33 @@ import { Center } from '@/types/component-interfaces/nurse'
   },
 })
 export default class Sidebar extends Vue {
+  centers: Center[] = []
+  selected = ''
+
+  created() {
+    if (authStore.user) {
+      nursesStore.load(authStore.user.username).then((nurse) => {
+        this.centers = nurse.manageCenters
+      })
+    } else {
+      authStore.signOut()
+      this.$router.push('/login')
+    }
+  }
+
   get centerId() {
     return nursesStore.getCenterId
+  }
+
+  handleChangeCenter() {
+    nursesStore.setCenter(this.selected)
+    this.$router.push(`/center/${this.selected}`)
   }
 
   handleLogout() {
     authStore.signOut()
     this.$router.push('/login')
   }
-
-  centers: Center[] = []
-  selected = ''
 }
 </script>
 
@@ -136,9 +152,9 @@ export default class Sidebar extends Vue {
   background: transparent;
   box-shadow: none;
   appearance: none;
-  font-size: 12px;
-  padding: 10px 16px 10px 0;
-  color: $gray-2;
+  font-size: 16px;
+  padding: 8px 16px 8px 0;
+  color: $light;
 }
 .navItem {
   padding: 16px 0;

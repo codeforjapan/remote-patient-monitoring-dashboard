@@ -3,7 +3,6 @@
     <Logo class="logoImage" />
     <div class="formArea">
       <h2 class="pageTitle">ログイン</h2>
-      <p class="message">事務局が発行したIDとパスワードを入力してください。</p>
       <div class="inputContainer">
         <InputField
           v-model="user.username"
@@ -95,9 +94,6 @@ export default class Login extends Vue {
 }
 .pageTitle {
   margin: 0 0 40px;
-  text-align: center;
-}
-.message {
   text-align: center;
 }
 .inputContainer {
