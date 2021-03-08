@@ -19,12 +19,7 @@
         :error-message="errorMessage"
         @click-register="handleRegister"
       />
-      <PatientRegistered
-        v-else
-        :phone="newPatientPhone"
-        :memo="newPatientMemo"
-        :login-key="newPatientLoginKey"
-      />
+      <PatientRegistered v-else :new-patient="newPatient" />
     </ModalBase>
     <div class="searchContainer">
       <SearchField v-model="inputSearch" />
@@ -100,10 +95,12 @@ export default class CenterId extends Vue {
   sortSelect = ''
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
-  newPatientPhone = ''
-  newPatientMemo = ''
-  newPatientLoginKey = ''
   errorMessage = ''
+  newPatient: RegisteredPatient = {
+    phone: '',
+    memo: '',
+    loginKey: '',
+  }
 
   created() {
     this.fetchPatients()
@@ -126,7 +123,7 @@ export default class CenterId extends Vue {
     })
   }
 
-  handleDisplayPatient(patient: ConsumePatient) {
+  handleDisplayPatient(patient: Patient) {
     patientsStore.update(patient).then((patient) => {
       this.patients = this.patients.filter((item) => {
         return item.patientId !== patient.patientId
@@ -142,23 +139,21 @@ export default class CenterId extends Vue {
   }
 
   handleRegister(value: { mobileTel: string; memo: string | undefined }) {
-    this.newPatientMemo = value.memo || ''
     const newPatient: ConsumePatient = {
       centerId: this.$route.params.centerId,
-      patientId: value.mobileTel,
       phone: value.mobileTel,
+      memo: value.memo,
       display: true,
     }
     patientsStore
       .create(newPatient)
       .then((patient: RegisteredPatient) => {
         this.registered = true
-        this.newPatientPhone = patient.phone
-        this.newPatientLoginKey = patient.loginKey
-        const patientItems =
-          JSON.parse(localStorage.getItem('patientItems') || '{}') || {}
-        patientItems[patient.patientId] = { memo: value.memo }
-        localStorage.setItem('patientItems', JSON.stringify(patientItems))
+        this.newPatient = {
+          phone: patient.phone,
+          memo: patient.memo,
+          loginKey: patient.loginKey,
+        }
       })
       .catch((error) => {
         this.errorMessage = error
