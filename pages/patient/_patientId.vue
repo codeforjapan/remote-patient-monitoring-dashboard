@@ -1,64 +1,56 @@
 <template>
   <div>
-    <PageHeader text="患者表示" :is-logged-in="true" />
+    <div class="pageHeader">
+      <h2 class="pageTitle">患者データ</h2>
+      <ActionButton
+        theme="outline"
+        class="backBtn"
+        size="M"
+        :is-inline="true"
+        @click="$emit('click-register')"
+      >
+        <NuxtLink class="detailItem" to="/">一覧に戻る</NuxtLink>
+      </ActionButton>
+    </div>
     <div class="patientContainer">
       <div class="patientHeader">
         <div>
           <span class="patentId">
-            患者ID：{{ patient.patientId }}（
+            患者ID：{{ patient.patientId }}
+            <EditIcon
+              :class="['editIcon', { editable: !isEditDisabled }]"
+              @click="isEditDisabled = !isEditDisabled"
+            />
+          </span>
+          <span>
             <input
               v-model="memo"
               class="memo"
               type="text"
               :disabled="isEditDisabled"
             />
-            <EditIcon
-              :class="['editIcon', { editable: !isEditDisabled }]"
+            <ActionButton
+              class="saveBtn"
+              theme="primary"
+              size="M"
+              :is-inline="true"
               @click="isEditDisabled = !isEditDisabled"
-            />
-            ）
-          </span>
-          <br />
-          <span class="monitoringTerm">
-            モニタリング期間：{{ getDate(patient.policy_accepted) }}〜現在
+            >
+              保存
+            </ActionButton>
           </span>
         </div>
         <div>
-          <ToggleSwitch
-            v-model="patient.display"
-            name="displayInDashboard"
-            label="ダッシュボード表示"
-          />
-        </div>
-        <div class="buttonsContainer">
-          <div class="buttonOuter">
-            <ActionButton theme="primary" size="M">
-              パスワードの再発行
-            </ActionButton>
-          </div>
-          <div class="buttonOuter">
-            <ActionButton theme="error" size="M">
-              この患者の情報を削除する
-            </ActionButton>
-          </div>
+          <span class="monitoringTerm">
+            モニタリング開始：{{ getDate(patient.policy_accepted) }}
+          </span>
+          <span class="dataHide"> 患者データを非表示にする </span>
         </div>
       </div>
-      <div class="patientSummary">
-        <dl class="patientSummaryList">
-          <dt class="patientSummaryTitle">最終データ取得日時</dt>
-          <dd class="patientSummaryItem">{{ getDate(lastStatus.created) }}</dd>
-          <dt class="patientSummaryTitle">SpO2</dt>
-          <dd class="patientSummaryItem">
-            {{ lastStatus.SpO2 }} <span class="unit">%</span>
-          </dd>
-          <dt class="patientSummaryTitle">脈拍</dt>
-          <dd class="patientSummaryItem">
-            {{ lastStatus.pulse }} <span class="unit">bpm</span>
-          </dd>
-        </dl>
+      <div class="patientGraphLayout">
         <PatientGraph />
       </div>
-      <SymptomsHistory :statuses="patient.statuses" />
+      <SymptomsHistory class="symptomsHistory" :statuses="patient.statuses" />
     </div>
   </div>
 </template>
@@ -68,21 +60,18 @@ import { Component, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 import { Patient } from '@/types/component-interfaces/patient'
 import { Status } from '@/types/component-interfaces/status'
-import PageHeader from '@/components/PageHeader.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import SymptomsHistory from '@/components/SymptomsHistory.vue'
 import EditIcon from '@/static/icon-edit.svg'
-import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import { patientsStore } from '@/store'
 
 @Component({
   name: 'patientId',
   components: {
-    PageHeader,
     ActionButton,
     SymptomsHistory,
     EditIcon,
-    ToggleSwitch,
+    // ToggleSwitch,
   },
 })
 export default class PatientId extends Vue {
@@ -146,57 +135,67 @@ export default class PatientId extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.searchField {
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 16px;
+}
+.pageTitle {
+  font-size: 24px;
+}
+.backBtn {
+  padding: 12.8px 40px;
 }
 .patientContainer {
   background-color: $white;
-  border: 1px solid $gray-3;
+  border: none;
   border-radius: 8px;
   overflow: hidden;
 }
 .patientHeader {
-  display: flex;
-  justify-content: space-between;
+  //display: flex;
+  //justify-content: space-between;
   padding: 32px;
 }
-.patentId,
-.memo {
+.patentId {
   font-size: 20px;
   font-weight: bold;
 }
 .editIcon {
-  fill: $link;
+  display: inline-block;
+  margin-left: 16px;
+  fill: $gray-3;
   &.editable {
-    fill: $gray-3;
+    fill: $link;
   }
 }
+.memo {
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 5px 0;
+}
+
+.saveBtn {
+  display: inline-block;
+  padding: 8px 18px;
+}
+
 .monitoringTerm {
   font-size: 12px;
   color: $gray-3;
 }
-.buttonsContainer {
-  flex: 0 0 38%;
-  display: flex;
-  align-items: center;
+.dataHide {
+  display: inline-block;
+  margin-left: 16px;
+  font-size: 14px;
+  color: $primary;
+  text-decoration: underline;
+  cursor: pointer;
 }
-.buttonOuter {
-  flex: 0 0 45%;
-  margin-right: 5%;
-  height: 100%;
-  button {
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: 0.5em 1em;
-  }
-}
-.patientSummary {
-  display: flex;
-}
-.patientSummaryList {
-  text-align: center;
-  margin-right: 30px;
+.patientGraphLayout {
+  padding: 0 32px;
 }
 .patientSummaryTitle {
   font-size: 16px;
@@ -213,5 +212,8 @@ export default class PatientId extends Vue {
   .unit {
     font-size: 14px;
   }
+}
+.symptomsHistory {
+  padding: 32px;
 }
 </style>

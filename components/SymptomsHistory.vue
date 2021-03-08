@@ -1,16 +1,23 @@
 <template>
   <section>
-    <h3 class="symptomsHistoryTitle">症状履歴</h3>
     <table class="symptomsHistoryTable">
       <thead>
         <tr class="symptomsHistoryRow symptomsHistoryHeader">
-          <th>最終更新</th>
-          <th>せき</th>
-          <th>たん</th>
-          <th>息苦しさ</th>
-          <th>頭痛</th>
-          <th>のどの痛み</th>
-          <th>その他連絡事項</th>
+          <th>記録日時</th>
+          <th>
+            SpO2
+            <LiftAndLowerIcon />
+          </th>
+          <th>
+            体温
+            <LiftAndLowerIcon />
+          </th>
+          <th>
+            脈拍
+            <LiftAndLowerIcon />
+          </th>
+          <th>症状</th>
+          <th>症状</th>
         </tr>
       </thead>
       <tbody>
@@ -20,22 +27,11 @@
           class="symptomsHistoryRow"
         >
           <td class="alignLeft">{{ getDate(item.created) }}</td>
-          <td>
-            <SymptomsStatusText :is-active="item.symptom.cough" />
-          </td>
-          <td>
-            <SymptomsStatusText :is-active="item.symptom.phlegm" />
-          </td>
-          <td>
-            <SymptomsStatusText :is-active="item.symptom.suffocation" />
-          </td>
-          <td>
-            <SymptomsStatusText :is-active="item.symptom.headache" />
-          </td>
-          <td>
-            <SymptomsStatusText :is-active="item.symptom.sore_throat" />
-          </td>
-          <td class="alignLeft">{{ item.symptom.remarks }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -46,11 +42,15 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
 import { Status } from '@/types/component-interfaces/status'
-import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
+// import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
+// import SymptomsStatus from '@/components/SymptomsStatus.vue'
+import LiftAndLowerIcon from '@/static/icon-liftAndLower.svg'
 
 export default Vue.extend({
   components: {
-    SymptomsStatusText,
+    // SymptomsStatusText,
+    // SymptomsStatus,
+    LiftAndLowerIcon,
   },
   props: {
     statuses: {
@@ -80,29 +80,31 @@ export default Vue.extend({
   width: 100%;
   font-size: 16px;
   tbody tr {
-    border-bottom: 1px solid $gray-3;
-    &:last-child {
-      border: none;
-    }
+    border-bottom: 1px solid $gray-1;
+    padding: 16px 0;
   }
 }
 .symptomsHistoryRow {
   display: grid;
-  grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr 35%;
+  grid-template-columns: 120px 1fr 1fr 1fr 24% 35%;
   grid-template-rows: auto;
-  padding: 0 12px;
-  td,
-  th {
+  padding: 0 12px 0 0;
+  td {
     text-align: center;
     align-self: center;
     padding: 8px 4px;
+  }
+  th {
+    text-align: left;
+    align-self: center;
+    padding: 8px 4px;
+
     &.alignLeft {
       text-align: left;
     }
   }
 }
 .symptomsHistoryHeader {
-  color: $gray-3;
-  border-bottom: 1px solid $gray-3;
+  color: $gray-2;
 }
 </style>
