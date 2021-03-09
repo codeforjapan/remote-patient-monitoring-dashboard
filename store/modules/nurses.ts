@@ -10,10 +10,6 @@ import { Nurse } from '@/types/component-interfaces/nurse'
 class NursesModule extends VuexModule {
   private centerId = ''
 
-  public get getCenterId(): string {
-    return this.centerId
-  }
-
   @Mutation
   public setCenterId(centerId: string): void {
     this.centerId = centerId
@@ -37,7 +33,7 @@ class NursesModule extends VuexModule {
     )
   }
 
-  @Action({ rawError: true })
+  @Action
   setCenter(centerId: string): void {
     this.context.commit('setCenterId', centerId)
   }
