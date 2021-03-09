@@ -23,8 +23,8 @@
     </ModalBase>
     <div class="searchContainer">
       <SearchField v-model="inputSearch" />
-      <SortSelect v-model="sortSelect" />
-      <HiddenSelect v-model="displaySelect" @input="handleSelect" />
+      <SortSelect v-model="sortSelect" @input="handleSortSelect" />
+      <HiddenSelect v-model="displaySelect" @input="handleDisplaySelect" />
     </div>
     <div class="overviewContainer">
       <table class="overviewTable">
@@ -45,6 +45,7 @@
         <tbody>
           <template v-for="(patient, index) in patients">
             <PatientOverview
+              v-if="patient.policy_accepted"
               :key="index"
               :patient="patient"
               @click="handleDisplayPatient"
@@ -92,7 +93,7 @@ export default class CenterId extends Vue {
   showModal = false
   registered = false
   inputSearch = ''
-  sortSelect = ''
+  sortSelect = 'policy-accepted-desc'
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
   errorMessage = ''
@@ -115,11 +116,27 @@ export default class CenterId extends Vue {
 
   fetchPatients() {
     patientsStore.load(this.$route.params.centerId).then((patients) => {
-      this.patients = patients.filter((item) => {
-        return this.displaySelect === 'show-only-display-true'
-          ? item.display
-          : !item.display
-      })
+      this.patients = patients
+        .filter((item) => {
+          return this.displaySelect === 'show-only-display-true'
+            ? item.display
+            : !item.display
+        })
+        .sort((a: Patient, b: Patient) => {
+          const patientA = Date.parse(a.policy_accepted)
+          const patientB = Date.parse(b.policy_accepted)
+
+          if (!patientA) {
+            return 1
+          } else if (!patientB) {
+            return -1
+          } else if (this.sortSelect === 'policy-accepted-desc') {
+            return patientA < patientB ? 1 : -1
+          } else if (this.sortSelect === 'policy-accepted-asc') {
+            return patientA < patientB ? -1 : 1
+          }
+          return 0
+        })
     })
   }
 
@@ -132,7 +149,25 @@ export default class CenterId extends Vue {
     })
   }
 
-  handleSelect(value: string) {
+  handleSortSelect(value: string) {
+    this.patients.sort((a: Patient, b: Patient) => {
+      const patientA = Date.parse(a.policy_accepted)
+      const patientB = Date.parse(b.policy_accepted)
+
+      if (!patientA) {
+        return 1
+      } else if (!patientB) {
+        return -1
+      } else if (value === 'policy-accepted-desc') {
+        return patientA < patientB ? 1 : -1
+      } else if (value === 'policy-accepted-asc') {
+        return patientA < patientB ? -1 : 1
+      }
+      return 0
+    })
+  }
+
+  handleDisplaySelect(value: string) {
     this.patients = patientsStore.getPatients.filter((item) => {
       return value === 'show-only-display-true' ? item.display : !item.display
     })
