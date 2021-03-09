@@ -167,10 +167,8 @@ export default class CenterId extends Vue {
     })
   }
 
-  handleDisplaySelect(value: string) {
-    this.patients = patientsStore.getPatients.filter((item) => {
-      return value === 'show-only-display-true' ? item.display : !item.display
-    })
+  handleDisplaySelect() {
+    this.fetchPatients()
   }
 
   handleRegister(value: { mobileTel: string; memo: string | undefined }) {
