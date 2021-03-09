@@ -3,9 +3,7 @@
     <header>
       <h1 class="title">
         <NuxtLink to="/" class="titleLink">
-          <span>
-            <Logo />
-          </span>
+          <Logo class="logoImage" />
           <span class="titleText">遠隔療養者<br />モニタリングシステム</span>
         </NuxtLink>
       </h1>
@@ -115,6 +113,10 @@ export default class Sidebar extends Vue {
   &:focus {
     outline: dotted $gray-2 1px;
   }
+}
+.logoImage {
+  width: 38px;
+  padding-top: 4px;
 }
 .titleText {
   font-size: 14px;
