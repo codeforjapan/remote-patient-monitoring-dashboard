@@ -65,14 +65,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
-import { Patient } from '~/types/component-interfaces/patient'
-import ActionButton from '~/components/ActionButton.vue'
-import SymptomsHistory from '~/components/SymptomsHistory.vue'
-import InputField from '~/components/InputField.vue'
-import EditIcon from '~/static/icon-edit.svg'
-import SaveIcon from '~/static/icon-save.svg'
-import CloseIcon from '~/static/icon-close.svg'
-import { patientsStore } from '~/store'
+import { Patient } from '@/types/component-interfaces/patient'
+import ActionButton from '@/components/ActionButton.vue'
+import SymptomsHistory from '@/components/SymptomsHistory.vue'
+import InputField from '@/components/InputField.vue'
+import EditIcon from '@/static/icon-edit.svg'
+import SaveIcon from '@/static/icon-save.svg'
+import CloseIcon from '@/static/icon-close.svg'
+import { patientsStore } from '@/store'
 
 @Component({
   name: 'patientId',
