@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { AuthUser } from '~/types/auth'
 
-const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
+const API_URL = process.env.apiUrl
 
 class AuthService {
   login(username: string, password: string): Promise<AuthUser> {

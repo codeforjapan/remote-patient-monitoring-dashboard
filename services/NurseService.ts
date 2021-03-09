@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Nurse } from '@/types/component-interfaces/nurse'
 import authHeader from './auth-header'
 
-const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
+const API_URL = process.env.apiUrl
 
 class NurseService {
   async getNurseInfo(nurseId: string): Promise<Nurse> {
