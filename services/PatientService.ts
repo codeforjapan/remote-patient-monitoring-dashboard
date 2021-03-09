@@ -7,7 +7,7 @@ import {
   UpdatePatient,
 } from '~/types/component-interfaces/patient'
 
-const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
+const API_URL = process.env.apiUrl
 
 class PatientService {
   async getPatients(centerId: string): Promise<Patient[]> {

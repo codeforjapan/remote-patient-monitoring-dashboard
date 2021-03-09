@@ -3,7 +3,7 @@ import authHeader from './auth-header'
 import { Status, ConsumeStatus } from '~/types/component-interfaces/status'
 import { AuthUser } from '~/types/auth'
 
-const API_URL = 'https://monitoring.stopcovid19.jp/stg/api/nurse/'
+const API_URL = process.env.apiUrl
 
 class UserService {
   async getUserInfo() {
