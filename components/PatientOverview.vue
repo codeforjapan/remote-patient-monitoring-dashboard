@@ -98,7 +98,7 @@
         theme="outline"
         size="S"
         :is-inline="true"
-        :to="`/patient/${patient.patientId}`"
+        :to="`/center/${patient.centerId}/patient/${patient.patientId}`"
       >
         詳細をみる
       </ActionButton>

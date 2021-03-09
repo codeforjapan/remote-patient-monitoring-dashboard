@@ -16,7 +16,7 @@
       <div class="patientHeader">
         <div>
           <span class="patentId">
-            患者ID：
+            患者メモ：
             <InputField
               v-model="memoValue"
               class="memo"
@@ -33,6 +33,7 @@
             </span>
           </span>
         </div>
+        <div v-if="!patient.memo">患者ID：{{ patient.patientId }}</div>
         <div>
           <span class="monitoringTerm">
             モニタリング開始：{{ getDate(patient.policy_accepted) }}
@@ -71,7 +72,7 @@ import InputField from '@/components/InputField.vue'
 import EditIcon from '@/static/icon-edit.svg'
 import SaveIcon from '@/static/icon-save.svg'
 import CloseIcon from '@/static/icon-close.svg'
-import { nursesStore, patientsStore } from '@/store'
+import { patientsStore } from '@/store'
 
 @Component({
   name: 'patientId',
@@ -98,33 +99,22 @@ export default class PatientId extends Vue {
   }
 
   created() {
-    if (patientsStore.getPatients.length > 0) {
-      this.patient = patientsStore.getPatients.find(
-        (patient) => patient.patientId === this.$route.params.patientId,
-      )!
-      this.currentMemoValue = this.patient.memo || ''
-    } else {
-      patientsStore
-        .loadPatient(this.$route.params.patientId)
-        .then((patient) => {
-          this.patient = patient
-          this.currentMemoValue = this.patient.memo || ''
-        })
-    }
+    patientsStore.loadPatient(this.$route.params.patientId).then((patient) => {
+      this.patient = patient
+      this.currentMemoValue = patient.memo || ''
+    })
   }
 
   get centerId() {
-    return nursesStore.getCenterId
+    return this.$route.params.centerId
   }
 
   get memoValue() {
-    return this.patient.memo
+    return patientsStore.getPatientMemo
   }
 
   set memoValue(value) {
-    if (value) {
-      patientsStore.updatePatientMemo(value)
-    }
+    patientsStore.setPatient(value || '')
   }
 
   getDate(date: string): string {
@@ -136,7 +126,7 @@ export default class PatientId extends Vue {
       .update({ ...this.patient, memo: this.memoValue })
       .then((patient) => {
         this.patient.memo = patient.memo
-        this.currentMemoValue = patient.memo!
+        this.currentMemoValue = patient.memo || ''
         this.isEditDisabled = true
       })
   }
