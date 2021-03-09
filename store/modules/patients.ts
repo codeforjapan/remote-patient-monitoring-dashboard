@@ -28,6 +28,10 @@ class PatientsModule extends VuexModule {
     return this.patients
   }
 
+  public get getPatientMemo(): string | undefined {
+    return this.patient.memo
+  }
+
   @Mutation
   public loadSuccess(patients: Patient[]): void {
     this.patients = patients
@@ -39,7 +43,7 @@ class PatientsModule extends VuexModule {
   }
 
   @Mutation
-  public updatePatientMemo(memo: string): void {
+  public setPatientMemo(memo: string): void {
     this.patient.memo = memo
   }
 
@@ -117,6 +121,7 @@ class PatientsModule extends VuexModule {
   update(patient: UpdatePatient): Promise<UpdatePatient> {
     return PatientService.putPatient(patient.patientId, patient).then(
       (patient) => {
+        this.context.commit('loadPatientSuccess', patient)
         return Promise.resolve(patient)
       },
       (error) => {
@@ -129,6 +134,11 @@ class PatientsModule extends VuexModule {
         return Promise.reject(message)
       },
     )
+  }
+
+  @Action
+  setPatient(memo: string): void {
+    this.context.commit('setPatientMemo', memo)
   }
 }
 
