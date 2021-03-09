@@ -82,11 +82,14 @@ export default class Login extends Vue {
 .logoImage {
   display: block;
   margin: 0 auto;
+  max-width: 108px;
+  width: 100%;
+  filter: drop-shadow(0 0 20px rgba(196, 198, 204, 0.3));
 }
 .formArea {
   max-width: 600px;
   width: 100%;
-  margin: 40px auto 0;
+  margin: 48px auto 40px;
   padding: 56px 80px;
   background: $white;
   border-radius: 10px;
