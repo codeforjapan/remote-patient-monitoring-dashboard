@@ -87,7 +87,7 @@ export default class Sidebar extends Vue {
   }
 
   get centerId() {
-    return nursesStore.getCenterId
+    return this.$route.params.centerId
   }
 
   handleChangeCenter() {
