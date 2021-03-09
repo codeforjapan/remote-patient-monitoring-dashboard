@@ -22,25 +22,25 @@ export default Vue.extend({
     return {
       items: [
         {
-          slug: 'latest',
-          text: '開始日が早い順',
+          slug: 'policy-accepted-desc',
+          text: '開始日が近い順',
         },
         {
-          slug: 'tmp-latest', // たぶん、これが 'latest' なのでは?
-          text: '開始日が遅い順',
+          slug: 'policy-accepted-asc',
+          text: '開始日が遠い順',
         },
-        {
-          slug: 'severity',
-          text: 'SpO2が低い順',
-        },
-        {
-          slug: 'reporting-latest',
-          text: '最新更新日順',
-        },
-        {
-          slug: 'remark-latest',
-          text: '備考記録日順',
-        },
+        // {
+        //   slug: 'severity',
+        //   text: 'SpO2が低い順',
+        // },
+        // {
+        //   slug: 'reporting-latest',
+        //   text: '最新更新日順',
+        // },
+        // {
+        //   slug: 'remark-latest',
+        //   text: '備考記録日順',
+        // },
       ],
     }
   },
