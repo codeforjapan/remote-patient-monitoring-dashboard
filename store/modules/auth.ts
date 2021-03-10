@@ -20,7 +20,7 @@ export default class AuthModule extends VuexModule {
   get isExpired(): boolean {
     if (!this.user) return false
     const payload: any = JSON.parse(atob(this.user!.idToken.split('.')[1]!))
-    return new Date().getSeconds() < payload.exp
+    return new Date().getSeconds() > payload.exp
   }
 
   @Mutation
