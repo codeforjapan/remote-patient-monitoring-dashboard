@@ -44,7 +44,7 @@ export default {
         },
         colors: ['#FF8000', '#03AF7A', '#05A'],
         stroke: {
-          curve: 'smooth',
+          curve: 'straight',
           width: 2,
         },
         xaxis: {

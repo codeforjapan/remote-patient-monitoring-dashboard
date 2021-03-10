@@ -36,7 +36,7 @@ export default {
         },
         colors: ['#FF8000', '#03AF7A', '#05A'],
         stroke: {
-          curve: 'smooth',
+          curve: 'straight',
           width: 2,
         },
         xaxis: {
@@ -46,7 +46,7 @@ export default {
             rotate: -30,
             rotateAlways: true,
             formatter: (val) => {
-              return dayjs(val).format('MM/DD')
+              return dayjs(val).format('MM/DD HH:mm')
             },
           },
           axisBorder: {
