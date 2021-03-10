@@ -36,17 +36,17 @@ export default {
         },
         colors: ['#FF8000', '#03AF7A', '#05A'],
         stroke: {
-          curve: 'smooth',
+          curve: 'straight',
           width: 2,
         },
         xaxis: {
-          type: 'datetime',
+          type: 'numeric',
           labels: {
             show: true,
             rotate: -30,
             rotateAlways: true,
             formatter: (val) => {
-              return dayjs(val).format('MM/DD')
+              return dayjs(val).format('MM/DD HH:mm')
             },
           },
           axisBorder: {
@@ -130,19 +130,20 @@ export default {
   },
   computed: {
     series() {
-      const bodyTemperatures = this.patient.statuses.map((status) => {
+      const reverseItems = this.patient.statuses.slice().reverse()
+      const bodyTemperatures = reverseItems.map((status) => {
         return {
           x: status.created,
           y: status.body_temperature.toFixed(1),
         }
       })
-      const spO2s = this.patient.statuses.map((status) => {
+      const spO2s = reverseItems.map((status) => {
         return {
           x: status.created,
           y: status.SpO2,
         }
       })
-      const pulses = this.patient.statuses.map((status) => {
+      const pulses = reverseItems.map((status) => {
         return {
           x: status.created,
           y: status.pulse,
