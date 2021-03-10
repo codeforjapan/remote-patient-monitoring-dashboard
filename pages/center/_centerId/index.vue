@@ -68,7 +68,7 @@ import PatientOverview from '@/components/PatientOverview.vue'
 import SearchField from '@/components/SearchField.vue'
 import SortSelect from '@/components/SortSelect.vue'
 import HiddenSelect from '@/components/HiddenSelect.vue'
-import { patientsStore } from '@/store'
+import { authStore, patientsStore } from '@/store'
 import {
   Patient,
   ConsumePatient,
@@ -105,7 +105,15 @@ export default class CenterId extends Vue {
 
   created() {
     this.fetchPatients()
-    this.timer = setInterval(this.fetchPatients, 300000)
+    this.timer = setInterval(() => {
+      if (authStore.isExpired) {
+        authStore.refreshToken().then(() => {
+          this.fetchPatients()
+        })
+      } else {
+        this.fetchPatients()
+      }
+    }, 300000)
   }
 
   beforeDestroy() {
