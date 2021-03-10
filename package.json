@@ -27,7 +27,7 @@
     "axios": "0.21.1",
     "core-js": "3.9.1",
     "dayjs": "1.10.4",
-    "nuxt": "2.15.2",
+    "nuxt": "2.15.3",
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
     "vue": "2.6.12",
@@ -36,7 +36,7 @@
     "vuex-module-decorators": "1.0.1"
   },
   "devDependencies": {
-    "@nuxt/types": "2.15.2",
+    "@nuxt/types": "2.15.3",
     "@nuxt/typescript-build": "2.1.0",
     "@nuxtjs/axios": "5.13.1",
     "@nuxtjs/eslint-config": "6.0.0",
