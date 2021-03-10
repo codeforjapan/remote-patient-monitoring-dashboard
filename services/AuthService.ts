@@ -19,6 +19,21 @@ class AuthService {
       })
   }
 
+  refreshToken(refreshToken: string): Promise<AuthUser> {
+    return axios
+      .post(API_URL + 'login', {
+        refreshToken,
+      })
+      .then((response) => {
+        if (response.data.idToken) {
+          const user = JSON.parse(localStorage.getItem('user')!)
+          user.idToken = response.data.idToken
+          localStorage.setItem('user', JSON.stringify(user))
+        }
+        return response.data
+      })
+  }
+
   logout() {
     localStorage.removeItem('user')
   }
