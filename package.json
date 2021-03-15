@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "apexcharts": "3.25.0",
+    "apexcharts": "3.26.0",
     "axios": "0.21.1",
     "core-js": "3.9.1",
     "dayjs": "1.10.4",
