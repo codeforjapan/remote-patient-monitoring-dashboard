@@ -35,11 +35,7 @@
             <th>患者ID</th>
             <th>最終更新</th>
             <th>SpO2</th>
-            <th class="overviewLabel">
-              <span class="sp02">SpO2</span>
-              <span class="temp">体温</span>
-              <span class="pulse">脈拍</span>
-            </th>
+            <th></th>
             <th>症状</th>
             <th></th>
           </tr>
@@ -249,7 +245,6 @@ export default class CenterId extends Vue {
   border-spacing: 0;
   tbody tr {
     border-bottom: 1px solid $gray-3;
-    padding: 8px 0;
     &:last-child {
       border: none;
     }
@@ -257,30 +252,16 @@ export default class CenterId extends Vue {
 }
 .overviewTableHeader {
   display: grid;
-  grid-template-columns: 8em 8em 6em 1fr 13% 8em;
+  grid-template-columns: 8em 6em 4em 1fr 20% 7em;
   grid-template-rows: auto;
   font-size: 16px;
   color: $gray-3;
   border-bottom: 1px solid $gray-3;
   padding: 8px 0;
   text-align: left;
-  text-indent: 16px;
+  text-indent: 8px;
   th {
     font-weight: 600;
-  }
-}
-.overviewLabel {
-  font-size: 12px;
-  font-weight: 400;
-  align-self: center;
-  .sp02 {
-    color: $primary;
-  }
-  .temp {
-    color: $tertiary;
-  }
-  .pulse {
-    color: $secondary;
   }
 }
 </style>
