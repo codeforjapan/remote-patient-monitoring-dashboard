@@ -16,7 +16,9 @@
     <ModalBase :show="showModal" @close="closeModal">
       <PatientRegister
         v-if="!registered"
+        :is-processing="isProcessing"
         :error-message="errorMessage"
+        @input-tel="handleInputTel"
         @click-register="handleRegister"
       />
       <PatientRegistered v-else :new-patient="newPatient" />
@@ -96,6 +98,7 @@ export default class CenterId extends Vue {
   sortSelect = 'policy-accepted-desc'
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
+  isProcessing = false
   errorMessage = ''
   newPatient: RegisteredPatient = {
     phone: '',
@@ -179,26 +182,41 @@ export default class CenterId extends Vue {
     this.fetchPatients()
   }
 
+  handleInputTel() {
+    this.errorMessage = ''
+  }
+
   handleRegister(value: { mobileTel: string; memo: string | undefined }) {
-    const newPatient: ConsumePatient = {
-      centerId: this.$route.params.centerId,
-      phone: value.mobileTel,
-      memo: value.memo,
-      display: true,
+    this.isProcessing = true
+    const phoneNumber = value.mobileTel.replace(/-/g, '')
+    if (phoneNumber.match(/^\d{11}$/)) {
+      const newPatient: ConsumePatient = {
+        centerId: this.$route.params.centerId,
+        phone: phoneNumber,
+        memo: value.memo,
+        display: true,
+      }
+      patientsStore
+        .create(newPatient)
+        .then((patient: RegisteredPatient) => {
+          this.registered = true
+          this.newPatient = {
+            phone: patient.phone,
+            memo: patient.memo,
+            loginKey: patient.loginKey,
+          }
+        })
+        .catch((error) => {
+          this.errorMessage = error
+        })
+        .finally(() => {
+          this.isProcessing = false
+        })
+    } else {
+      this.isProcessing = false
+      this.errorMessage =
+        '電話番号が不正です。桁数の過不足あるいは数字以外を入力していませんか？'
     }
-    patientsStore
-      .create(newPatient)
-      .then((patient: RegisteredPatient) => {
-        this.registered = true
-        this.newPatient = {
-          phone: patient.phone,
-          memo: patient.memo,
-          loginKey: patient.loginKey,
-        }
-      })
-      .catch((error) => {
-        this.errorMessage = error
-      })
   }
 
   closeModal() {
