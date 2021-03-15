@@ -118,7 +118,7 @@ export default class PatientId extends Vue {
   }
 
   getDate(date: string): string {
-    return dayjs(date).format('MM/DD HH:mm')
+    return dayjs(date).format('M/D (ddd) HH:mm')
   }
 
   updateMemo() {

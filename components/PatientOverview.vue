@@ -7,8 +7,9 @@
     ]"
   >
     <td>
-      <span>{{ patient.memo ? patient.memo : patient.patientId }}</span>
-      <br />
+      <div class="patientId">
+        {{ patient.memo ? patient.memo : patient.patientId }}
+      </div>
       <time class="date">
         {{
           patient.policy_accepted ? getDate(patient.policy_accepted) : '--:--'
@@ -126,8 +127,8 @@ import ActionButton from '@/components/ActionButton.vue'
   },
 })
 export default class PatientOverview extends Vue {
-  isOutdated = false
-  isAlerted = false
+  outdatedDay = 1
+  SpO2Threshold = 95
   defaultStatus: Status | undefined = {
     statusId: '',
     patientId: '',
@@ -156,8 +157,18 @@ export default class PatientOverview extends Vue {
       : this.defaultStatus
   }
 
+  get isOutdated(): boolean {
+    const lastUpdated = dayjs(this.lastStatus?.created)
+    const now = dayjs()
+    return now.diff(lastUpdated, 'day') >= this.outdatedDay
+  }
+
+  get isAlerted(): boolean {
+    return this.lastStatus ? this.lastStatus?.SpO2 <= this.SpO2Threshold : false
+  }
+
   getDate(date: string): string {
-    return dayjs(date).format('MM/DD HH:mm')
+    return dayjs(date).format('M/D (ddd) HH:mm')
   }
 }
 </script>
@@ -165,12 +176,12 @@ export default class PatientOverview extends Vue {
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 8em 8em 6em 1fr 13% 8em;
+  grid-template-columns: 8em 6em 4em 1fr 20% 7em;
   grid-template-rows: auto;
   font-size: 16px;
   td {
     align-self: center;
-    padding: 0 16px;
+    padding: 0 8px;
   }
   &.outdated {
     background-color: $gray-1;
@@ -178,6 +189,11 @@ export default class PatientOverview extends Vue {
   &.alerted {
     background-color: $bg-red;
   }
+}
+.patientId {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .spo2 {
   font-size: 32px;
@@ -204,10 +220,13 @@ export default class PatientOverview extends Vue {
   }
 }
 .graph {
-  text-align: right;
+  position: relative;
 }
 .symptoms {
-  display: inline-block;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  display: block;
   border: 1px solid $secondary;
   border-radius: 14px;
   font-size: 10px;

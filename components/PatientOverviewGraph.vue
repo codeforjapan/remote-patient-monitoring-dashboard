@@ -3,7 +3,7 @@
     <client-only>
       <Apexcharts
         type="line"
-        height="130px"
+        height="180px"
         :options="chartOptions"
         :series="series"
       />
@@ -26,6 +26,7 @@ export default {
       chartOptions: {
         chart: {
           type: 'line',
+          parentHeightOffset: 0,
           zoom: {
             enabled: false,
           },
@@ -33,14 +34,15 @@ export default {
             show: false,
           },
           animations: {
-            easing: 'linear',
-            dynamicAnimation: {
-              speed: 100,
-            },
+            enabled: false,
           },
         },
         legend: {
-          show: false,
+          position: 'top',
+          horizontalAlign: 'left',
+          inverseOrder: true,
+          fontSize: '11px',
+          offsetY: 20,
         },
         colors: ['#FF8000', '#03AF7A', '#05A'],
         stroke: {
@@ -54,7 +56,7 @@ export default {
             rotate: -30,
             rotateAlways: true,
             formatter: (val) => {
-              return dayjs(val).format('MM/DD')
+              return dayjs(val).format('M/D (ddd)')
             },
           },
           axisBorder: {
@@ -70,7 +72,7 @@ export default {
         tooltip: {
           x: {
             formatter: (val) => {
-              return dayjs(val).format('MM/DD HH:mm')
+              return dayjs(val).format('M/D (ddd) HH:mm')
             },
           },
         },
@@ -87,10 +89,6 @@ export default {
                 colors: ['#FF8000'],
               },
             },
-            title: {
-              enabled: false,
-              show: false,
-            },
             min: 40,
             max: 150,
           },
@@ -102,13 +100,10 @@ export default {
             labels: {
               minWidth: 0,
               maxWidth: 40,
+              offsetX: 15,
               style: {
                 colors: ['#03AF7A'],
               },
-            },
-            title: {
-              enabled: false,
-              show: false,
             },
             min: 34,
             max: 40,
@@ -121,13 +116,10 @@ export default {
             labels: {
               minWidth: 0,
               maxWidth: 40,
+              offsetX: 30,
               style: {
                 colors: ['#05A'],
               },
-            },
-            title: {
-              enabled: false,
-              show: false,
             },
             min: 90,
             max: 100,

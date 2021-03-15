@@ -70,7 +70,7 @@ export default Vue.extend({
   },
   methods: {
     getDate(date: string): string {
-      return dayjs(date).format('MM/DD HH:mm')
+      return dayjs(date).format('M/D (ddd) HH:mm')
     },
   },
 })
@@ -91,13 +91,13 @@ export default Vue.extend({
 }
 .symptomsHistoryRow {
   display: grid;
-  grid-template-columns: 7em 5em 5em 5em 1fr 22%;
+  grid-template-columns: 9em 5em 5em 5em 1fr 28%;
   grid-template-rows: auto;
   padding: 0 12px 0 0;
   td,
   th {
     align-self: center;
-    padding: 8px 4px;
+    padding: 0 4px;
     &.alignCenter {
       text-align: center;
     }

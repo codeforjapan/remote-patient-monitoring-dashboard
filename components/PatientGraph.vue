@@ -28,6 +28,9 @@ export default {
           toolbar: {
             show: false,
           },
+          animations: {
+            enabled: false,
+          },
         },
         legend: {
           position: 'top',
@@ -46,7 +49,7 @@ export default {
             rotate: -30,
             rotateAlways: true,
             formatter: (val) => {
-              return dayjs(val).format('MM/DD HH:mm')
+              return dayjs(val).format('M/D (ddd) HH:mm')
             },
           },
           axisBorder: {
@@ -62,7 +65,7 @@ export default {
         tooltip: {
           x: {
             formatter: (val) => {
-              return dayjs(val).format('MM/DD HH:mm')
+              return dayjs(val).format('M/D (ddd) HH:mm')
             },
           },
         },
