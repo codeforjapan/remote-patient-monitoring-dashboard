@@ -23,7 +23,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .statusText {
-  font-weight: bold;
+  font-weight: 600;
   color: $gray-2;
   &.active {
     color: $notice;

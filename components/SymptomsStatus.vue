@@ -24,6 +24,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .symptomsText {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
 }
 </style>

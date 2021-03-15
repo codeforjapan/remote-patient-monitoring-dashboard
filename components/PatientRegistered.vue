@@ -72,7 +72,7 @@ export default class PatientRegistered extends Vue {
   margin: 24px 0 8px;
 }
 .registrationItem {
-  font-weight: 700;
+  font-weight: 600;
   margin-left: 0;
 }
 .registrationMessage {

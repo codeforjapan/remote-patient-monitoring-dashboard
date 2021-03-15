@@ -181,7 +181,7 @@ export default class PatientOverview extends Vue {
 }
 .spo2 {
   font-size: 32px;
-  font-weight: bold;
+  font-weight: 600;
 }
 .statusItem {
   width: 100%;

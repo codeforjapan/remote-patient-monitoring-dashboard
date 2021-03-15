@@ -70,7 +70,7 @@ export default class ActionButton extends Vue {
 .actionButton {
   display: inline-block;
   width: 100%;
-  font-weight: bold;
+  font-weight: 600;
   padding: 0.8em 1em;
   border-radius: 0.5em;
   border: none;
