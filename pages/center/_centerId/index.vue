@@ -265,6 +265,9 @@ export default class CenterId extends Vue {
   padding: 8px 0;
   text-align: left;
   text-indent: 16px;
+  th {
+    font-weight: 600;
+  }
 }
 .overviewLabel {
   font-size: 12px;
