@@ -167,7 +167,7 @@ export default class PatientId extends Vue {
 }
 .patentId {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
 }
 .icon {
   display: inline-block;
@@ -204,13 +204,13 @@ export default class PatientId extends Vue {
 }
 .patientSummaryTitle {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   color: $gray-3;
   padding-top: 24px;
 }
 .patientSummaryItem {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 600;
   margin: 0;
   padding: 16px;
   border-bottom: 1px solid $gray-3;
