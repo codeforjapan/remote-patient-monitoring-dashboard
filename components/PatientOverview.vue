@@ -3,7 +3,7 @@
     :class="[
       'patientOverview',
       { outdated: isOutdated },
-      { alerted: isAlerted },
+      { alerted: isAlertedSpO2 },
     ]"
   >
     <td>
@@ -36,19 +36,19 @@
         {{ lastStatus.created ? getDate(lastStatus.created) : '--:--' }}
       </time>
       <div class="withIconItem">
-        <span class="icon">
+        <span :class="['icon', { alerted: isAlertedBodyTemperature }]">
           <TemperatureIcon />
         </span>
         {{ lastStatus.body_temperature.toFixed(1) }}
       </div>
       <div class="withIconItem">
-        <span class="icon">
+        <span :class="['icon', { alerted: isAlertedPulse }]">
           <HeartIcon />
         </span>
         {{ lastStatus.pulse }}
       </div>
     </td>
-    <td class="spo2">{{ lastStatus.SpO2 }}</td>
+    <td :class="['spo2', { alerted: isAlertedSpO2 }]">{{ lastStatus.SpO2 }}</td>
     <td class="graph">
       <div
         v-if="
@@ -129,6 +129,9 @@ import ActionButton from '@/components/ActionButton.vue'
 export default class PatientOverview extends Vue {
   outdatedDay = 1
   SpO2Threshold = 95
+  bodyTemperatureThreshold = 38.5
+  pulseThresholdUnder = 60
+  pulseThresholdUpper = 100
   defaultStatus: Status | undefined = {
     statusId: '',
     patientId: '',
@@ -163,8 +166,21 @@ export default class PatientOverview extends Vue {
     return now.diff(lastUpdated, 'day') >= this.outdatedDay
   }
 
-  get isAlerted(): boolean {
+  get isAlertedSpO2(): boolean {
     return this.lastStatus ? this.lastStatus?.SpO2 <= this.SpO2Threshold : false
+  }
+
+  get isAlertedBodyTemperature(): boolean {
+    return this.lastStatus
+      ? this.lastStatus?.body_temperature >= this.bodyTemperatureThreshold
+      : false
+  }
+
+  get isAlertedPulse(): boolean {
+    return this.lastStatus
+      ? this.lastStatus?.pulse <= this.pulseThresholdUnder ||
+          this.lastStatus.pulse >= this.pulseThresholdUpper
+      : false
   }
 
   getDate(date: string): string {
@@ -198,6 +214,9 @@ export default class PatientOverview extends Vue {
 .spo2 {
   font-size: 32px;
   font-weight: 600;
+  &.alerted {
+    color: $error;
+  }
 }
 .statusItem {
   width: 100%;
@@ -216,6 +235,11 @@ export default class PatientOverview extends Vue {
     text-align: center;
     svg {
       fill: $gray-3;
+    }
+    &.alerted {
+      svg {
+        fill: $error;
+      }
     }
   }
 }
