@@ -127,8 +127,8 @@ import ActionButton from '@/components/ActionButton.vue'
   },
 })
 export default class PatientOverview extends Vue {
-  outdatedDay: 1
-  SpO2Threshold: 95
+  outdatedDay = 1
+  SpO2Threshold = 95
   defaultStatus: Status | undefined = {
     statusId: '',
     patientId: '',
@@ -164,7 +164,7 @@ export default class PatientOverview extends Vue {
   }
 
   get isAlerted(): boolean {
-    return this.lastStatus?.SpO2 <= this.SpO2Threshold
+    return this.lastStatus ? this.lastStatus?.SpO2 <= this.SpO2Threshold : false
   }
 
   getDate(date: string): string {
