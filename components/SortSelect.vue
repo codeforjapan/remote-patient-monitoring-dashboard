@@ -29,10 +29,10 @@ export default Vue.extend({
           slug: 'policy-accepted-asc',
           text: '開始日が遠い順',
         },
-        // {
-        //   slug: 'severity',
-        //   text: 'SpO2が低い順',
-        // },
+        {
+          slug: 'SpO2-asc',
+          text: 'SpO2が低い順',
+        },
         // {
         //   slug: 'reporting-latest',
         //   text: '最新更新日順',
