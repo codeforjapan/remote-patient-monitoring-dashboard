@@ -196,6 +196,7 @@ export default class PatientOverview extends Vue {
   grid-template-rows: auto;
   font-size: 16px;
   td {
+    display: block;
     align-self: center;
     padding: 0 8px;
   }

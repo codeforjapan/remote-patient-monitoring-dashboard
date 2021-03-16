@@ -258,6 +258,7 @@ export default class CenterId extends Vue {
   text-align: left;
   text-indent: 8px;
   th {
+    display: block;
     font-weight: 600;
   }
 }

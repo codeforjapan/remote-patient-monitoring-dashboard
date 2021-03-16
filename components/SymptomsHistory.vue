@@ -96,6 +96,7 @@ export default Vue.extend({
   padding: 0 12px 0 0;
   td,
   th {
+    display: block;
     align-self: center;
     padding: 0 4px;
     &.alignCenter {
