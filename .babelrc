@@ -1,0 +1,15 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "@nuxt/babel-preset-app",
+          {
+            "useBuiltIns": "usage",
+            "corejs": 3,
+          },
+        ],
+      ]
+    },
+  },
+}

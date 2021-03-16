@@ -49,6 +49,7 @@ $sidebarWidth: 255px;
   padding: 36px 30px 30px;
 }
 .mainContainer {
+  display: block;
   grid-column: 2/3;
   overflow: hidden;
   background-color: $bg-gray;
