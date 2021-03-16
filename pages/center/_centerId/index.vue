@@ -66,7 +66,7 @@ import PatientOverview from '@/components/PatientOverview.vue'
 import SearchField from '@/components/SearchField.vue'
 import SortSelect from '@/components/SortSelect.vue'
 import HiddenSelect from '@/components/HiddenSelect.vue'
-import { authStore, patientsStore } from '@/store'
+import { authStore, patientsStore, utilsStore } from '@/store'
 import {
   Patient,
   ConsumePatient,
@@ -91,7 +91,7 @@ export default class CenterId extends Vue {
   showModal = false
   registered = false
   inputSearch = ''
-  sortSelect = 'policy-accepted-desc'
+  sortSelect = ''
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
   isProcessing = false
@@ -123,27 +123,13 @@ export default class CenterId extends Vue {
 
   fetchPatients() {
     patientsStore.load(this.$route.params.centerId).then((patients) => {
-      this.patients = patients
-        .filter((item) => {
-          return this.displaySelect === 'show-only-display-true'
-            ? item.display
-            : !item.display
-        })
-        .sort((a: Patient, b: Patient) => {
-          const patientA = Date.parse(a.policy_accepted)
-          const patientB = Date.parse(b.policy_accepted)
-
-          if (!patientA) {
-            return 1
-          } else if (!patientB) {
-            return -1
-          } else if (this.sortSelect === 'policy-accepted-desc') {
-            return patientA < patientB ? 1 : -1
-          } else if (this.sortSelect === 'policy-accepted-asc') {
-            return patientA < patientB ? -1 : 1
-          }
-          return 0
-        })
+      this.patients = patients.filter((item) => {
+        return this.displaySelect === 'show-only-display-true'
+          ? item.display
+          : !item.display
+      })
+      this.sortSelect = utilsStore.getSortItem
+      this.sortItems(this.sortSelect)
     })
   }
 
@@ -156,22 +142,33 @@ export default class CenterId extends Vue {
     })
   }
 
-  handleSortSelect(value: string) {
+  sortItems(value: string) {
     this.patients.sort((a: Patient, b: Patient) => {
-      const patientA = Date.parse(a.policy_accepted)
-      const patientB = Date.parse(b.policy_accepted)
+      const patient = (target: Patient): number | string => {
+        if (value.includes('SpO2')) {
+          return target.statuses.length > 0 ? target.statuses[0].SpO2 : 0
+        } else if (value.includes('policy-accepted')) {
+          return Date.parse(target.policy_accepted)
+        }
+        return 0
+      }
 
-      if (!patientA) {
+      if (!patient(a)) {
         return 1
-      } else if (!patientB) {
+      } else if (!patient(b)) {
         return -1
-      } else if (value === 'policy-accepted-desc') {
-        return patientA < patientB ? 1 : -1
-      } else if (value === 'policy-accepted-asc') {
-        return patientA < patientB ? -1 : 1
+      } else if (value.includes('desc')) {
+        return patient(a) < patient(b) ? 1 : -1
+      } else if (value.includes('asc')) {
+        return patient(a) < patient(b) ? -1 : 1
       }
       return 0
     })
+  }
+
+  handleSortSelect(value: string) {
+    utilsStore.setSortItem(value)
+    this.sortItems(value)
   }
 
   handleDisplaySelect() {
