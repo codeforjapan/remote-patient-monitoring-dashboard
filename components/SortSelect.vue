@@ -22,16 +22,20 @@ export default Vue.extend({
     return {
       items: [
         {
-          slug: 'policy-accepted-desc',
+          slug: 'policy_accepted-desc',
           text: '開始日が近い順',
         },
         {
-          slug: 'policy-accepted-asc',
+          slug: 'policy_accepted-asc',
           text: '開始日が遠い順',
         },
         {
           slug: 'SpO2-asc',
           text: 'SpO2が低い順',
+        },
+        {
+          slug: 'body_temperature-desc',
+          text: '体温が高い順',
         },
         // {
         //   slug: 'reporting-latest',
