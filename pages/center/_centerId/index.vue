@@ -147,7 +147,7 @@ export default class CenterId extends Vue {
       const patient = (target: Patient): number | string => {
         if (value.includes('SpO2')) {
           return target.statuses.length > 0 ? target.statuses[0].SpO2 : 0
-        } else if (value.includes('policy-accepted')) {
+        } else if (value.includes('policy_accepted')) {
           return Date.parse(target.policy_accepted)
         }
         return 0

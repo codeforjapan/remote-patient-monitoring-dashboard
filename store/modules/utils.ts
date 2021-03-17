@@ -6,7 +6,7 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
   namespaced: true,
 })
 class UtilsModule extends VuexModule {
-  private sortItem: string = 'policy-accepted-desc'
+  private sortItem: string = 'policy_accepted-desc'
 
   public get getSortItem(): string {
     return this.sortItem
