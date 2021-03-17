@@ -33,6 +33,10 @@ export default Vue.extend({
           slug: 'SpO2-asc',
           text: 'SpO2が低い順',
         },
+        {
+          slug: 'body_temperature-desc',
+          text: '体温が高い順',
+        },
         // {
         //   slug: 'reporting-latest',
         //   text: '最新更新日順',
