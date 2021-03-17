@@ -165,7 +165,7 @@ export default class Sidebar extends Vue {
   color: $gray-2;
   text-decoration: none;
   &.nuxt-link-exact-active {
-    font-weight: bold;
+    font-weight: 600;
 
     &:link,
     &:hover,

@@ -3,12 +3,13 @@
     :class="[
       'patientOverview',
       { outdated: isOutdated },
-      { alerted: isAlerted },
+      { alerted: isAlertedSpO2 },
     ]"
   >
     <td>
-      <span>{{ patient.memo ? patient.memo : patient.patientId }}</span>
-      <br />
+      <div class="patientId">
+        {{ patient.memo ? patient.memo : patient.patientId }}
+      </div>
       <time class="date">
         {{
           patient.policy_accepted ? getDate(patient.policy_accepted) : '--:--'
@@ -35,19 +36,19 @@
         {{ lastStatus.created ? getDate(lastStatus.created) : '--:--' }}
       </time>
       <div class="withIconItem">
-        <span class="icon">
+        <span :class="['icon', { alerted: isAlertedBodyTemperature }]">
           <TemperatureIcon />
         </span>
         {{ lastStatus.body_temperature.toFixed(1) }}
       </div>
       <div class="withIconItem">
-        <span class="icon">
+        <span :class="['icon', { alerted: isAlertedPulse }]">
           <HeartIcon />
         </span>
         {{ lastStatus.pulse }}
       </div>
     </td>
-    <td class="spo2">{{ lastStatus.SpO2 }}</td>
+    <td :class="['spo2', { alerted: isAlertedSpO2 }]">{{ lastStatus.SpO2 }}</td>
     <td class="graph">
       <div
         v-if="
@@ -126,8 +127,11 @@ import ActionButton from '@/components/ActionButton.vue'
   },
 })
 export default class PatientOverview extends Vue {
-  isOutdated = false
-  isAlerted = false
+  outdatedDay = 1
+  SpO2Threshold = 95
+  bodyTemperatureThreshold = 38.5
+  pulseThresholdUnder = 60
+  pulseThresholdUpper = 100
   defaultStatus: Status | undefined = {
     statusId: '',
     patientId: '',
@@ -156,8 +160,31 @@ export default class PatientOverview extends Vue {
       : this.defaultStatus
   }
 
+  get isOutdated(): boolean {
+    const lastUpdated = dayjs(this.lastStatus?.created)
+    const now = dayjs()
+    return now.diff(lastUpdated, 'day') >= this.outdatedDay
+  }
+
+  get isAlertedSpO2(): boolean {
+    return this.lastStatus ? this.lastStatus?.SpO2 <= this.SpO2Threshold : false
+  }
+
+  get isAlertedBodyTemperature(): boolean {
+    return this.lastStatus
+      ? this.lastStatus?.body_temperature >= this.bodyTemperatureThreshold
+      : false
+  }
+
+  get isAlertedPulse(): boolean {
+    return this.lastStatus
+      ? this.lastStatus?.pulse <= this.pulseThresholdUnder ||
+          this.lastStatus.pulse >= this.pulseThresholdUpper
+      : false
+  }
+
   getDate(date: string): string {
-    return dayjs(date).format('MM/DD HH:mm')
+    return dayjs(date).format('M/D (ddd) HH:mm')
   }
 }
 </script>
@@ -165,12 +192,13 @@ export default class PatientOverview extends Vue {
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 8em 8em 6em 1fr 13% 8em;
+  grid-template-columns: 8em 6em 4em 1fr 20% 7em;
   grid-template-rows: auto;
   font-size: 16px;
   td {
+    display: block;
     align-self: center;
-    padding: 0 16px;
+    padding: 0 8px;
   }
   &.outdated {
     background-color: $gray-1;
@@ -179,9 +207,17 @@ export default class PatientOverview extends Vue {
     background-color: $bg-red;
   }
 }
+.patientId {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .spo2 {
   font-size: 32px;
-  font-weight: bold;
+  font-weight: 600;
+  &.alerted {
+    color: $error;
+  }
 }
 .statusItem {
   width: 100%;
@@ -201,13 +237,21 @@ export default class PatientOverview extends Vue {
     svg {
       fill: $gray-3;
     }
+    &.alerted {
+      svg {
+        fill: $error;
+      }
+    }
   }
 }
 .graph {
-  text-align: right;
+  position: relative;
 }
 .symptoms {
-  display: inline-block;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  display: block;
   border: 1px solid $secondary;
   border-radius: 14px;
   font-size: 10px;

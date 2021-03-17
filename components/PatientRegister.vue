@@ -13,6 +13,7 @@
         placeholder="例）09012345678"
         required
         rules="required"
+        @input="$emit('input-tel', $event)"
       />
     </div>
     <div class="inputContainer">
@@ -23,6 +24,7 @@
       :theme="btnTheme"
       size="L"
       :is-submittable="isSubmittable"
+      :is-processing="isProcessing"
       @click="
         $emit('click-register', {
           mobileTel: inputMobileTel,
@@ -53,6 +55,9 @@ export default class PatientRegister extends Vue {
 
   @Prop({ default: '' })
   errorMessage?: string
+
+  @Prop({ default: false })
+  isProcessing!: boolean
 
   get isSubmittable(): boolean {
     return this.inputMobileTel !== ''

@@ -23,19 +23,23 @@
     }
   },
   "dependencies": {
-    "apexcharts": "3.25.0",
+    "apexcharts": "3.26.0",
     "axios": "0.21.1",
     "core-js": "3.9.1",
+    "classlist-polyfill": "1.2.0",
     "dayjs": "1.10.4",
     "nuxt": "2.15.3",
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
+    "promise-polyfill": "8.2.0",
     "vue": "2.6.12",
     "vue-apexcharts": "1.6.0",
     "vuex": "3.6.2",
     "vuex-module-decorators": "1.0.1"
   },
   "devDependencies": {
+    "@babel/core": "7.13.10",
+    "@babel/runtime-corejs3": "7.13.10",
     "@nuxt/types": "2.15.3",
     "@nuxt/typescript-build": "2.1.0",
     "@nuxtjs/axios": "5.13.1",
@@ -45,7 +49,7 @@
     "@nuxtjs/style-resources": "1.0.0",
     "@nuxtjs/stylelint-module": "4.0.0",
     "babel-eslint": "10.1.0",
-    "eslint": "7.21.0",
+    "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-nuxt": "2.0.0",
     "eslint-plugin-prettier": "3.3.1",
@@ -57,8 +61,8 @@
     "stylelint": "13.12.0",
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-standard": "21.0.0",
-    "ts-loader": "8.0.17",
+    "ts-loader": "8.0.18",
     "typescript": "4.2.3",
-    "webpack": "5.24.4"
+    "webpack": "5.26.2"
   }
 }
