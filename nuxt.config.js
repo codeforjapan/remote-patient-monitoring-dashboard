@@ -5,9 +5,13 @@ export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
 
+  router: {
+    mode: 'hash',
+  },
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'remote-patient-monitoring-dashboard',
+    title: '遠隔療養者モニタリングシステム',
     meta: [
       {
         charset: 'utf-8',
