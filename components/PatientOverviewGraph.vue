@@ -121,7 +121,7 @@ export default {
                 colors: ['#05A'],
               },
             },
-            min: 90,
+            min: 80,
             max: 100,
           },
         ],
