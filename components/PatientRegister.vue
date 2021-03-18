@@ -8,9 +8,8 @@
     <div class="inputContainer">
       <InputField
         v-model="inputMobileTel"
-        label="携帯電話番号（ハイフン不要）"
+        label="携帯電話番号"
         name="mobileTel"
-        placeholder="例）09012345678"
         required
         rules="required"
         @input="$emit('input-tel', $event)"
