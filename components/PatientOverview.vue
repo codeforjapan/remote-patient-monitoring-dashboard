@@ -97,7 +97,7 @@
           :is-inline="true"
           :to="`/center/${patient.centerId}/patient/${patient.patientId}`"
         >
-          <SearchIcon class="detailIcon" />
+          <DetailIcon class="detailIcon" />
         </ActionButton>
       </div>
       <div class="remarksWrap">
@@ -120,7 +120,7 @@ import { Status } from '@/types/component-interfaces/status'
 import SymptomsStatus from '@/components/SymptomsStatus.vue'
 import TemperatureIcon from '@/static/icon-temperature.svg'
 import HeartIcon from '@/static/icon-heart.svg'
-import SearchIcon from '@/static/icon-search.svg'
+import DetailIcon from '@/static/icon-detail.svg'
 import ActionButton from '@/components/ActionButton.vue'
 
 @Component({
@@ -129,7 +129,7 @@ import ActionButton from '@/components/ActionButton.vue'
     SymptomsStatus,
     TemperatureIcon,
     HeartIcon,
-    SearchIcon,
+    DetailIcon,
     ActionButton,
   },
 })
