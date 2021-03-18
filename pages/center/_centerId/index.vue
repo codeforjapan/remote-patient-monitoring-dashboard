@@ -37,7 +37,6 @@
             <th>SpO2</th>
             <th></th>
             <th>症状</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -253,7 +252,7 @@ export default class CenterId extends Vue {
 }
 .overviewTableHeader {
   display: grid;
-  grid-template-columns: 8em 6em 4em 1fr 20% 7em;
+  grid-template-columns: 8em 6em 4em 1fr 23%;
   grid-template-rows: auto;
   font-size: 16px;
   color: $gray-3;
