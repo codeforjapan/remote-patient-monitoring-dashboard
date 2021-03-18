@@ -11,9 +11,10 @@
         {{ patient.memo ? patient.memo : patient.patientId }}
       </div>
       <time class="date">
+        開始日時<br />
         {{
           patient.policy_accepted ? getDate(patient.policy_accepted) : '--:--'
-        }}〜
+        }}
       </time>
       <br />
       <span
@@ -89,20 +90,24 @@
       <div><PatientOverviewGraph :patient="patient" /></div>
     </td>
     <td>
-      <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
-      <time class="date symptomDate">
-        {{ lastStatus.created ? getDate(lastStatus.created) : '--:--' }}
-      </time>
-    </td>
-    <td class="detail">
-      <ActionButton
-        theme="outline"
-        size="S"
-        :is-inline="true"
-        :to="`/center/${patient.centerId}/patient/${patient.patientId}`"
-      >
-        詳細をみる
-      </ActionButton>
+      <div class="detailButton">
+        <ActionButton
+          theme="text"
+          size="S"
+          :is-inline="true"
+          :to="`/center/${patient.centerId}/patient/${patient.patientId}`"
+        >
+          <DetailIcon class="detailIcon" />
+        </ActionButton>
+      </div>
+      <div class="remarksWrap">
+        <template v-if="lastStatus.symptom.remarks">
+          <p class="remarks">{{ lastStatus.symptom.remarks }}</p>
+          <time class="date symptomDate">
+            {{ lastStatus.created ? getDate(lastStatus.created) : '--:--' }}
+          </time>
+        </template>
+      </div>
     </td>
   </tr>
 </template>
@@ -115,6 +120,7 @@ import { Status } from '@/types/component-interfaces/status'
 import SymptomsStatus from '@/components/SymptomsStatus.vue'
 import TemperatureIcon from '@/static/icon-temperature.svg'
 import HeartIcon from '@/static/icon-heart.svg'
+import DetailIcon from '@/static/icon-detail.svg'
 import ActionButton from '@/components/ActionButton.vue'
 
 @Component({
@@ -123,6 +129,7 @@ import ActionButton from '@/components/ActionButton.vue'
     SymptomsStatus,
     TemperatureIcon,
     HeartIcon,
+    DetailIcon,
     ActionButton,
   },
 })
@@ -192,7 +199,7 @@ export default class PatientOverview extends Vue {
 <style lang="scss" scoped>
 .patientOverview {
   display: grid;
-  grid-template-columns: 8em 6em 4em 1fr 20% 7em;
+  grid-template-columns: 8em 6em 4em 1fr 23%;
   grid-template-rows: auto;
   font-size: 16px;
   td {
@@ -261,11 +268,17 @@ export default class PatientOverview extends Vue {
   content: '・';
   color: $gray-3;
 }
+.remarksWrap {
+  min-height: 130px;
+}
 .remarks {
   margin: 6px 0;
 }
-.detail {
-  text-align: center;
+.detailButton {
+  text-align: right;
+}
+.detailIcon {
+  fill: $gray-3;
 }
 .date {
   font-size: 13px;
