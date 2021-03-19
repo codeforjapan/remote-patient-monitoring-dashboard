@@ -18,6 +18,11 @@
     <div class="inputContainer">
       <InputField v-model="inputMemo" label="メモ（任意）" name="memo" />
     </div>
+    <div class="inputContainer">
+      <VCheckbox v-model="checkSendSMS" name="sendSMS">
+        患者にSMSを送信する
+      </VCheckbox>
+    </div>
     <ActionButton
       type="submit"
       :theme="btnTheme"
@@ -28,6 +33,7 @@
         $emit('click-register', {
           mobileTel: inputMobileTel,
           memo: inputMemo,
+          sendSMS: checkSendSMS,
         })
       "
     >
@@ -40,17 +46,20 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import InputField from '@/components/InputField.vue'
+import VCheckbox from '@/components/VCheckbox.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
 @Component({
   components: {
     InputField,
+    VCheckbox,
     ActionButton,
   },
 })
 export default class PatientRegister extends Vue {
   inputMobileTel = ''
   inputMemo = ''
+  checkSendSMS = false
 
   @Prop({ default: '' })
   errorMessage?: string

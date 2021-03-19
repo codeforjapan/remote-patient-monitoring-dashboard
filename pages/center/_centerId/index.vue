@@ -21,7 +21,7 @@
         @input-tel="handleInputTel"
         @click-register="handleRegister"
       />
-      <PatientRegistered v-else :new-patient="newPatient" />
+      <PatientRegistered v-else :new-patient="newPatient" :sended="sended" />
     </ModalBase>
     <div class="searchContainer">
       <SearchField v-model="inputSearch" />
@@ -95,6 +95,7 @@ export default class CenterId extends Vue {
   patients: Patient[] = []
   isProcessing = false
   errorMessage = ''
+  sended = false
   newPatient: RegisteredPatient = {
     phone: '',
     memo: '',
@@ -182,7 +183,11 @@ export default class CenterId extends Vue {
     this.errorMessage = ''
   }
 
-  handleRegister(value: { mobileTel: string; memo: string | undefined }) {
+  handleRegister(value: {
+    mobileTel: string
+    memo: string | undefined
+    sendSMS: boolean
+  }) {
     this.isProcessing = true
     const phoneNumber = value.mobileTel.replace(/-/g, '')
     if (phoneNumber.match(/^\d{11}$/)) {
@@ -191,6 +196,7 @@ export default class CenterId extends Vue {
         phone: phoneNumber,
         memo: value.memo,
         display: true,
+        sendSMS: value.sendSMS,
       }
       patientsStore
         .create(newPatient)
@@ -201,6 +207,7 @@ export default class CenterId extends Vue {
             memo: patient.memo,
             loginKey: patient.loginKey,
           }
+          this.sended = value.sendSMS
         })
         .catch((error) => {
           this.errorMessage = error

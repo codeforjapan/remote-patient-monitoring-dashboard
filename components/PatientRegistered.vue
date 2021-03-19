@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>登録完了</h2>
-    <p>
+    <p v-if="sended">
       ログイン用のURLを記載したメッセージを送信しました。<br />
       患者に受信の確認をしてください。
     </p>
@@ -26,7 +26,7 @@
         </div>
       </dd>
     </dl>
-    <div class="registrationMessage">
+    <div v-if="sended" class="registrationMessage">
       <p class="registrationText">
         送信に少々お時間がかかる場合があります。<br />
         <br />
@@ -55,8 +55,13 @@ import { RegisteredPatient } from '@/types/component-interfaces/patient'
 export default class PatientRegistered extends Vue {
   clientUrl = process.env.clientUrl
 
-  @Prop({ default: () => ({ phone: '', memo: '', loginKey: '' }) })
+  @Prop({
+    default: () => ({ phone: '', memo: '', loginKey: '' }),
+  })
   newPatient!: RegisteredPatient
+
+  @Prop({ default: false })
+  sended!: boolean
 
   copyToClipboard() {
     const input: HTMLInputElement = this.$refs.loginUrl as HTMLInputElement
