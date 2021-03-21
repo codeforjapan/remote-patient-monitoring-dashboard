@@ -87,6 +87,6 @@ export default {
   env: {
     clientUrl: process.env.CLIENT_URL || 'http://localhost:8080',
     apiUrl:
-      process.env.API_URL || 'https://monitoring.stopcovid19.jp/stg/api/nurse/',
+      process.env.API_URL || 'https://api.rms.stopcovid19.jp/stg/api/nurse/',
   },
 }
