@@ -1,12 +1,10 @@
-import axios from 'axios'
-import { AuthUser } from '~/types/auth'
-
-const API_URL = process.env.apiUrl
+import { $axios } from '@/utils/api-accessor'
+import { AuthUser } from '@/types/auth'
 
 class AuthService {
   login(username: string, password: string): Promise<AuthUser> {
-    return axios
-      .post(API_URL + 'login', {
+    return $axios
+      .post('login', {
         username,
         password,
       })
@@ -20,8 +18,8 @@ class AuthService {
   }
 
   refreshToken(refreshToken: string): Promise<AuthUser> {
-    return axios
-      .post(API_URL + 'login', {
+    return $axios
+      .post('login', {
         refreshToken,
       })
       .then((response) => {
