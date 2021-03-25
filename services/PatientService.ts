@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { $axios } from '@/utils/api-accessor'
 import authHeader from './auth-header'
 import {
   ConsumePatient,
@@ -7,16 +7,11 @@ import {
   UpdatePatient,
 } from '~/types/component-interfaces/patient'
 
-const API_URL = process.env.apiUrl
-
 class PatientService {
   async getPatients(centerId: string): Promise<Patient[]> {
-    const response = await axios.get(
-      API_URL + `centers/${centerId}/patients/`,
-      {
-        headers: authHeader(),
-      },
-    )
+    const response = await $axios.get(`centers/${centerId}/patients/`, {
+      headers: authHeader(),
+    })
     return response.data.Items
   }
 
@@ -24,8 +19,8 @@ class PatientService {
     centerId: string,
     patient: ConsumePatient,
   ): Promise<RegisteredPatient> {
-    const response = await axios.post(
-      API_URL + `centers/${centerId}/patients/`,
+    const response = await $axios.post(
+      `centers/${centerId}/patients/`,
       patient,
       {
         headers: authHeader(),
@@ -35,7 +30,7 @@ class PatientService {
   }
 
   async getPatient(patientId: string): Promise<Patient> {
-    const response = await axios.get(API_URL + `patients/${patientId}`, {
+    const response = await $axios.get(`patients/${patientId}`, {
       headers: authHeader(),
     })
     return response.data
@@ -45,13 +40,9 @@ class PatientService {
     patientId: string,
     payload: UpdatePatient,
   ): Promise<Patient> {
-    const response = await axios.put(
-      API_URL + `patients/${patientId}`,
-      payload,
-      {
-        headers: authHeader(),
-      },
-    )
+    const response = await $axios.put(`patients/${patientId}`, payload, {
+      headers: authHeader(),
+    })
     return response.data
   }
 }
