@@ -19,7 +19,7 @@
             ref="loginUrl"
             class="inputFieldReadOnly"
             type="text"
-            :value="`${clientUrl}/login/${newPatient.loginKey}`"
+            :value="`${$config.clientUrl}/login/${newPatient.loginKey}`"
             readonly
           />
           <CopyIcon class="icon" @click="copyToClipboard" />
@@ -53,8 +53,6 @@ import { RegisteredPatient } from '@/types/component-interfaces/patient'
   },
 })
 export default class PatientRegistered extends Vue {
-  clientUrl = process.env.clientUrl
-
   @Prop({
     default: () => ({ phone: '', memo: '', loginKey: '' }),
   })
