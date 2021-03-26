@@ -18,9 +18,22 @@
           class="symptomsHistoryRow"
         >
           <td>{{ getDate(item.created) }}</td>
-          <td class="alignCenter spo2">{{ item.SpO2 }}</td>
-          <td class="alignCenter">{{ item.body_temperature.toFixed(1) }}</td>
-          <td class="alignCenter">{{ item.pulse }}</td>
+          <td
+            :class="['alignCenter spo2', { alerted: isAlertedSpO2(item.SpO2) }]"
+          >
+            {{ item.SpO2 }}
+          </td>
+          <td
+            :class="[
+              'alignCenter',
+              { alerted: isAlertedBodyTemperature(item.body_temperature) },
+            ]"
+          >
+            {{ item.body_temperature.toFixed(1) }}
+          </td>
+          <td :class="['alignCenter', { alerted: isAlertedPulse(item.pulse) }]">
+            {{ item.pulse }}
+          </td>
           <td>
             <div class="symptoms">
               <SymptomsStatusText
@@ -53,27 +66,39 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 import { Status } from '@/types/component-interfaces/status'
 import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
 
-export default Vue.extend({
+@Component({
   components: {
     SymptomsStatusText,
   },
-  props: {
-    statuses: {
-      type: Array as () => Status[],
-      default: [],
-    },
-  },
-  methods: {
-    getDate(date: string): string {
-      return dayjs(date).format('M/D (ddd) HH:mm')
-    },
-  },
 })
+export default class SymptomsHistory extends Vue {
+  @Prop({ default: [] })
+  statuses!: Status[]
+
+  isAlertedSpO2(value: number): boolean {
+    return value ? value <= this.$threshold.SpO2 : false
+  }
+
+  isAlertedBodyTemperature(value: number): boolean {
+    return value ? value >= this.$threshold.bodyTemperature : false
+  }
+
+  isAlertedPulse(value: number): boolean {
+    return value
+      ? value <= this.$threshold.pulseUnder ||
+          value >= this.$threshold.pulseUpper
+      : false
+  }
+
+  getDate(date: string): string {
+    return dayjs(date).format('M/D (ddd) HH:mm')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -116,5 +141,8 @@ export default Vue.extend({
 .symptoms {
   color: $gray-2;
   padding: 0 1em;
+}
+.alerted {
+  color: $error;
 }
 </style>

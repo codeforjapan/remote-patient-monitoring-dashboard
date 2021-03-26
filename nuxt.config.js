@@ -49,7 +49,14 @@ export default {
       src: '@/plugins/vue-apexchart.ts',
       ssr: false,
     },
-    '@/plugins/axios',
+    {
+      src: '@/plugins/axios',
+      ssr: false,
+    },
+    {
+      src: '@/plugins/threshold',
+      ssr: false,
+    },
   ],
 
   loading: { color: '#FF8000' },
