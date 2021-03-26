@@ -49,6 +49,14 @@ export default {
       src: '@/plugins/vue-apexchart.ts',
       ssr: false,
     },
+    {
+      src: '@/plugins/axios',
+      ssr: false,
+    },
+    {
+      src: '@/plugins/threshold',
+      ssr: false,
+    },
   ],
 
   loading: { color: '#FF8000' },
@@ -70,7 +78,7 @@ export default {
   },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ['nuxt-svg-loader'],
+  modules: ['nuxt-svg-loader', '@nuxtjs/axios'],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
@@ -84,9 +92,11 @@ export default {
     },
   },
 
-  env: {
+  publicRuntimeConfig: {
     clientUrl: process.env.CLIENT_URL || 'http://localhost:8080',
-    apiUrl:
-      process.env.API_URL || 'https://api.rms.stopcovid19.jp/stg/api/nurse/',
+    axios: {
+      baseURL:
+        process.env.API_URL || 'https://api.rms.stopcovid19.jp/stg/api/nurse/',
+    },
   },
 }
