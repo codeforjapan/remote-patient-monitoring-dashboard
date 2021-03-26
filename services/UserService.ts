@@ -1,25 +1,20 @@
-import axios from 'axios'
+import { $axios } from '@/utils/api-accessor'
 import authHeader from './auth-header'
 import { Status, ConsumeStatus } from '~/types/component-interfaces/status'
 import { AuthUser } from '~/types/auth'
 
-const API_URL = process.env.apiUrl
-
 class UserService {
   async getUserInfo() {
-    const response = await axios.get(API_URL + `patients/${this.getUserId()}`, {
+    const response = await $axios.get(`patients/${this.getUserId()}`, {
       headers: authHeader(),
     })
     return response.data
   }
 
   async getStatuses(): Promise<Status[]> {
-    const response = await axios.get(
-      API_URL + `patients/${this.getUserId()}/statuses`,
-      {
-        headers: authHeader(),
-      },
-    )
+    const response = await $axios.get(`patients/${this.getUserId()}/statuses`, {
+      headers: authHeader(),
+    })
     return response.data
   }
 
@@ -34,8 +29,8 @@ class UserService {
   }
 
   async postStatus(status: ConsumeStatus) {
-    const response = await axios.post(
-      API_URL + `patients/${this.getUserId()}/statuses`,
+    const response = await $axios.post(
+      `patients/${this.getUserId()}/statuses`,
       status,
       {
         headers: authHeader(),
@@ -45,8 +40,8 @@ class UserService {
   }
 
   async deleteStatus(patientId: string, statusId: string) {
-    const response = await axios.delete(
-      API_URL + `patients/${patientId}/statuses/${statusId}`,
+    const response = await $axios.delete(
+      `patients/${patientId}/statuses/${statusId}`,
       {
         headers: authHeader(),
       },
