@@ -42,8 +42,8 @@ jobs:
       - name: Run linter 👀
         run: yarn lint
 
-      - name: create .env file
-        run: export CLIENT_URL="http://client.rms.stopcovid19.jp/"; export API_URL="https://api.rms.stopcovid19.jp/prd/api/nurse/"
+      - name: create env
+        run: echo "CLIENT_URL=http://client.rms.stopcovid19.jp/\nAPI_URL=https://api.rms.stopcovid19.jp/prd/api/nurse/" >> $GITHUB_ENV
 
       - name: generate 
         run: yarn generate
