@@ -135,10 +135,6 @@ import ActionButton from '@/components/ActionButton.vue'
 })
 export default class PatientOverview extends Vue {
   outdatedDay = 1
-  SpO2Threshold = 95
-  bodyTemperatureThreshold = 38.5
-  pulseThresholdUnder = 60
-  pulseThresholdUpper = 100
   defaultStatus: Status | undefined = {
     statusId: '',
     patientId: '',
@@ -174,19 +170,21 @@ export default class PatientOverview extends Vue {
   }
 
   get isAlertedSpO2(): boolean {
-    return this.lastStatus ? this.lastStatus?.SpO2 <= this.SpO2Threshold : false
+    return this.lastStatus
+      ? this.lastStatus?.SpO2 <= this.$threshold.SpO2
+      : false
   }
 
   get isAlertedBodyTemperature(): boolean {
     return this.lastStatus
-      ? this.lastStatus?.body_temperature >= this.bodyTemperatureThreshold
+      ? this.lastStatus?.body_temperature >= this.$threshold.bodyTemperature
       : false
   }
 
   get isAlertedPulse(): boolean {
     return this.lastStatus
-      ? this.lastStatus?.pulse <= this.pulseThresholdUnder ||
-          this.lastStatus.pulse >= this.pulseThresholdUpper
+      ? this.lastStatus?.pulse <= this.$threshold.pulseUnder ||
+          this.lastStatus.pulse >= this.$threshold.pulseUpper
       : false
   }
 
