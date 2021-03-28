@@ -9,11 +9,7 @@ class AuthService {
         password,
       })
       .then((response) => {
-        if (response.data.idToken) {
-          localStorage.setItem('user', JSON.stringify(response.data))
-        }
-
-        return response.data
+        return { ...response.data, isExpired: false }
       })
   }
 
@@ -23,11 +19,6 @@ class AuthService {
         refreshToken,
       })
       .then((response) => {
-        if (response.data.idToken) {
-          const user = JSON.parse(localStorage.getItem('user')!)
-          user.idToken = response.data.idToken
-          localStorage.setItem('user', JSON.stringify(user))
-        }
         return response.data
       })
   }
