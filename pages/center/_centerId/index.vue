@@ -102,17 +102,11 @@ export default class CenterId extends Vue {
     loginKey: '',
   }
 
-  created() {
-    this.fetchPatients()
+  created(): void {
+    this.checkAndFetchPatients()
     this.timer = setInterval(() => {
-      if (authStore.isExpired) {
-        authStore.refreshToken().then(() => {
-          this.fetchPatients()
-        })
-      } else {
-        this.fetchPatients()
-      }
-    }, 300000)
+      this.checkAndFetchPatients()
+    }, 30000)
   }
 
   beforeDestroy() {
@@ -121,7 +115,25 @@ export default class CenterId extends Vue {
     }
   }
 
-  fetchPatients() {
+  checkAndFetchPatients(): void {
+    authStore.checkIsExpired().then((expired) => {
+      if (expired) {
+        authStore
+          .refreshToken()
+          .then(() => {
+            this.fetchPatients()
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$router.push('/login')
+          })
+      } else {
+        this.fetchPatients()
+      }
+    })
+  }
+
+  fetchPatients(): void {
     patientsStore.load(this.$route.params.centerId).then((patients) => {
       this.patients = patients.filter((item) => {
         return this.displaySelect === 'show-only-display-true'
@@ -133,7 +145,7 @@ export default class CenterId extends Vue {
     })
   }
 
-  handleDisplayPatient(patient: Patient) {
+  handleDisplayPatient(patient: Patient): void {
     patientsStore.update(patient).then((patient) => {
       this.patients = this.patients.filter((item) => {
         return item.patientId !== patient.patientId
@@ -142,7 +154,7 @@ export default class CenterId extends Vue {
     })
   }
 
-  sortItems(value: string) {
+  sortItems(value: string): void {
     this.patients.sort((a: Patient, b: Patient) => {
       const patient = (target: Patient): number | string => {
         if (value.includes('SpO2')) {
@@ -170,16 +182,16 @@ export default class CenterId extends Vue {
     })
   }
 
-  handleSortSelect(value: string) {
+  handleSortSelect(value: string): void {
     utilsStore.setSortItem(value)
     this.sortItems(value)
   }
 
-  handleDisplaySelect() {
+  handleDisplaySelect(): void {
     this.fetchPatients()
   }
 
-  handleInputTel() {
+  handleInputTel(): void {
     this.errorMessage = ''
   }
 
@@ -187,7 +199,7 @@ export default class CenterId extends Vue {
     mobileTel: string
     memo: string | undefined
     sendSMS: boolean
-  }) {
+  }): void {
     this.isProcessing = true
     const phoneNumber = value.mobileTel.replace(/-/g, '')
     if (phoneNumber.match(/^\d{11}$/)) {
@@ -222,7 +234,7 @@ export default class CenterId extends Vue {
     }
   }
 
-  closeModal() {
+  closeModal(): void {
     this.showModal = false
     this.registered = false
   }
