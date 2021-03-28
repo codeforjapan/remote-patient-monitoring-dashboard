@@ -37,7 +37,7 @@
     "vuex-module-decorators": "1.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.13.10",
+    "@babel/core": "7.13.13",
     "@babel/runtime-corejs3": "7.13.10",
     "@nuxt/types": "2.15.3",
     "@nuxt/typescript-build": "2.1.0",
@@ -48,7 +48,7 @@
     "@nuxtjs/style-resources": "1.0.0",
     "@nuxtjs/stylelint-module": "4.0.0",
     "babel-eslint": "10.1.0",
-    "eslint": "7.22.0",
+    "eslint": "7.23.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-nuxt": "2.0.0",
     "eslint-plugin-prettier": "3.3.1",
