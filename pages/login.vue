@@ -49,6 +49,13 @@ export default class Login extends Vue {
   private user = { username: '', password: '' }
   message = ''
   loading = false
+  created() {
+    if (authStore.user != null) {
+      authStore.refreshToken().then(() => {
+        this.$router.push('/')
+      })
+    }
+  }
 
   handleLogin() {
     if (this.user.username && this.user.password) {
