@@ -105,7 +105,7 @@ export default {
   },
 
   publicRuntimeConfig: {
-    clientUrl: process.env.CLIENT_URL || 'http://localhost:8080',
+    clientUrl: process.env.CLIENT_URL || 'http://localhost:8080/#',
     axios: {
       baseURL:
         process.env.API_URL || 'https://api.rms.stopcovid19.jp/stg/api/nurse/',
