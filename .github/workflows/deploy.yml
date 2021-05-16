@@ -28,7 +28,7 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2.1.5
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -44,10 +44,10 @@ jobs:
 
       - name: create env
         run: |
-          echo "CLIENT_URL=http://client.rms.stopcovid19.jp/" >> $GITHUB_ENV
+          echo "CLIENT_URL=http://client.rms.stopcovid19.jp/#" >> $GITHUB_ENV
           echo "API_URL=https://api.rms.stopcovid19.jp/prd/api/nurse/" >> $GITHUB_ENV
 
-      - name: generate 
+      - name: generate
         run: yarn generate
 
       - name: deploy

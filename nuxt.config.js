@@ -82,6 +82,18 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    babel: {
+      presets() {
+        return [
+          [
+            '@nuxt/babel-preset-app',
+            {
+              corejs: { version: '3.12' },
+            },
+          ],
+        ]
+      },
+    },
     postcss: {
       preset: {
         autoprefixer: {
@@ -93,7 +105,7 @@ export default {
   },
 
   publicRuntimeConfig: {
-    clientUrl: process.env.CLIENT_URL || 'http://localhost:8080',
+    clientUrl: process.env.CLIENT_URL || 'http://localhost:8080/#',
     axios: {
       baseURL:
         process.env.API_URL || 'https://api.rms.stopcovid19.jp/stg/api/nurse/',
