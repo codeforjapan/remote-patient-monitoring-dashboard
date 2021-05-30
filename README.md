@@ -36,3 +36,7 @@ $ yarn generate
 
 このプロジェクトは[Nuxt.js](https://nuxtjs.org)で動いています。
 より詳しい情報は公式のドキュメントを参照してください。
+
+## ライセンス
+
+GNU AGPL v3 です。
