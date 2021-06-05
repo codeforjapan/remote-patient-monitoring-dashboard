@@ -31,7 +31,7 @@
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
     "promise-polyfill": "8.2.0",
-    "vue": "2.6.12",
+    "vue": "2.6.13",
     "vue-apexcharts": "1.6.1",
     "vuex": "3.6.2",
     "vuex-module-decorators": "1.0.1"
