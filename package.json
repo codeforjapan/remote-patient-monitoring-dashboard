@@ -17,11 +17,6 @@
     "*.{ts,js,vue}": "yarn lint",
     "*.{css,vue}": "yarn stylelint"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "apexcharts": "3.26.3",
     "classlist-polyfill": "1.2.0",
