@@ -18,7 +18,7 @@
     "*.{css,vue}": "yarn stylelint"
   },
   "dependencies": {
-    "apexcharts": "3.26.3",
+    "apexcharts": "3.27.1",
     "classlist-polyfill": "1.2.0",
     "core-js": "3.14.0",
     "dayjs": "1.10.5",
