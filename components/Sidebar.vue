@@ -93,7 +93,7 @@ export default class Sidebar extends Vue {
           }
         })
         .then(() => {
-          this.selected = this.centerId
+          this.selected = this.centerId || ''
         })
     } else {
       authStore.signOut()
