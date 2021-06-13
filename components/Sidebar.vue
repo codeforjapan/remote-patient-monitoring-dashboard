@@ -77,19 +77,24 @@ export default class Sidebar extends Vue {
 
   created() {
     if (authStore.user) {
-      authStore.checkIsExpired().then((expired) => {
-        if (expired) {
-          authStore.refreshToken().then(() => {
+      authStore
+        .checkIsExpired()
+        .then((expired) => {
+          if (expired) {
+            authStore.refreshToken().then(() => {
+              nursesStore.load(authStore.user!.username).then((nurse) => {
+                this.centers = nurse.manageCenters
+              })
+            })
+          } else {
             nursesStore.load(authStore.user!.username).then((nurse) => {
               this.centers = nurse.manageCenters
             })
-          })
-        } else {
-          nursesStore.load(authStore.user!.username).then((nurse) => {
-            this.centers = nurse.manageCenters
-          })
-        }
-      })
+          }
+        })
+        .then(() => {
+          this.selected = this.centerId || ''
+        })
     } else {
       authStore.signOut()
       this.$router.push('/login')

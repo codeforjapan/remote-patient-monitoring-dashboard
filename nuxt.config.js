@@ -88,7 +88,7 @@ export default {
           [
             '@nuxt/babel-preset-app',
             {
-              corejs: { version: '3.12' },
+              corejs: { version: '3.14' },
             },
           ],
         ]
