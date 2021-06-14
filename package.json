@@ -22,7 +22,7 @@
     "classlist-polyfill": "1.2.0",
     "core-js": "3.14.0",
     "dayjs": "1.10.5",
-    "nuxt": "2.15.6",
+    "nuxt": "2.15.7",
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
     "promise-polyfill": "8.2.0",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@babel/core": "7.14.5",
     "@babel/runtime-corejs3": "7.14.5",
-    "@nuxt/types": "2.15.6",
+    "@nuxt/types": "2.15.7",
     "@nuxt/typescript-build": "2.1.0",
     "@nuxtjs/axios": "5.13.6",
     "@nuxtjs/eslint-config": "6.0.1",
