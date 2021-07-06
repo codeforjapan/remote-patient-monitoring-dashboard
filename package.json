@@ -21,7 +21,7 @@
     "apexcharts": "3.27.1",
     "classlist-polyfill": "1.2.0",
     "core-js": "3.14.0",
-    "dayjs": "1.10.5",
+    "dayjs": "1.10.6",
     "nuxt": "2.15.7",
     "nuxt-property-decorator": "2.9.1",
     "nuxt-svg-loader": "1.2.0",
