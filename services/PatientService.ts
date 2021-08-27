@@ -1,5 +1,5 @@
-import { $axios } from '@/utils/api-accessor'
 import authHeader from './auth-header'
+import { $axios } from '@/utils/api-accessor'
 import {
   ConsumePatient,
   Patient,
