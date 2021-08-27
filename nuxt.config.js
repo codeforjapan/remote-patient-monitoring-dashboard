@@ -102,6 +102,15 @@ export default {
         },
       },
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    extend(config, { isDev, isClient }) {
+      if (isClient) {
+        config.module.rules.push({
+          test: /worker\.js$/,
+          use: [{ loader: 'url-loader' }],
+        })
+      }
+    },
   },
 
   publicRuntimeConfig: {
