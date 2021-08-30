@@ -56,9 +56,15 @@
           </div>
         </div>
         <div>
-          <span class="download" @click="showModal = true">
-            患者データをダウンロード
-          </span>
+          <ActionButton
+            theme="outline"
+            size="S"
+            :is-inline="true"
+            @click="showModal = true"
+          >
+            <DownloadIcon class="downloadIcon" />
+            ダウンロード
+          </ActionButton>
         </div>
       </div>
       <div class="patientGraphLayout">
@@ -67,11 +73,15 @@
       <SymptomsHistory class="symptomsHistory" :statuses="patient.statuses" />
       <ModalBase :show="showModal" @close="closeModal">
         <h2>患者データをダウンロード</h2>
+        <p>
+          患者の記録データをCSV形式に変換しファイルをzip形式に圧縮します。ダウンロードファイルのパスワード設定をしてください。
+        </p>
         <div class="inputContainer">
           <InputField
             v-model="zipPassword"
             type="password"
-            label="パスワードを設定してください"
+            label="パスワード"
+            placeholder="8文字以上"
             :rule-length="8"
             required
             class="passwordField"
@@ -80,6 +90,7 @@
             v-model="zipPasswordReEnter"
             type="password"
             label="パスワードの再入力"
+            placeholder="8文字以上"
             :rule-length="8"
             required
             class="passwordField"
@@ -91,7 +102,7 @@
           :is-submittable="isDownloadable"
           @click="downloadZip"
         >
-          ZIPをダウンロード
+          ダウンロードを開始する
         </ActionButton>
       </ModalBase>
     </div>
@@ -112,6 +123,7 @@ import ModalBase from '@/components/ModalBase.vue'
 import EditIcon from '@/static/icon-edit.svg'
 import SaveIcon from '@/static/icon-save.svg'
 import CloseIcon from '@/static/icon-close.svg'
+import DownloadIcon from '@/static/icon-download.svg'
 import { patientsStore } from '@/store'
 
 @Component({
@@ -124,6 +136,7 @@ import { patientsStore } from '@/store'
     EditIcon,
     SaveIcon,
     CloseIcon,
+    DownloadIcon,
   },
 })
 export default class PatientId extends Vue {
@@ -320,13 +333,14 @@ export default class PatientId extends Vue {
 .symptomsHistory {
   padding: 32px;
 }
-.download {
-  cursor: pointer;
-}
 .inputContainer {
   margin: 30px 0;
 }
 .passwordField {
   margin-bottom: 30px;
+}
+.downloadIcon {
+  fill: none !important;
+  vertical-align: text-bottom;
 }
 </style>
