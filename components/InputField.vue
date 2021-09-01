@@ -5,7 +5,7 @@
       <input
         :class="['inputField', { 'inputField-error': showError }]"
         :style="{ fontSize: fontSizeMap.get(fontSize) }"
-        :type="type"
+        :type="definedType"
         :pattern="type === 'number' ? '\\d*' : null"
         :name="name"
         :placeholder="placeholder"
@@ -15,6 +15,13 @@
         :disabled="disabled"
         @input="$emit('input', $event.target.value)"
       />
+      <div v-if="type === 'password'" class="showIcon">
+        <EyeIcon
+          v-if="definedType === 'password'"
+          @click="handleShowPassword(true)"
+        />
+        <EyeOffIcon v-else @click="handleShowPassword(false)" />
+      </div>
     </label>
     <span class="message">{{ errorMessage }}</span>
   </div>
@@ -22,6 +29,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import EyeIcon from '@/static/icon-eye.svg'
+import EyeOffIcon from '@/static/icon-eye-off.svg'
 
 type Rules = {
   [key: string]: {
@@ -33,6 +42,10 @@ type SizeType = 'M' | 'S'
 type FontSizeType = string
 
 export default Vue.extend({
+  components: {
+    EyeIcon,
+    EyeOffIcon,
+  },
   props: {
     label: {
       type: String,
@@ -78,13 +91,19 @@ export default Vue.extend({
       type: String,
       default: '',
     },
+    ruleLength: {
+      type: Number,
+      default: 0,
+    },
   },
   data(): {
     showError: boolean
+    showPassword: boolean
     fontSizeMap: Map<SizeType, FontSizeType>
   } {
     return {
       showError: false,
+      showPassword: false,
       fontSizeMap: new Map([
         ['M', '20px'],
         ['S', '16px'],
@@ -97,6 +116,10 @@ export default Vue.extend({
         required: {
           isValid: this.ruleRequired,
           message: '必須項目です', // TODO: メッセージを確定させる
+        },
+        length: {
+          isValid: this.value.length >= this.ruleLength,
+          message: `${this.ruleLength}文字以上必要です`, // TODO: メッセージを確定させる
         },
       }
     },
@@ -117,6 +140,17 @@ export default Vue.extend({
         (key: string) => !this.rules[key].isValid,
       )
     },
+    definedType(): string {
+      if (this.type === 'password') {
+        if (this.showPassword) {
+          return 'text'
+        } else {
+          return 'password'
+        }
+      } else {
+        return this.type
+      }
+    },
   },
   watch: {
     rules() {
@@ -126,11 +160,17 @@ export default Vue.extend({
       this.$emit('validate', !this.hasErrors)
     },
   },
+  methods: {
+    handleShowPassword(bool: boolean): void {
+      this.showPassword = bool
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .inputFieldContainer {
+  position: relative;
   padding: 12px 0;
 }
 .inputField {
@@ -161,5 +201,13 @@ export default Vue.extend({
   color: $error;
   font-size: 14px;
   height: 14px;
+}
+.showIcon {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  svg {
+    fill: $gray-3;
+  }
 }
 </style>
