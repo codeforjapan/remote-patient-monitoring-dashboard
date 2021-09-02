@@ -97,14 +97,6 @@ export default Vue.extend({
       default: '',
     },
   },
-  watch: {
-    rules() {
-      this.showError = this.hasErrors
-    },
-    value() {
-      this.$emit('validate', !this.hasErrors)
-    },
-  },
   data(): {
     showError: boolean
     fontSizeMap: Map<SizeType, FontSizeType>
@@ -185,6 +177,14 @@ export default Vue.extend({
       return Object.keys(this.rules).some(
         (key: string) => !this.rules[key].isValid,
       )
+    },
+  },
+  watch: {
+    rules() {
+      this.showError = this.hasErrors
+    },
+    value() {
+      this.$emit('validate', !this.hasErrors)
     },
   },
 })
