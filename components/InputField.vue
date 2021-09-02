@@ -6,7 +6,13 @@
         :class="['inputField', { 'inputField-error': showError }]"
         :style="{ fontSize: fontSizeMap.get(fontSize) }"
         :type="definedType"
-        :pattern="type === 'number' ? '\\d*' : null"
+        :pattern="
+          type === 'number'
+            ? '\\d*'
+            : type === 'datetime-local'
+            ? '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}'
+            : null
+        "
         :name="name"
         :placeholder="placeholder"
         :step="step"
