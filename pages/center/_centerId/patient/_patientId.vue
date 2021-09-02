@@ -158,7 +158,6 @@
                 placeholder="98"
                 required
                 spo2
-                is-number
                 rules="required"
               />
             </li>
