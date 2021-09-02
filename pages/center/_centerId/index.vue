@@ -24,7 +24,7 @@
       <PatientRegistered v-else :new-patient="newPatient" :sended="sended" />
     </ModalBase>
     <div class="searchContainer">
-      <SearchField v-model="inputSearch" />
+      <SearchField v-model="inputSearch" @input="handleSearch" />
       <SortSelect v-model="sortSelect" @input="handleSortSelect" />
       <HiddenSelect v-model="displaySelect" @input="handleDisplaySelect" />
     </div>
@@ -189,6 +189,25 @@ export default class CenterId extends Vue {
 
   handleDisplaySelect(): void {
     this.fetchPatients()
+  }
+
+  handleSearch(value: string): void {
+    if (value) {
+      if (this.timer) {
+        clearInterval(this.timer)
+      }
+      patientsStore.load(this.$route.params.centerId).then((patients) => {
+        this.patients = patients.filter((item) => {
+          const pattern = new RegExp(value, 'ig')
+          return item.phone.match(pattern) || item.memo?.match(pattern)
+        })
+      })
+    } else {
+      this.fetchPatients()
+      this.timer = setInterval(() => {
+        this.checkAndFetchPatients()
+      }, 30000)
+    }
   }
 
   handleInputTel(): void {
