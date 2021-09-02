@@ -6,7 +6,11 @@
       @click="showContent ? (showContent = false) : $emit('close')"
     >
       <transition name="modalContentTransition" @after-leave="$emit('close')">
-        <div v-if="showContent" class="modalContent" @click.stop>
+        <div
+          v-if="showContent"
+          :class="['modalContent', wide ? 'wide' : '']"
+          @click.stop
+        >
           <div class="closeButton" @click="showContent = false">
             <CloseIcon />
           </div>
@@ -38,6 +42,10 @@ export default Vue.extend({
   },
   props: {
     show: {
+      type: Boolean,
+      default: false,
+    },
+    wide: {
       type: Boolean,
       default: false,
     },
@@ -75,17 +83,19 @@ export default Vue.extend({
 }
 .modalContent {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
   width: 80%;
   max-width: 520px;
-  min-height: 50%;
   max-height: calc(100vh - 100px);
   padding: 22px 10px 40px;
-  margin: 50px 0;
   background-color: $white;
   border-radius: 10px;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%);
+
+  &.wide {
+    max-width: 800px;
+  }
 
   &Transition {
     &-enter,

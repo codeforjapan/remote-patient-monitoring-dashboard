@@ -190,6 +190,9 @@ export default Vue.extend({
   &::placeholder {
     color: $gray-2;
   }
+  &[type='datetime-local'] {
+    padding: 12px 16px;
+  }
 }
 .labelText {
   display: block;
