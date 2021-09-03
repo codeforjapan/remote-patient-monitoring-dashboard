@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import ActionButton from '@/components/ActionButton.vue'
 import PlusIcon from '@/static/icon-plus.svg'
 import ModalBase from '@/components/ModalBase.vue'
@@ -90,6 +90,7 @@ export default class CenterId extends Vue {
   showModal = false
   registered = false
   inputSearch = ''
+  searchWord = ''
   sortSelect = ''
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
@@ -112,6 +113,13 @@ export default class CenterId extends Vue {
   beforeDestroy() {
     if (this.timer) {
       clearInterval(this.timer)
+    }
+  }
+
+  @Watch('searchWord')
+  onSearchWordChanged(newValue: string, oldValue: string) {
+    if (newValue !== oldValue) {
+      this.fetchPatients()
     }
   }
 
@@ -140,6 +148,14 @@ export default class CenterId extends Vue {
           ? item.display
           : !item.display
       })
+      if (this.searchWord) {
+        this.patients = this.patients.filter((item) => {
+          const pattern = new RegExp(this.searchWord, 'ig')
+          return (
+            pattern.test(item.phone) || (item.memo && pattern.test(item.memo))
+          )
+        })
+      }
       this.sortSelect = utilsStore.getSortItem
       this.sortItems(this.sortSelect)
     })
@@ -192,22 +208,7 @@ export default class CenterId extends Vue {
   }
 
   handleSearch(value: string): void {
-    if (value) {
-      if (this.timer) {
-        clearInterval(this.timer)
-      }
-      patientsStore.load(this.$route.params.centerId).then((patients) => {
-        this.patients = patients.filter((item) => {
-          const pattern = new RegExp(value, 'ig')
-          return item.phone.match(pattern) || item.memo?.match(pattern)
-        })
-      })
-    } else {
-      this.fetchPatients()
-      this.timer = setInterval(() => {
-        this.checkAndFetchPatients()
-      }, 30000)
-    }
+    this.searchWord = value
   }
 
   handleInputTel(): void {
