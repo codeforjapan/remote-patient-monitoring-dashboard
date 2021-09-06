@@ -136,6 +136,7 @@
             <li class="conditionItem">
               <InputNumberField
                 id="temperature"
+                :key="`temperature-${recordElementKey}`"
                 v-model="inputTemperature"
                 name="temperature"
                 label="体温"
@@ -151,6 +152,7 @@
             <li class="conditionItem">
               <InputNumberField
                 id="spo2"
+                :key="`spo2-${recordElementKey}`"
                 v-model="inputSpO2"
                 name="spo2"
                 label="酸素飽和度(SpO2)"
@@ -164,6 +166,7 @@
             <li class="conditionItem">
               <InputNumberField
                 id="pulse"
+                :key="`pulse-${recordElementKey}`"
                 v-model="inputPulse"
                 name="pulse"
                 label="脈拍"
@@ -185,6 +188,7 @@
                 class="symptomsItem"
               >
                 <CheckboxField
+                  :key="`checkbox-${index}-${recordElementKey}`"
                   v-model="inputSymptom[item.label]"
                   :name="item.name"
                   :label="item.label"
@@ -269,6 +273,7 @@ export default class PatientId extends Vue {
   isEditDisabled = true
   currentMemoValue = ''
   showModalRecord = false
+  recordElementKey = 0
   showModalDownload = false
   zipPassword = ''
   zipPasswordReEnter = ''
@@ -429,6 +434,8 @@ export default class PatientId extends Vue {
           () => {
             this.formMessage = '体調記録を登録しました'
             this.createdStatus = true
+            this.clearRecordValue()
+            this.recordElementKey++
           },
           (error) => {
             this.loading = false
