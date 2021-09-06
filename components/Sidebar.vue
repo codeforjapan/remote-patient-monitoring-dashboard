@@ -41,16 +41,6 @@
         </li>
       </ul>
     </nav>
-    <footer class="footer">
-      <div class="navItem">
-        <NuxtLink to="/help" class="navLink">
-          <span class="navIcon">
-            <HelpIcon aria-hidden="true" />
-          </span>
-          <span>ヘルプ</span>
-        </NuxtLink>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -214,8 +204,5 @@ export default class Sidebar extends Vue {
   svg {
     fill: currentColor;
   }
-}
-.footer {
-  margin-top: 260px;
 }
 </style>
