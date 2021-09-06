@@ -71,7 +71,7 @@ export default class ActionButton extends Vue {
   display: inline-block;
   width: 100%;
   font-weight: 600;
-  padding: 0.8em 1em;
+  padding: 0.8em 1.5em;
   border-radius: 0.5em;
   border: none;
   color: $white;
@@ -97,7 +97,7 @@ export default class ActionButton extends Vue {
   &-outline {
     background-color: $white;
     color: $primary;
-    border: 2px solid currentColor;
+    box-shadow: 0 0 0 2px currentColor inset;
   }
   &-text {
     background-color: transparent;

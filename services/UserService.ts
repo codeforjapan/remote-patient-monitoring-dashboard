@@ -28,9 +28,9 @@ class UserService {
     return JSON.parse(payload)['cognito:username']
   }
 
-  async postStatus(status: ConsumeStatus) {
+  async postStatus(patientId: string, status: ConsumeStatus) {
     const response = await $axios.post(
-      `patients/${this.getUserId()}/statuses`,
+      `patients/${patientId}/statuses`,
       status,
       {
         headers: authHeader(),

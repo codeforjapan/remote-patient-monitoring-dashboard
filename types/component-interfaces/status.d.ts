@@ -18,6 +18,7 @@ export interface Status {
   }
 }
 export interface ConsumeStatus {
+  created: string
   SpO2: number
   body_temperature: number
   pulse: number

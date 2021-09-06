@@ -57,6 +57,10 @@ export default {
       src: '@/plugins/threshold',
       ssr: false,
     },
+    {
+      src: '@/plugins/vee-validate',
+      ssr: false,
+    },
   ],
 
   loading: { color: '#FF8000' },
