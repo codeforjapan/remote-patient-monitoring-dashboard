@@ -488,6 +488,7 @@ export default class PatientId extends Vue {
 
   async closeModalRecord() {
     this.showModalRecord = false
+    this.formMessage = ''
     this.clearRecordValue()
     if (this.createdStatus) {
       await this.load()
