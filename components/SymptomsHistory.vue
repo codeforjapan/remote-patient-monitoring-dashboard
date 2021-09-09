@@ -61,34 +61,34 @@
           </td>
           <td>{{ item.symptom.remarks }}</td>
           <td>
-            <DeleteIcon class="icon" @click="showModal = true" />
-            <ModalBase :show="showModal" @close="showModal = false">
-              <h2>記録を削除する</h2>
-              <p>この記録を削除してもよろしいですか？</p>
-              <div class="buttonContainer">
-                <ActionButton
-                  class="button"
-                  theme="primary"
-                  size="L"
-                  @click="deleteStatus(item.statusId)"
-                >
-                  はい
-                </ActionButton>
-                <ActionButton
-                  class="button"
-                  theme="outline"
-                  size="L"
-                  @click="showModal = false"
-                >
-                  いいえ
-                </ActionButton>
-              </div>
-              <p v-if="message">{{ message }}</p>
-            </ModalBase>
+            <DeleteIcon class="icon" @click="showDeleteModal(item.statusId)" />
           </td>
         </tr>
       </tbody>
     </table>
+    <ModalBase :show="showModal" @close="closeDeleteModal">
+      <h2>記録を削除する</h2>
+      <p>この記録を削除してもよろしいですか？</p>
+      <div class="buttonContainer">
+        <ActionButton
+          class="button"
+          theme="primary"
+          size="L"
+          @click="deleteStatus(targetDeleteStatusId)"
+        >
+          はい
+        </ActionButton>
+        <ActionButton
+          class="button"
+          theme="outline"
+          size="L"
+          @click="closeDeleteModal"
+        >
+          いいえ
+        </ActionButton>
+      </div>
+      <p v-if="message">{{ message }}</p>
+    </ModalBase>
   </section>
 </template>
 
@@ -111,6 +111,7 @@ import { statusesStore } from '@/store'
 export default class SymptomsHistory extends Vue {
   message = ''
   showModal = false
+  targetDeleteStatusId = ''
 
   @Prop()
   patientId!: string
@@ -137,12 +138,23 @@ export default class SymptomsHistory extends Vue {
     return dayjs(date).format('M/D (ddd) HH:mm')
   }
 
+  showDeleteModal(id: string): void {
+    this.showModal = true
+    this.targetDeleteStatusId = id
+  }
+
+  closeDeleteModal(): void {
+    this.showModal = false
+    this.targetDeleteStatusId = ''
+  }
+
   deleteStatus(id: string): void {
     statusesStore
       .delete({ patientId: this.patientId, statusId: id })
       .then((result) => {
         if (result === true) {
           this.showModal = false
+          this.targetDeleteStatusId = ''
           this.$emit('on-deleted')
         } else {
           this.message = `削除に失敗しました。${result}`
