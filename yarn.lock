@@ -2158,10 +2158,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zip.js/zip.js@2.3.13":
-  version "2.3.13"
-  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.3.13.tgz#3f8b41e0adebee3d0695bfd4777dae212735d2ec"
-  integrity sha512-uo50XC95ikIqNzzMtrXAiUBsXLaNFHEiKqWLWi1vVKDBIuPi6/WfqUzv3ptLbUv0Fbr8CbLu+ipWl/CmH3Uj7A==
+"@zip.js/zip.js@2.3.14":
+  version "2.3.14"
+  resolved "https://registry.yarnpkg.com/@zip.js/zip.js/-/zip.js-2.3.14.tgz#c3c968ee4dfeca302e6d8931f123e612d698538d"
+  integrity sha512-LjS3vjtrGbHyp5vgD7jkkOLJHvAF+CMjtKkYi2eSCT/QCiUvfDYQzlzXlNuIU8aOOOa24lq2710UiFH7ROnukQ==
 
 accepts@~1.3.5:
   version "1.3.7"
