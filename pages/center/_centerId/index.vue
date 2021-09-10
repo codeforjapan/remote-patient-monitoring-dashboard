@@ -219,6 +219,7 @@ export default class CenterId extends Vue {
     mobileTel: string
     memo: string | undefined
     sendSMS: boolean
+    isAccepted: boolean
   }): void {
     this.isProcessing = true
     const phoneNumber = value.mobileTel.replace(/-/g, '')
@@ -229,6 +230,7 @@ export default class CenterId extends Vue {
         memo: value.memo,
         display: true,
         sendSMS: value.sendSMS,
+        isAccepted: value.isAccepted,
       }
       patientsStore
         .create(newPatient)
