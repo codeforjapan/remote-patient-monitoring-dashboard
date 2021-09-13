@@ -9,8 +9,8 @@ interface Threshold {
 
 const plugin: Plugin = function (_, inject) {
   const threshold: Threshold = {
-    SpO2: 90,
-    bodyTemperature: 37.5,
+    SpO2: 95,
+    bodyTemperature: 38.5,
     pulseUnder: 60,
     pulseUpper: 100,
   }
