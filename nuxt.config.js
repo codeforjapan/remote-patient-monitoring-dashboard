@@ -46,7 +46,7 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {
-      src: '@/plugins/vue-apexchart.ts',
+      src: '@/plugins/vue-apexchart',
       ssr: false,
     },
     {
@@ -55,6 +55,10 @@ export default {
     },
     {
       src: '@/plugins/threshold',
+      ssr: false,
+    },
+    {
+      src: '@/plugins/vee-validate',
       ssr: false,
     },
   ],
@@ -101,6 +105,15 @@ export default {
           grid: 'autoplace',
         },
       },
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    extend(config, { isDev, isClient }) {
+      if (isClient) {
+        config.module.rules.push({
+          test: /worker\.js$/,
+          use: [{ loader: 'url-loader' }],
+        })
+      }
     },
   },
 

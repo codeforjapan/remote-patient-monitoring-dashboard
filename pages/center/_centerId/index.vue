@@ -24,7 +24,7 @@
       <PatientRegistered v-else :new-patient="newPatient" :sended="sended" />
     </ModalBase>
     <div class="searchContainer">
-      <SearchField v-model="inputSearch" />
+      <SearchField v-model="inputSearch" @input="handleSearch" />
       <SortSelect v-model="sortSelect" @input="handleSortSelect" />
       <HiddenSelect v-model="displaySelect" @input="handleDisplaySelect" />
     </div>
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import ActionButton from '@/components/ActionButton.vue'
 import PlusIcon from '@/static/icon-plus.svg'
 import ModalBase from '@/components/ModalBase.vue'
@@ -90,6 +90,7 @@ export default class CenterId extends Vue {
   showModal = false
   registered = false
   inputSearch = ''
+  searchWord = ''
   sortSelect = ''
   displaySelect = 'show-only-display-true'
   patients: Patient[] = []
@@ -112,6 +113,13 @@ export default class CenterId extends Vue {
   beforeDestroy() {
     if (this.timer) {
       clearInterval(this.timer)
+    }
+  }
+
+  @Watch('searchWord')
+  onSearchWordChanged(newValue: string, oldValue: string) {
+    if (newValue !== oldValue) {
+      this.fetchPatients()
     }
   }
 
@@ -140,6 +148,14 @@ export default class CenterId extends Vue {
           ? item.display
           : !item.display
       })
+      if (this.searchWord) {
+        this.patients = this.patients.filter((item) => {
+          const pattern = new RegExp(this.searchWord, 'ig')
+          return (
+            pattern.test(item.phone) || (item.memo && pattern.test(item.memo))
+          )
+        })
+      }
       this.sortSelect = utilsStore.getSortItem
       this.sortItems(this.sortSelect)
     })
@@ -191,6 +207,10 @@ export default class CenterId extends Vue {
     this.fetchPatients()
   }
 
+  handleSearch(value: string): void {
+    this.searchWord = value
+  }
+
   handleInputTel(): void {
     this.errorMessage = ''
   }
@@ -199,6 +219,7 @@ export default class CenterId extends Vue {
     mobileTel: string
     memo: string | undefined
     sendSMS: boolean
+    isAccepted: boolean
   }): void {
     this.isProcessing = true
     const phoneNumber = value.mobileTel.replace(/-/g, '')
@@ -209,6 +230,7 @@ export default class CenterId extends Vue {
         memo: value.memo,
         display: true,
         sendSMS: value.sendSMS,
+        isAccepted: value.isAccepted,
       }
       patientsStore
         .create(newPatient)

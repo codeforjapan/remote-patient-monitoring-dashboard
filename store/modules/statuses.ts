@@ -58,8 +58,8 @@ class StatusesModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  create(status: ConsumeStatus): Promise<Status> {
-    return UserService.postStatus(status).then(
+  create(item: { patientId: string; status: ConsumeStatus }): Promise<Status> {
+    return UserService.postStatus(item.patientId, item.status).then(
       (status) => {
         this.context.commit('pushStatus', status)
         return Promise.resolve(status)

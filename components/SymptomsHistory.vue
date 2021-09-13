@@ -9,6 +9,7 @@
           <th>脈拍</th>
           <th class="alignLeft" style="padding-left: 20px">症状</th>
           <th class="alignLeft">症状</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -59,9 +60,35 @@
             </div>
           </td>
           <td>{{ item.symptom.remarks }}</td>
+          <td>
+            <DeleteIcon class="icon" @click="showDeleteModal(item.statusId)" />
+          </td>
         </tr>
       </tbody>
     </table>
+    <ModalBase :show="showModal" @close="closeDeleteModal">
+      <h2>記録を削除する</h2>
+      <p>この記録を削除してもよろしいですか？</p>
+      <div class="buttonContainer">
+        <ActionButton
+          class="button"
+          theme="primary"
+          size="L"
+          @click="deleteStatus(targetDeleteStatusId)"
+        >
+          はい
+        </ActionButton>
+        <ActionButton
+          class="button"
+          theme="outline"
+          size="L"
+          @click="closeDeleteModal"
+        >
+          いいえ
+        </ActionButton>
+      </div>
+      <p v-if="message">{{ message }}</p>
+    </ModalBase>
   </section>
 </template>
 
@@ -70,13 +97,25 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 import { Status } from '@/types/component-interfaces/status'
 import SymptomsStatusText from '@/components/SymptomsStatusText.vue'
+import ModalBase from '@/components/ModalBase.vue'
+import DeleteIcon from '@/static/icon-delete.svg'
+import { statusesStore } from '@/store'
 
 @Component({
   components: {
     SymptomsStatusText,
+    ModalBase,
+    DeleteIcon,
   },
 })
 export default class SymptomsHistory extends Vue {
+  message = ''
+  showModal = false
+  targetDeleteStatusId = ''
+
+  @Prop()
+  patientId!: string
+
   @Prop({ default: [] })
   statuses!: Status[]
 
@@ -98,6 +137,30 @@ export default class SymptomsHistory extends Vue {
   getDate(date: string): string {
     return dayjs(date).format('M/D (ddd) HH:mm')
   }
+
+  showDeleteModal(id: string): void {
+    this.showModal = true
+    this.targetDeleteStatusId = id
+  }
+
+  closeDeleteModal(): void {
+    this.showModal = false
+    this.targetDeleteStatusId = ''
+  }
+
+  deleteStatus(id: string): void {
+    statusesStore
+      .delete({ patientId: this.patientId, statusId: id })
+      .then((result) => {
+        if (result === true) {
+          this.showModal = false
+          this.targetDeleteStatusId = ''
+          this.$emit('on-deleted')
+        } else {
+          this.message = `削除に失敗しました。${result}`
+        }
+      })
+  }
 }
 </script>
 
@@ -116,7 +179,7 @@ export default class SymptomsHistory extends Vue {
 }
 .symptomsHistoryRow {
   display: grid;
-  grid-template-columns: 9em 5em 5em 5em 1fr 28%;
+  grid-template-columns: 9em 5em 5em 5em 1fr 28% 2em;
   grid-template-rows: auto;
   padding: 0 12px 0 0;
   td,
@@ -144,5 +207,17 @@ export default class SymptomsHistory extends Vue {
 }
 .alerted {
   color: $error;
+}
+.icon {
+  cursor: pointer;
+  fill: $gray-2;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 0 30px;
+}
+.button {
+  flex: 0 0 46%;
 }
 </style>
