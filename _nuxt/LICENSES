@@ -1,6 +1,35 @@
+/* @license
+Papa Parse
+v5.3.1
+https://github.com/mholt/PapaParse
+License: MIT
+*/
+
+/*! https://mths.be/punycode v1.4.1 by @mathias */
+
+
 /*!
- * ApexCharts v3.27.1
- * (c) 2018-2021 Juned Chhipa
+  * vue-router v3.5.2
+  * (c) 2021 Evan You
+  * @license MIT
+  */
+
+/*!
+ * Vue.js v2.6.14
+ * (c) 2014-2021 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
+
+
+/*!
+ * ApexCharts v3.28.1
+ * (c) 2018-2021 ApexCharts
  * Released under the MIT License.
  */
 
@@ -42,26 +71,13 @@ PERFORMANCE OF THIS SOFTWARE.
   * Copyright (c) 2016 Wout Fierens; Licensed MIT */
 
 /**
+  * vee-validate v3.4.12
+  * (c) 2021 Abdelrahman Awad
+  * @license MIT
+  */
+
+/**
   * vue-class-component v7.2.6
   * (c) 2015-present Evan You
   * @license MIT
   */
-
-
-/*!
-  * vue-router v3.5.1
-  * (c) 2021 Evan You
-  * @license MIT
-  */
-
-/*!
- * Vue.js v2.6.14
- * (c) 2014-2021 Evan You
- * Released under the MIT License.
- */
-
-/*!
- * vuex v3.6.2
- * (c) 2021 Evan You
- * @license MIT
- */
