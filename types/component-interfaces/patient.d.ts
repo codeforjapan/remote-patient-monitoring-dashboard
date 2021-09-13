@@ -16,6 +16,7 @@ export interface ConsumePatient {
   memo?: string | undefined
   display: boolean
   sendSMS: boolean
+  isAccepted: boolean
 }
 export interface RegisteredPatient {
   phone: string

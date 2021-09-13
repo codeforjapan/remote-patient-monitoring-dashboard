@@ -23,6 +23,11 @@
         患者にSMSを送信する
       </VCheckbox>
     </div>
+    <div class="inputContainer">
+      <VCheckbox v-model="checkSkipAcceptPolicy" name="skipAcceptPolicy">
+        利用規約同意をスキップする
+      </VCheckbox>
+    </div>
     <ActionButton
       type="submit"
       :theme="btnTheme"
@@ -34,6 +39,7 @@
           mobileTel: inputMobileTel,
           memo: inputMemo,
           sendSMS: checkSendSMS,
+          isAccepted: checkSkipAcceptPolicy,
         })
       "
     >
@@ -60,6 +66,7 @@ export default class PatientRegister extends Vue {
   inputMobileTel = ''
   inputMemo = ''
   checkSendSMS = false
+  checkSkipAcceptPolicy = true
 
   @Prop({ default: '' })
   errorMessage?: string

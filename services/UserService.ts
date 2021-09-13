@@ -1,5 +1,5 @@
-import { $axios } from '@/utils/api-accessor'
 import authHeader from './auth-header'
+import { $axios } from '@/utils/api-accessor'
 import { Status, ConsumeStatus } from '~/types/component-interfaces/status'
 import { AuthUser } from '~/types/auth'
 
@@ -28,9 +28,9 @@ class UserService {
     return JSON.parse(payload)['cognito:username']
   }
 
-  async postStatus(status: ConsumeStatus) {
+  async postStatus(patientId: string, status: ConsumeStatus) {
     const response = await $axios.post(
-      `patients/${this.getUserId()}/statuses`,
+      `patients/${patientId}/statuses`,
       status,
       {
         headers: authHeader(),

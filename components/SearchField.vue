@@ -4,7 +4,7 @@
     type="search"
     placeholder="検索"
     :value="value"
-    @input="$emit('input', $event.target.value)"
+    @keydown.enter="search"
   />
 </template>
 
@@ -16,6 +16,12 @@ export default Vue.extend({
     value: {
       type: String,
       default: '',
+    },
+  },
+  methods: {
+    search($event: { keyCode: number; target: { value: string } }): void {
+      if ($event.keyCode !== 13) return
+      this.$emit('input', $event.target.value)
     },
   },
 })
