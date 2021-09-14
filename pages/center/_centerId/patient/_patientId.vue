@@ -199,7 +199,7 @@
             </ul>
             <InputField
               v-model="inputSymptom.remarks"
-              label="上記以外の体調の変化"
+              label="その他の体調の変化"
               name="memo"
               placeholder="例：昨日の20時ごろから咳が止まらない"
             />
