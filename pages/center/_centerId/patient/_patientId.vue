@@ -473,7 +473,7 @@ export default class PatientId extends Vue {
           息苦しさ: item.symptom?.suffocation ? 1 : 0,
           頭痛: item.symptom?.headache ? 1 : 0,
           のど痛み: item.symptom?.sore_throat ? 1 : 0,
-          症状備考: item.symptom?.remarks,
+          その他の体調の変化: item.symptom?.remarks,
         }
       })
       const csv = Papa.unparse(data, {

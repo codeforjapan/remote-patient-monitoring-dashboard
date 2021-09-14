@@ -8,7 +8,7 @@
           <th>体温</th>
           <th>脈拍</th>
           <th class="alignLeft" style="padding-left: 20px">症状</th>
-          <th class="alignLeft">症状</th>
+          <th class="alignLeft">その他の体調の変化</th>
           <th></th>
         </tr>
       </thead>
