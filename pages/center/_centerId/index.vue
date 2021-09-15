@@ -107,7 +107,7 @@ export default class CenterId extends Vue {
     this.checkAndFetchPatients()
     this.timer = setInterval(() => {
       this.checkAndFetchPatients()
-    }, 30000)
+    }, 300000)
   }
 
   beforeDestroy() {
