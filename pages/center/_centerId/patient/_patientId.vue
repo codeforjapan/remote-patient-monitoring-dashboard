@@ -227,6 +227,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import Papa from 'papaparse'
 import { saveAs } from 'file-saver'
 import * as zip from '@zip.js/zip.js/dist/zip'
@@ -244,6 +245,8 @@ import CloseIcon from '@/static/icon-close.svg'
 import PlusIcon from '@/static/icon-plus.svg'
 import DownloadIcon from '@/static/icon-download.svg'
 import { patientsStore, statusesStore } from '@/store'
+
+dayjs.extend(utc)
 
 type SymptomItem = {
   name: string
@@ -340,7 +343,7 @@ export default class PatientId extends Vue {
 
   get status(): ConsumeStatus {
     return {
-      created: this.inputDateTime,
+      created: dayjs(this.inputDateTime).utc().format(),
       SpO2: +this.inputSpO2,
       body_temperature: +this.inputTemperature,
       pulse: +this.inputPulse,
