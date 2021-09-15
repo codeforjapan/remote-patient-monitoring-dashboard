@@ -1,13 +1,3 @@
-/* @license
-Papa Parse
-v5.3.1
-https://github.com/mholt/PapaParse
-License: MIT
-*/
-
-/*! https://mths.be/punycode v1.4.1 by @mathias */
-
-
 /*!
   * vue-router v3.5.2
   * (c) 2021 Evan You
@@ -81,3 +71,13 @@ PERFORMANCE OF THIS SOFTWARE.
   * (c) 2015-present Evan You
   * @license MIT
   */
+
+
+/* @license
+Papa Parse
+v5.3.1
+https://github.com/mholt/PapaParse
+License: MIT
+*/
+
+/*! https://mths.be/punycode v1.4.1 by @mathias */
