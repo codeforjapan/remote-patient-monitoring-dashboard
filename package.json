@@ -18,7 +18,7 @@
     "*.{css,vue}": "yarn stylelint"
   },
   "dependencies": {
-    "@zip.js/zip.js": "2.3.17",
+    "@zip.js/zip.js": "2.3.18",
     "apexcharts": "3.28.3",
     "classlist-polyfill": "1.2.0",
     "core-js": "3.17.3",
