@@ -296,6 +296,7 @@ export default class PatientOverview extends Vue {
   border-radius: 14px;
   font-size: 10px;
   padding: 0 8px;
+  max-width: 70%;
 }
 .symptomsItem:not(:last-of-type)::after {
   content: '・';
