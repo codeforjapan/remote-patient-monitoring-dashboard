@@ -82,7 +82,7 @@ export default Vue.extend({
 .checkboxContainer {
   position: relative;
   display: block;
-  padding: 16px;
+  padding: 16px 12px;
   border-radius: 6px;
   border: 1px solid $gray-2;
   cursor: pointer;
@@ -102,6 +102,7 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   cursor: pointer;
+  font-size: 14px;
   &::before {
     display: block;
     border: 1px solid $gray-2;

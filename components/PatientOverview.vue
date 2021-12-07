@@ -57,7 +57,12 @@
           lastStatus.symptom.phlegm ||
           lastStatus.symptom.suffocation ||
           lastStatus.symptom.headache ||
-          lastStatus.symptom.sore_throat
+          lastStatus.symptom.sore_throat ||
+          lastStatus.symptom.malaise ||
+          lastStatus.symptom.nausea ||
+          lastStatus.symptom.diarrhea ||
+          lastStatus.symptom.difficulty_eating ||
+          lastStatus.symptom.no_urination
         "
         class="symptoms"
       >
@@ -83,8 +88,33 @@
         />
         <SymptomsStatus
           class="symptomsItem"
-          text="のど痛み"
+          text="のどの痛み"
           :is-active="lastStatus.symptom.sore_throat"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="全身倦怠感"
+          :is-active="lastStatus.symptom.malaise"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="嘔気・嘔吐"
+          :is-active="lastStatus.symptom.nausea"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="下痢"
+          :is-active="lastStatus.symptom.diarrhea"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="食事困難"
+          :is-active="lastStatus.symptom.difficulty_eating"
+        />
+        <SymptomsStatus
+          class="symptomsItem"
+          text="半日排尿がない"
+          :is-active="lastStatus.symptom.no_urination"
         />
       </div>
       <div><PatientOverviewGraph :patient="patient" /></div>
@@ -150,6 +180,11 @@ export default class PatientOverview extends Vue {
       suffocation: false,
       headache: false,
       sore_throat: false,
+      malaise: false,
+      nausea: false,
+      diarrhea: false,
+      difficulty_eating: false,
+      no_urination: false,
       remarks: '',
     },
   }
