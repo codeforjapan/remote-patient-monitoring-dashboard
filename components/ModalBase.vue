@@ -94,7 +94,7 @@ export default Vue.extend({
   transform: translate(-50%, -50%);
 
   &.wide {
-    max-width: 800px;
+    max-width: 850px;
   }
 
   &Transition {
