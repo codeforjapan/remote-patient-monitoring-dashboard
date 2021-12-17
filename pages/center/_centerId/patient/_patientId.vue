@@ -299,6 +299,11 @@ export default class PatientId extends Vue {
     suffocation: false,
     headache: false,
     sore_throat: false,
+    malaise: false,
+    nausea: false,
+    diarrhea: false,
+    difficulty_eating: false,
+    no_urination: false,
     remarks: '',
   }
 
@@ -321,7 +326,27 @@ export default class PatientId extends Vue {
     },
     {
       name: 'sore_throat',
-      label: 'のど痛み',
+      label: 'のどの痛み',
+    },
+    {
+      name: 'malaise',
+      label: '全身倦怠感',
+    },
+    {
+      name: 'nausea',
+      label: '嘔気・嘔吐',
+    },
+    {
+      name: 'diarrhea',
+      label: '下痢',
+    },
+    {
+      name: 'difficulty_eating',
+      label: '食事困難',
+    },
+    {
+      name: 'no_urination',
+      label: '半日排尿がない',
     },
   ]
 
@@ -353,6 +378,11 @@ export default class PatientId extends Vue {
         suffocation: this.inputSymptom.suffocation,
         headache: this.inputSymptom.headache,
         sore_throat: this.inputSymptom.sore_throat,
+        malaise: this.inputSymptom.malaise,
+        nausea: this.inputSymptom.nausea,
+        diarrhea: this.inputSymptom.diarrhea,
+        difficulty_eating: this.inputSymptom.difficulty_eating,
+        no_urination: this.inputSymptom.no_urination,
         remarks: this.inputSymptom.remarks,
       },
     }
@@ -424,7 +454,17 @@ export default class PatientId extends Vue {
 
   itemSelectControl(checked: boolean, value: string): void {
     this.inputSymptom[
-      value as 'cough' | 'phlegm' | 'suffocation' | 'headache' | 'sore_throat'
+      value as
+        | 'cough'
+        | 'phlegm'
+        | 'suffocation'
+        | 'headache'
+        | 'sore_throat'
+        | 'malaise'
+        | 'nausea'
+        | 'diarrhea'
+        | 'difficulty_eating'
+        | 'no_urination'
     ] = checked
   }
 
@@ -459,6 +499,11 @@ export default class PatientId extends Vue {
       suffocation: false,
       headache: false,
       sore_throat: false,
+      malaise: false,
+      nausea: false,
+      diarrhea: false,
+      difficulty_eating: false,
+      no_urination: false,
       remarks: '',
     }
   }
@@ -475,7 +520,12 @@ export default class PatientId extends Vue {
           たん: item.symptom?.phlegm ? 1 : 0,
           息苦しさ: item.symptom?.suffocation ? 1 : 0,
           頭痛: item.symptom?.headache ? 1 : 0,
-          のど痛み: item.symptom?.sore_throat ? 1 : 0,
+          のどの痛み: item.symptom?.sore_throat ? 1 : 0,
+          全身倦怠感: item.symptom?.malaise ? 1 : 0,
+          '嘔気・嘔吐': item.symptom?.nausea ? 1 : 0,
+          下痢: item.symptom?.diarrhea ? 1 : 0,
+          食事困難: item.symptom?.difficulty_eating ? 1 : 0,
+          半日排尿がない: item.symptom?.no_urination ? 1 : 0,
           その他の体調の変化: item.symptom?.remarks,
         }
       })
@@ -618,10 +668,12 @@ export default class PatientId extends Vue {
 }
 .symptomsList {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 .symptomsItem {
-  flex: 0 1 18%;
+  flex: 0 0 19%;
+  margin-bottom: 12px;
 }
 .buttonContainer {
   margin: 15px 0;

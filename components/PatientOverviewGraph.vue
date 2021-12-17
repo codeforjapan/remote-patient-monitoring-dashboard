@@ -3,7 +3,7 @@
     <client-only>
       <Apexcharts
         type="line"
-        height="180px"
+        height="200px"
         :options="chartOptions"
         :series="series"
       />
