@@ -14,6 +14,11 @@ export interface Status {
     suffocation: boolean
     headache: boolean
     sore_throat: boolean
+    malaise: boolean
+    nausea: boolean
+    diarrhea: boolean
+    difficulty_eating: boolean
+    no_urination: boolean
     remarks?: string
   }
 }
@@ -28,6 +33,11 @@ export interface ConsumeStatus {
     suffocation: boolean
     headache: boolean
     sore_throat: boolean
+    malaise: boolean
+    nausea: boolean
+    diarrhea: boolean
+    difficulty_eating: boolean
+    no_urination: boolean
     remarks: string
   }
 }

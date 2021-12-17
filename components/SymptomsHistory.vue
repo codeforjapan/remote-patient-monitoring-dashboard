@@ -40,22 +40,42 @@
               <SymptomsStatusText
                 text="せき"
                 :is-active="item.symptom.cough"
-              />・
+              />｜
               <SymptomsStatusText
                 text="たん"
                 :is-active="item.symptom.phlegm"
-              />・
+              />｜
               <SymptomsStatusText
                 text="息苦しさ"
                 :is-active="item.symptom.suffocation"
-              />・
+              />｜
               <SymptomsStatusText
                 text="頭痛"
                 :is-active="item.symptom.headache"
-              />・
+              />｜
               <SymptomsStatusText
-                text="のど痛み"
+                text="のどの痛み"
                 :is-active="item.symptom.sore_throat"
+              />｜
+              <SymptomsStatusText
+                text="全身倦怠感"
+                :is-active="item.symptom.malaise"
+              />｜
+              <SymptomsStatusText
+                text="嘔気・嘔吐"
+                :is-active="item.symptom.nausea"
+              />｜
+              <SymptomsStatusText
+                text="下痢"
+                :is-active="item.symptom.diarrhea"
+              />｜
+              <SymptomsStatusText
+                text="食事困難"
+                :is-active="item.symptom.difficulty_eating"
+              />｜
+              <SymptomsStatusText
+                text="半日排尿がない"
+                :is-active="item.symptom.no_urination"
               />
             </div>
           </td>
