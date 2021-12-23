@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@zip.js/zip.js": "2.3.22",
-    "apexcharts": "3.32.0",
+    "apexcharts": "3.32.1",
     "classlist-polyfill": "1.2.0",
     "core-js": "3.19.3",
     "dayjs": "1.10.7",
